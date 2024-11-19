@@ -1,0 +1,348 @@
+
+.s4{
+    font-size: 30px;
+}
+
+.login-button {
+    background: white;
+    color: #5544ab;
+    padding: 25px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    font-size: 25px;
+}
+.s3 {
+    font-size: 30px;
+}
+.navbar {
+    height: 80px;
+    min-width: 100vw;
+    background: var(--main-color);
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.preview-container{
+    display:flex;
+    flex-flow:column;
+}
+
+.banner{
+    display:flex;
+    max-width:100%;
+}
+
+
+.preview-description{
+    line-height: 1;
+    display: flex;
+    flex-flow: column;
+    font-size: 5vw;
+    font-family: Roboto;
+    margin: 9vw;
+    text-indent: 40px;
+    letter-spacing: 1.5px;
+    font-weight: normal;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+
+.preview-buttons{
+    display:flex;
+    border: 1px solid #b7b7b7;
+    width:100%;
+    align-items:center;
+    align-content:center;
+    justify-content:center;
+}
+
+.preview-button{
+    display:flex;
+    font-family:Roboto;
+    font-size:35px;
+    padding: 20px;
+    align-items:center;
+    margin:0px 10px 0px 10px;
+    text-decoration: none;
+    color: black;
+}
+
+
+.preview-button-url{
+    display:flex;
+    font-family:Roboto;
+    padding: 20px;
+    padding-left: 100px;
+    font-size: 5vw;
+    padding-right: 100px;
+    align-items:center;
+    align-content:center;
+    justify-content:center;
+    margin:0px 10px 0px 10px;
+    border-radius: 20px;
+    margin-top:50px;
+    color:white;
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-indent: 0px;
+}
+.vk{
+    background:#0077FF;
+}
+.dogovor{
+    background:#222;
+}
+
+.insta{
+    background:#f00075;
+}
+.connect{
+    background:#00f083;
+}
+
+
+
+
+.inner{
+    display:flex;
+    max-width:40%;
+    object-fit: contain;
+}
+
+
+
+
+
+
+
+.preview-block{
+    line-height: 1;
+    display: flex;
+    flex-flow: column;
+    font-size: 1.5vw;
+    font-family: Roboto;
+    text-indent: 40px;
+    letter-spacing: 1.5px;
+    font-weight: normal;
+    margin:20px;
+    justify-content:center;
+}
+
+
+
+.preview-header{
+    line-height: 1;
+    display: flex;
+    flex-flow: column;
+    font-size: 6vw;
+    font-family: Roboto;
+    margin: 2vw 2vw 2vw 0vw;
+    text-indent: 40px;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    background:#71afff;
+    padding: 1vw;
+}
+
+
+
+.preview-header-left{
+    margin: 2vw 20vw 2vw 0vw;
+}
+
+.preview-header-right{
+    margin: 2vw 0vw 2vw 20vw;
+}
+
+
+
+
+.pt-block{
+    display:flex;
+    flex-flow:column;
+    background: #9921f1;
+    width:700px;
+    color:white;
+    margin:50px;
+    text-indent: 0px;
+}
+
+.preview-teachers-container{
+    display:flex;
+    flex-flow: column;
+    justify-content:center;
+    align-items: center;
+}
+
+
+.teachers-img{
+    display:flex;
+    max-width:100%;
+    object-fit: contain;
+}
+
+
+
+
+
+.login-button{
+    background:white;
+    color:#5544ab;
+    padding:15px;
+    padding-left:30px;
+    padding-right:30px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+.about-description{
+    line-height: 1;
+    display: flex;
+    flex-flow: column;
+    font-size: 4vw;
+    font-family: Roboto;
+    margin: 2vw;
+    text-indent: 40px;
+    letter-spacing: 1.5px;
+    font-weight: normal;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+
+}
+
+
+
+.swap-module{
+    display:flex;
+    flex-flow:column;
+    min-height:350px;
+    padding:30px;
+    background:#9921f1;
+    border-radius:20px;
+    color:white;
+    text-indent: 0px;
+    justify-content: center;
+    font-size: 4vw;
+    margin: 2vw;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+
+
+
+
+.p-module{
+    display:flex;
+    flex-flow:column;
+    padding:20px;
+    background:#9921f1;
+    border-radius:20px;
+    width:90%;
+    color:white;
+    text-indent: 0px;
+    font-size: 5vw;
+    margin:20px;
+}
+.p-module-title{
+    margin-bottom:10px;
+    font-weight:bold;
+}
+
+.p-module-list{
+    margin-left:30px;
+}
+.p-module-list li{
+    margin:5px;
+    list-style-type: circle;
+}
+
+
+#svg{
+    position:absolute;
+    stroke-width: 3;
+}
+
+
+
+
+
+.underline-one {
+    position: relative;
+    cursor: pointer;
+    line-height:1;
+    text-decoration: none; /* Убираем подчеркивание */
+}
+.underline-one:after {
+	content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: -3px;
+    width: 0;
+    height: 2px; /* Высота линии */
+    background-color: black; /* Цвет подчеркивания при исчезании линии*/
+    transition: width 0.5s; /* Время эффекта */
+}
+
+.underline-one:hover:after {
+	content: "";
+    width: 100%;
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 2px; /* Высота линии */
+    background-color: black; /* Цвет подчеркивания при появлении линии*/
+    transition: width 0.5s;  /* Время эффекта */
+}
+
+
+
+
+
+.underline-one-white {
+    position: relative;
+    cursor: pointer;
+    line-height:1;
+    text-decoration: none; /* Убираем подчеркивание */
+}
+.underline-one-white:after {
+	content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: -3px;
+    width: 0;
+    height: 2px; /* Высота линии */
+    background-color: white; /* Цвет подчеркивания при исчезании линии*/
+    transition: width 0.5s; /* Время эффекта */
+}
+
+.preview-button-url:hover .underline-one-white:after {
+	content: "";
+    width: 100%;
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 2px; /* Высота линии */
+    background-color: white; /* Цвет подчеркивания при появлении линии*/
+    transition: width 0.5s;  /* Время эффекта */
+}

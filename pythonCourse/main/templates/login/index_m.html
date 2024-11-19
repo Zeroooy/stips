@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход | NameProject</title>
+    <link rel="stylesheet" href="{% static 'main/css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/type1.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/type2.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/mobile_types.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-inner-container">
+            <div class="login-form">
+                <div class="inner-container">
+                    <div id="label" class="header-text s5">Авторизация</div>
+                    <div class="inputs-container">
+                        <input id="login-input" class="inputs-login" type="text" placeholder="Логин" name="uname" required>
+                        <input id="password-input" class="inputs-login" type="password" placeholder="Пароль" name="psw" required>
+                        <button onclick="login()" class="login-button" type="submit">Войти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<script>if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) window.location.href = '/login'</script>
+<script>var csrftoken = '{{ csrf_token }}'</script>
+<script src="{% static 'main/js/site.js' %}"></script>
+<script src="{% static 'main/js/login.js' %}"></script>
+</body>
+</html>

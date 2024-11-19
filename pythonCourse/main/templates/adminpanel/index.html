@@ -1,0 +1,395 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель админа | NameProject</title>
+    <link rel="stylesheet" href="{% static 'main/css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/type1.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/type2.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/general.css' %}">
+</head>
+<body>
+   <header style="display:flex">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="container-logo">
+                    <div class="header-text s3 tar lh">TASK</br>NEXUS</div>
+                    <div class="v-line"></div>
+                </div>
+                <div class="header-text s4 naming-project">
+                    Админ-панель
+                </div>
+                <div class="navbar-menu">
+                    <img class="navbar-menu-img" src="{% static 'main/img/menu.png' %}">
+                    <div class="dropdown-content">
+                        <div onclick="window.location.href = '/title'" class="ddb">Главная страница</div>
+                        <div onclick="window.location.href = '/me'" class="ddb">Личный кабинет</div>
+                        <div onclick="window.location.href = '/menu'" class="ddb">Мои курсы</div>
+                        <div onclick="out()" class="ddb-red">Выход</div>
+                    </div>
+                </div>
+                <div class="admin-panel">
+                    <img class="navbar-menu-img" src="{% static 'main/img/admin.png' %}">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="main-container-select">
+        <div class="selection-container aec">
+            <div class="buttons-container">
+                <button class="buttons-container-button bcb-grey" id="buttonUser" onclick="openBlockContainer(0)">Пользователи</button>
+                <button class="buttons-container-button bcb-grey" id="buttonCourse" onclick="openBlockContainer(1)">Курсы</button>
+                <button class="buttons-container-button bcb-grey" onclick="openBlockContainer(2)">Модули</button>
+                <button class="buttons-container-button bcb-grey" onclick="openBlockContainer(3)">Уроки</button>
+                <button class="buttons-container-button bcb-grey" onclick="openBlockContainer(4)">Видео - файлы</button>
+                <button class="buttons-container-button bcb-grey" onclick="openBlockContainer(5)">Документы</button>
+            </div>
+
+
+
+
+
+            <div class="block-container">
+                <div class="block-container-dop">
+                    <button class="block-container-button bcb-green" onclick="showLK(0)">Добавить нового пользователя</button>
+                </div>
+                <div class="block-container-dop">
+                    <select class="input-selector" id="c-u"></select>
+                    <div class="button-in-container">
+                        <button class="block-container-button" onclick="showLK(1)">Изменить данные пользователя</button>
+                        <button class="block-container-button bcb-red" onclick="deleteUser()">Удалить пользователя</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="block-container">
+                <div class="block-container-dop">
+                    <button class="block-container-button bcb-green" onclick="showCourse(0)">Добавить новый курс</button>
+                </div>
+                <div class="block-container-dop">
+                    <select class="input-selector" id="c-c"></select>
+                    <div class="button-in-container">
+                        <button class="block-container-button" onclick="showCourse(1)">Изменить данные курса</button>
+                        <button class="block-container-button bcb-red" onclick="deleteCourse()">Удалить курс</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="block-container">
+                <div class="block-container-dop">
+                    <select class="input-selector" id="c-c-i-m-a"></select>
+                    <div class="button-in-container">
+                        <button class="block-container-button bcb-green" onclick="showModule(0)">Добавить новый модуль</button>
+                    </div>
+                </div>
+                <div class="block-container-dop">
+                    <select class="input-selector" id="c-c-i-m"></select>
+                    <select class="input-selector" id="c-m"></select>
+                    <div class="button-in-container">
+                        <button class="block-container-button" onclick="showModule(1)">Изменить данные модуля</button>
+                        <button class="block-container-button bcb-red" onclick="deleteModule()">Удалить модуль</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="block-container">
+                <div class="block-container-dop">
+                    <select class="input-selector" id="c-c-i-l-a"></select>
+                    <select class="input-selector" id="c-m-i-l-a"></select>
+                    <div class="button-in-container">
+                        <button class="block-container-button bcb-green" onclick="showLesson(0)">Добавить новый урок</button>
+                    </div>
+                </div>
+                <div class="block-container-dop">
+                    <select class="input-selector" id="c-c-i-l"></select>
+                    <select class="input-selector" id="c-m-i-l"></select>
+                    <select class="input-selector" id="c-l"></select>
+                    <div class="button-in-container">
+                        <button class="block-container-button" onclick="showLesson(1)">Изменить данные урока</button>
+                        <button class="block-container-button bcb-red" onclick="deleteLesson()">Удалить урок</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="block-container">
+                <div class="block-container-dop">
+                    <div class="button-in-container">
+                        <button class="block-container-button bcb-green" onclick="showVideo(0)">Добавить новое видео</button>
+                    </div>
+                </div>
+                <div class="block-container-dop">
+                    <select class="input-selector" id="c-v"></select>
+                    <div class="button-in-container">
+                        <button class="block-container-button" onclick="showVideo(1)">Изменить данные видео</button>
+                        <button class="block-container-button bcb-red" onclick="deleteVideo()">Удалить видео</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="block-container">
+                <div class="block-container-dop">
+                    <div class="button-in-container">
+                        <button class="block-container-button bcb-green" onclick="showDocument(0)">Добавить новый документ</button>
+                    </div>
+                </div>
+                <div class="block-container-dop">
+                    <select class="input-selector" id="c-d"></select>
+                    <div class="button-in-container">
+                        <button class="block-container-button" onclick="showDocument(1)">Изменить данные документа</button>
+                        <button class="block-container-button bcb-red" onclick="deleteDocument()">Удалить документ</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="selection-container dn">
+
+            <div class="me-label-container us" id="mbac-title">Пользователь | </div>
+
+            <div class="me-buttons-ava-container">
+                <div class="mbac-buttons">
+                    <label for="photo-user-file" class="mbac-button"><img class="mbac-button-img" src="{% static 'main/img/download.png' %}"></label><input type="file" class="file-upload" id="photo-user-file">
+                    <label for="photo-user-file" class="mbac-button"><img class="mbac-button-img" src="{% static 'main/img/reload.png' %}"></label>
+                    <div class="mbac-button" onclick="deleteImg('photo-user-file','mbac-avatar')"><img class="mbac-button-img" src="{% static 'main/img/delete.png' %}"></div>
+                </div>
+                <img class="mbac-img" id="mbac-avatar">
+            </div>
+            <div style="display:flex;flex-flow:row; margin-bottom:40px;">
+                <div class="mdcb-button" id="data_button" onclick="change_data(true)">Данные пользователя</div>
+                <div class="mdcb-button" id="course_button" onclick="change_data(false)">Доступные курсы</div>
+            </div>
+            <div class="me-data-container" id="me-data-container">
+                <div class="mdc-block"><div class="mdcb-text">Имя</div><input class="mdcb-input" id="mdcb-name" placeholder="-- Введите имя --" maxlength="30" ></div>
+                <div class="mdc-block"><div class="mdcb-text">Фамилия</div><input class="mdcb-input" id="mdcb-surname" placeholder="-- Введите фамилию --" maxlength="30" ></div>
+                <div class="mdc-block"><div class="mdcb-text">Отчество</div><input class="mdcb-input" id="mdcb-postname" placeholder="-- Введите отчество --" maxlength="30" ></div>
+                <div class="mdc-block"><div class="mdcb-text">E-mail</div><input class="mdcb-input" id="mdcb-email" placeholder="-- Введите e-mail --" maxlength="30" ></div>
+                <div class="mdc-block"><div class="mdcb-text">Телефон</div><input class="mdcb-input" id="mdcb-number" placeholder="-- Введите телефон --" maxlength="30" ></div>
+
+                <div class="mdc-block mdc-block-p"><div class="mdcb-text">Логин</div><input class="mdcb-input" id="mdcb-login" placeholder="-- Введите логин --" maxlength="30" ></div>
+                <div class="mdc-block"><div class="mdcb-text">Пароль</div><input class="mdcb-input" id="mdcb-password" placeholder="-- Введите пароль --" maxlength="30" ></div>
+
+                <div class="mdc-block"><div class="mdcb-text">Роль</div>
+                    <select class="mdcb-input" id="mdcb-role">
+                            <option value='-1'>-- Выберите роль --</option>
+                            <option value='Пользователь'>Пользователь</option>
+                            <option value='Модератор'>Модератор</option>
+                            <option value='Администратор'>Администратор</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="me-data-container" id="select-course-container">
+
+            </div>
+
+            <div class="me-buttons-container">
+                <div class="mbc-block mbcb-green" id="save_changes">Сохранить изменения</div>
+                <div class="mbc-block mbcb-red" onclick="window.location.href = '/adminpanel'">Отменить изменения</div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="selection-container dn">
+            <div class="me-label-container us" id="cdc-title">Курс | </div>
+
+            <div class="me-buttons-ava-container">
+                <div class="mbac-buttons">
+                    <label for="photo-course-file" class="mbac-button"><img class="mbac-button-img" src="{% static 'main/img/download.png' %}"></label><input type="file" class="file-upload" id="photo-course-file">
+                    <label for="photo-course-file" class="mbac-button"><img class="mbac-button-img" src="{% static 'main/img/reload.png' %}"></label>
+                    <div class="mbac-button" onclick="deleteImg('photo-course-file','cdc-avatar')"><img class="mbac-button-img" src="{% static 'main/img/delete.png' %}"></div>
+                </div>
+                <img class="mbac-img" id="cdc-avatar">
+            </div>
+
+            <div style="display:flex;flex-flow:row; margin-bottom:40px;">
+                <div class="mdcb-button" id="change_button_data_course" onclick="change_course(0)">Данные курса</div>
+                <div class="mdcb-button" id="change_button_order_course" onclick="change_course(1)">Порядок модулей</div>
+            </div>
+
+            <div class="course-data-container" id="course-data-container">
+                <div class="mdc-block"><div class="mdcb-text">Название</div><input class="mdcb-input" id="cdc-name" placeholder="-- Введите название --" maxlength="30" ></div>
+                <div class="mdc-block"><div class="mdcb-text">Описание</div><textarea class="mdcb-input" id="cdc-description" placeholder="-- Введите описание --" maxlength="400"></textarea></div>
+            </div>
+
+            <ul class="course-data-container" id="course-order-container">
+
+            </ul>
+
+            <div class="me-buttons-container">
+                <div class="mbc-block mbcb-green" id="save_changes_course">Сохранить изменения</div>
+                <div class="mbc-block mbcb-red" onclick="window.location.href = '/adminpanel'">Отменить изменения</div>
+            </div>
+        </div>
+
+
+
+        <div class="selection-container dn">
+            <div class="me-label-container us" id="mdc-title">Модуль | </div>
+
+            <div class="me-buttons-ava-container">
+                <div class="mbac-buttons">
+                    <label for="photo-module-file" class="mbac-button"><img class="mbac-button-img" src="{% static 'main/img/download.png' %}"></label><input type="file" class="file-upload" id="photo-module-file">
+                    <label for="photo-module-file" class="mbac-button"><img class="mbac-button-img" src="{% static 'main/img/reload.png' %}"></label>
+                    <div class="mbac-button" onclick="deleteImg('photo-module-file','mdc-avatar')"><img class="mbac-button-img" src="{% static 'main/img/delete.png' %}"></div>
+                </div>
+                <img class="mbac-img" id="mdc-avatar">
+            </div>
+
+            <div style="display:flex;flex-flow:row; margin-bottom:40px;">
+                <div class="mdcb-button" id="change_button_data_module" onclick="change_module(0)">Данные модуля</div>
+                <div class="mdcb-button" id="change_button_order_module" onclick="change_module(1)">Порядок уроков</div>
+            </div>
+
+            <div class="course-data-container" id="module-data-container">
+                <div class="mdc-block"><div class="mdcb-text">Название</div><input class="mdcb-input" id="mdc-name" placeholder="-- Введите название --" maxlength="30" ></div>
+            </div>
+
+
+            <ul class="course-data-container" id="module-order-container">
+
+            </ul>
+
+            <div class="me-buttons-container">
+                <div class="mbc-block mbcb-green" id="save_changes_module">Сохранить изменения</div>
+                <div class="mbc-block mbcb-red" onclick="window.location.href = '/adminpanel'">Отменить изменения</div>
+            </div>
+        </div>
+
+
+
+        <div class="selection-container dn">
+            <div class="me-label-container us" id="ldc-title">Урок | </div>
+
+            <div class="me-buttons-ava-container">
+                <div class="mbac-buttons">
+                    <label for="photo-lesson-file" class="mbac-button"><img class="mbac-button-img" src="{% static 'main/img/download.png' %}"></label><input type="file" class="file-upload" id="photo-lesson-file" >
+                    <label for="photo-lesson-file" class="mbac-button"><img class="mbac-button-img" src="{% static 'main/img/reload.png' %}"></label>
+                    <div class="mbac-button" onclick="deleteImg('photo-lesson-file','ldc-avatar')"><img class="mbac-button-img" src="{% static 'main/img/delete.png' %}"></div>
+                </div>
+                <img class="mbac-img" id="ldc-avatar">
+            </div>
+
+            <div style="display:flex;flex-flow:row; margin-bottom:40px;">
+                <div class="mdcb-button" id="change_button_text" onclick="change_lesson(0)">Данные урока</div>
+                <div class="mdcb-button" id="change_button_video" onclick="change_lesson(1)">Видео и документы</div>
+            </div>
+
+            <div class="course-data-container" id="lesson-data-container">
+                <div class="mdc-block"><div class="mdcb-text">Название</div><input class="mdcb-input" id="ldc-name" placeholder="-- Введите название --" maxlength="30" ></div>
+                <div class="mdc-block"><div class="mdcb-text">Текст</div><textarea class="mdcb-input" id="ldc-text" placeholder="-- Введите текст --" maxlength="50000"></textarea></div>
+            </div>
+
+            <div class="me-data-container" id="change_button_document_video">
+                <div class="me-data-container">Прикрепленные видео</div>
+                <div class="me-data-container" id="list_videos"></div>
+                <div class="me-data-container">Прикрепленные документы</div>
+                <div class="me-data-container" id="list_documents"></div>
+                <div class="lesson-disclaimer">Внимание! Если вы выберите уже занятый элемент, то он открепится от своего урока и прикрепится к данному!</div>
+            </div>
+
+            <div class="me-buttons-container">
+                <div class="mbc-block mbcb-green" id="save_changes_lesson">Сохранить изменения</div>
+                <div class="mbc-block mbcb-red" onclick="window.location.href = '/adminpanel'">Отменить изменения</div>
+            </div>
+        </div>
+
+
+
+
+        <div class="selection-container dn">
+            <div class="me-label-container us" id="vdc-title">Видео | </div>
+
+            <div class="course-data-container" id="video-data-container" style="margin-top:30px">
+                <div class="mdc-block"><div class="mdcb-text">Название</div><input class="mdcb-input" id="vdc-name" placeholder="-- Введите название --" maxlength="30" ></div>
+                <div class="mdc-block"><div class="mdcb-text">Файл</div><label for="vdc-file" class="custom-file-upload" id="label-video">-- Выбрать файл --</label><input type="file" class="file-upload" id="vdc-file" accept=".mkv,.mov,.avi,.mp4"></div>
+                <progress id="progressBar" value="0" max="100"></progress>
+            </div>
+
+            <div class="me-buttons-container">
+                <div class="mbc-block mbcb-green" id="save_changes_video">Сохранить изменения</div>
+                <div class="mbc-block mbcb-red" onclick="window.location.href = '/adminpanel'">Отменить изменения</div>
+            </div>
+        </div>
+
+
+
+
+        <div class="selection-container dn">
+            <div class="me-label-container us" id="ddc-title">Документ | </div>
+
+            <div class="course-data-container" id="document-data-container" style="margin-top:30px">
+                <div class="mdc-block"><div class="mdcb-text">Название</div><input class="mdcb-input" id="ddc-name" placeholder="-- Введите название --" maxlength="30" ></div>
+                <div class="mdc-block"><div class="mdcb-text">Файл</div><label for="ddc-file" class="custom-file-upload"  id="label-file">-- Выбрать файл --</label><input type="file" class="file-upload" id="ddc-file"></div>
+                <progress id="progressBar2" value="0" max="100"></progress>
+            </div>
+
+            <div class="me-buttons-container">
+                <div class="mbc-block mbcb-green" id="save_changes_document">Сохранить изменения</div>
+                <div class="mbc-block mbcb-red" onclick="window.location.href = '/adminpanel'">Отменить изменения</div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+<script>var csrftoken = '{{ csrf_token }}'</script>
+<script src="{% static 'main/js/site.js' %}"></script>
+<script src="{% static 'main/js/admin.js' %}"></script>
+</body>
+</html>

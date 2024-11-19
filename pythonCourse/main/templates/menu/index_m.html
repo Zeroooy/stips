@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню | NameProject</title>
+    <link rel="stylesheet" href="{% static 'main/css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/type1.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/type2.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/mobile_types.css' %}">
+</head>
+<body>
+    <header style="display:flex">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="container-logo">
+                    <div class="header-text s3 tar lh">TASK</br>NEXUS</div>
+                    <div class="v-line"></div>
+                </div>
+                <div class="header-text s4 naming-project">
+                    Мои курсы
+                </div>
+                <div class="navbar-menu">
+                    <img class="navbar-menu-img" src="{% static 'main/img/menu.png' %}">
+                    <div class="dropdown-content">
+                        <div onclick="window.location.href = '/title'" class="ddb">Главная страница</div>
+                        <div onclick="window.location.href = '/me'" class="ddb">Личный кабинет</div>
+                        <div onclick="window.location.href = '/menu'" class="ddb">Мои курсы</div>
+                        <div onclick="out()" class="ddb-red">Выход</div>
+                    </div>
+                </div>
+                <div class="admin-panel" id="admin-panel" onclick="window.location.href = '/adminpanel'">
+                    <img class="navbar-menu-img" src="{% static 'main/img/admin.png' %}">
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-container-select">
+        <div class="selection-container">
+            <div class="cources-label-container" id="s-c">
+
+            </div>
+        </div>
+    </div>
+
+<script>if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) window.location.href = '/menu'</script>
+<script>var csrftoken = '{{ csrf_token }}'</script>
+<script src="{% static 'main/js/site.js' %}"></script>
+<script src="{% static 'main/js/menu.js' %}"></script>
+</body>
+</html>
