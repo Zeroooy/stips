@@ -1,10 +1,12 @@
+from datetime import datetime
+
 from django.db import models
 from django.template.defaultfilters import random
 # Create your models here.
 
 
 class User(models.Model):
-    session_id = models.TextField("ID Сессии",default="")
+    session = models.TextField("ID Сессии",default="")
 
     login = models.TextField("Логин",default="")
     password = models.TextField("Пароль")
@@ -21,11 +23,11 @@ class User(models.Model):
     def __str__(self):
         return str(self.surname) + " " + str(self.name) + " " + str(self.middlename)
 
-    def generate_session_id(self):
+    def generate_session(self):
         key = ""
         for i in range(20):
             key += random("abcde!?:fghi^jkl*mnopq_+rstuv$wxy=zAB&CDEFG-HIJKLMNO#PQRSTUV@WXYZ0123456789")
-        self.session_id = key
+        self.session = key
         return key
 
     def is_student(self):
@@ -53,8 +55,17 @@ class User(models.Model):
 
     # Получаем объект по session
     @staticmethod
-    def get_user_by_session(session):
-        users = User.objects.filter(session_id=session)
+    def get_by_session(session):
+        users = User.objects.filter(session=session)
+        if users.exists():
+            return users.first()
+        else:
+            return None
+
+    # Получаем объект по id
+    @staticmethod
+    def get_by_id(id_):
+        users = User.objects.filter(id=id_)
         if users.exists():
             return users.first()
         else:
@@ -63,12 +74,31 @@ class User(models.Model):
 
     # Получаем запись по логину и паролю
     @staticmethod
-    def get_user_by_login_password(login, password):
+    def get_by_login_password(login, password):
         users = User.objects.filter(login=login, password=password)
         if users.exists():
             return users.first()
         else:
             return None
+
+
+    def get_statements(self):
+        statements = Statement.objects.filter(user_id=self.id)
+        if statements.exists():
+            return statements
+        else:
+            return None
+
+
+
+    def get_id(self):
+        return self.id
+
+
+
+
+
+
 
 
 
@@ -95,8 +125,16 @@ class Statement(models.Model):
     mark_sport = models.BooleanField("Оценка спорт", default=False)
     comment_sport = models.TextField("Комментарий спорт")
 
+    date = models.DateTimeField("Дата")
+
     points = models.IntegerField("Баллы", default=0)
 
+    def get_data(self):
+        return {"user" : str(User.get_user_by_id(self.user_id)),
+                "status" : self.get_status(),
+                "points": self.points,
+                "date": self.date
+                }
 
     def set_mark_studies(self, value, comment):
         self.mark_studies = value
@@ -163,8 +201,15 @@ class Statement(models.Model):
             self.status = 0
 
     @staticmethod
-    def add(self, user_id_):
-        statement_temp = Statement.objects.create(user_id=user_id_)
+    def add(user_id_, json):
+        statement_temp = Statement.objects.create(user_id=user_id_, json=json, date=datetime.now())
+        statement_temp.save()
+
+    @staticmethod
+    def edit(user_id_, json):
+        statement_temp = Statement.get_by_user_id(user_id_)
+        statement_temp.json = json
+        statement_temp.date = datetime.now()
         statement_temp.save()
 
 
@@ -195,6 +240,21 @@ class Statement(models.Model):
             else:
                 for s in i:
                     s.status = 5
+
+
+
+    @staticmethod
+    def get_by_user_id(user_id_):
+        statements = Statement.objects.filter(user_id=user_id_)
+        if statements.exists():
+            return statements.last()
+        else:
+            return None
+
+
+
+
+
 
 
 
