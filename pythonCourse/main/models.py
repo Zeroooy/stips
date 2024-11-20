@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.template.defaultfilters import random
 # Create your models here.
 
 
@@ -21,6 +21,16 @@ class User(models.Model):
     def __str__(self):
         return str(self.surname) + " " + str(self.name) + " " + str(self.middlename)
 
+    def generate_session_id(self):
+        key = ""
+        for i in range(20):
+            key += random("abcde!?:fghi^jkl*mnopq_+rstuv$wxy=zAB&CDEFG-HIJKLMNO#PQRSTUV@WXYZ0123456789")
+        self.session_id = key
+        return key
+
+    def is_student(self):
+        return self.role == 0
+
     def is_admin(self):
         return self.role == 1
 
@@ -41,7 +51,7 @@ class User(models.Model):
         return roles.get(self.role)
 
 
-        # Получаем объект по session
+    # Получаем объект по session
     @staticmethod
     def get_user_by_session(session):
         users = User.objects.filter(session_id=session)
@@ -51,11 +61,14 @@ class User(models.Model):
             return None
 
 
-    # Проверяем есть ли запись по логину и паролю
+    # Получаем запись по логину и паролю
     @staticmethod
-    def check_user_by_login_password(login, password):
+    def get_user_by_login_password(login, password):
         users = User.objects.filter(login=login, password=password)
-        return users.exists()
+        if users.exists():
+            return users.first()
+        else:
+            return None
 
 
 
@@ -150,11 +163,18 @@ class Statement(models.Model):
             self.status = 0
 
     @staticmethod
+    def add(self, user_id_):
+        statement_temp = Statement.objects.create(user_id=user_id_)
+        statement_temp.save()
+
+
+    @staticmethod
     def system_checkout(counts):
         statements = Statement.objects.filter(status=2).order_by('-points')
 
         part_of_statements = {}
         prev_points = 0
+
         # пробегаем и формируем списки с одинаковыми баллами
         for i in statements:
             if prev_points == i.point:
