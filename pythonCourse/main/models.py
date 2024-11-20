@@ -4,9 +4,9 @@ from django.db import models
 
 
 class User(models.Model):
-    session_id = models.TextField("ID Сессии")
+    session_id = models.TextField("ID Сессии",default="")
 
-    login = models.TextField("Логин")
+    login = models.TextField("Логин",default="")
     password = models.TextField("Пароль")
 
     role = models.IntegerField("Роль", default=0)

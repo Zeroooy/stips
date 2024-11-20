@@ -41,47 +41,6 @@ function HttpRequestPostJson(URL, callback, data) {
 }
 
 
-function HttpRequestPostFormDataWithProgressBar(URL, callback, data) {
-
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                if (xhr.responseText == "error_by_connection" || xhr.responseText == "error_by_link" || xhr.responseText == "bad_login") window.location.href = '/login'
-                else callback(JSON.parse(xhr.responseText))
-            } else {
-                console.error('ERROR BY "' + URL + '":' + xhr.responseText);
-                return ''
-            }
-        }
-    };
-
-    xhr.upload.addEventListener('progress', progressHandler, false)
-    xhr.open('POST', "api/" + URL, true);
-
-    xhr.setRequestHeader('X-CSRFToken', csrftoken);
-    xhr.send(data);
-
-}
-
-function progressHandler(event) {
-  updateProgress(event.loaded, event.total)
-}
-
-const BYTES_IN_MB = 1048576
-async function updateProgress(loaded, total) {
-
-  const percentLoaded = Math.round((loaded / total) * 100)
-  var need_time = total / 1200000
-      if(percentLoaded == 100){
-        for(let i = 0; i < 100; i++){
-            await new Promise(resolve => setTimeout(resolve, need_time));
-            document.getElementById("progressBar").value = i
-            document.getElementById("progressBar2").value = i
-        }
-      }
-}
-
 
 function out() {
     let json = {
@@ -154,30 +113,6 @@ function red_flag(id){
         element.style.boxShadow = boxShadow;
     }, 3000, element, background, boxShadow)
 }
-
-
-
-function createLockScreen(text){
-    if(document.getElementsByClassName('alert_').length == 0){
-        var message = document.createElement("div")
-        var blockirator = document.createElement("div")
-        message.innerHTML = "<div class='alert-text'>"+text+"</div>"
-        message.className = "alert_";
-        blockirator.className = "blockirator";
-        document.body.appendChild(blockirator)
-        document.body.appendChild(message)
-    }
-}
-
-
-function createUnlockScreen(){
-    document.getElementsByClassName('blockirator')[0].remove();
-    document.getElementsByClassName('alert_')[0].remove();
-}
-
-
-
-
 
 
 
