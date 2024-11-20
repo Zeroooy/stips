@@ -6,7 +6,7 @@ from django.urls import path
 from . import views, backend
 
 urlpatterns = [
-
+    path('', views.login_page),
     path('adminpanel', views.admin_page),
     path('login', views.login_page),
 
