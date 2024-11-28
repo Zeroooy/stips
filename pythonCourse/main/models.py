@@ -85,6 +85,11 @@ class User(models.Model):
     def __str__(self):
         return str(self.surname) + " " + str(self.name) + " " + str(self.middlename)
 
+    def save(self, *args, **kwargs):
+        if not self.id:  # Генерировать ID только если он ещё не установлен
+            self.id = User.generate_id()
+        super().save(*args, **kwargs)
+
     def get_data(self):
         return {"surname" : self.surname,
                 "name" : self.name,
@@ -179,7 +184,7 @@ class User(models.Model):
 
     @staticmethod
     def add(login, password, role, name, surname):
-        user = User.objects.create(id=generate_id(),login=login, password=password, role=Role.objects.get(id=role), name=name, surname=surname)
+        user = User.objects.create(id=User.generate_id(),login=login, password=password, role=Role.objects.get(id=role), name=name, surname=surname)
         user.save()
 
     @staticmethod
@@ -200,7 +205,7 @@ class User(models.Model):
             key = ""
             for i in range(50):
                 key += random("abcde!?:fghi^jkl*mnopq_+rstuv$wxy=zAB&CDEFG-HIJKLMNO#PQRSTUV@WXYZ0123456789")
-            if not MyModel.objects.filter(unique_id=key).exists():  # Проверка на уникальность
+            if not User.objects.filter(id=key).exists():  # Проверка на уникальность
                 return key
 
 
