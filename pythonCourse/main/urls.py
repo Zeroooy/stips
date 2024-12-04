@@ -22,10 +22,12 @@ urlpatterns = [
     # ВСЕ
     path('api/signIn', backend.sign_in),
     path('api/getPeriod', backend.get_period),
+    path('api/getRole', backend.get_role),
 
     # СТУДЕНТ
     path('api/uploadStatement', backend.upload_statement),
     path('api/getMyStatements', backend.get_my_statements),
+    path('api/getMyStatement', backend.get_my_statement),
 
 
 
@@ -50,5 +52,17 @@ urlpatterns = [
     path('api/getUser', backend.get_user),
 
     path('api/changeRole', backend.change_role_user),
+
+    path('api/getStatement', backend.get_statement_admin),
+    path('api/getListStatements', backend.get_list_statements_admin),
+    path('api/changeRole', backend.change_role_user),
+
+    # КЕШ В АДМИНКЕ
+    path('api/cache', backend.cache),
+    path('api/getListCache', backend.get_list_cache),
+
+    # ЛОГИ
+    path('api/getLog', backend.get_log),
+    path('api/resetLog', backend.reset_log)
 
 ]

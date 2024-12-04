@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from email.policy import default
 
 from django.db import models
@@ -18,7 +18,7 @@ class Status(models.Model):
             {'id': 2, 'name': "verified"},
             {'id': 3, 'name': "conflict"},
             {'id': 4, 'name': "confirm"},
-            {'id': 5, 'name': "deny"},
+            {'id': 5, 'name': "deny"}
         ]
         for record in default_records:
             cls.objects.get_or_create(**record)
@@ -137,8 +137,9 @@ class User(models.Model):
 
 
     def change_role(self, new_role):
-        self.role = Role.objects.get(id = new_role)
-        return users_info
+        new_role = int(new_role)
+        self.role = Role.objects.filter(id = new_role).last()
+        self.save()
 
     # Получаем объект по session
     @staticmethod
@@ -230,24 +231,26 @@ class Statement(models.Model):
 
     json = models.JSONField("Json", default=list, blank=True)
 
-    mark_studies = models.BooleanField("Оценка учеба", default=False, blank=True)
+    mark_studies = models.IntegerField("Оценка учеба", default=False, blank=True)
     comment_studies = models.TextField("Комментарий учеба", blank=True)
 
-    mark_science = models.BooleanField("Оценка наука", default=False, blank=True)
+    mark_science = models.IntegerField("Оценка наука", default=False, blank=True)
     comment_science = models.TextField("Комментарий наука", blank=True)
 
-    mark_activities = models.BooleanField("Оценка мероприятия", default=False, blank=True)
+    mark_activities = models.IntegerField("Оценка мероприятия", default=False, blank=True)
     comment_activities = models.TextField("Комментарий мероприятия", blank=True)
 
-    mark_culture = models.BooleanField("Оценка культура", default=False, blank=True)
+    mark_culture = models.IntegerField("Оценка культура", default=False, blank=True)      # СДЕЛАТЬ МИГРАТЕ
     comment_culture = models.TextField("Комментарий культура", blank=True)
 
-    mark_sport = models.BooleanField("Оценка спорт", default=False, blank=True)
+    mark_sport = models.IntegerField("Оценка спорт", default=False, blank=True)
     comment_sport = models.TextField("Комментарий спорт", blank=True)
 
     date = models.DateTimeField("Дата", default=datetime.now(), blank=True)
 
     points = models.IntegerField("Баллы", default=0, blank=True)
+
+    cache_status = models.BooleanField("Кеш-статус", blank=True, default=False)
 
 
     def get_data(self):
@@ -255,21 +258,25 @@ class Statement(models.Model):
                 "status" : self.status.name,
                 "points": self.points,
                 "date": self.date.strftime("%H:%M %d.%m.%Y"),
-                "statement-id": self.id
+                "statement-id": self.id,
+                "cache-status": self.cache_status
                 }
+
+    def get_json_data(self):
+        return self.json
 
 
     def mark(self, user, value, comment):
-        if user.id == 3:
-            set_mark_studies(self, value, comment)
-        elif user.id == 4:
-            set_mark_science(self, value, comment)
-        elif user.id == 5:
-            set_mark_activities(self, value, comment)
-        elif user.id == 6:
-            set_mark_culture(self, value, comment)
-        elif user.id == 7:
-            set_mark_sport(self, value, comment)
+        if user.role.id == 3:
+            self.set_mark_studies(value, comment)
+        elif user.role.id == 4:
+            self.set_mark_science(value, comment)
+        elif user.role.id == 5:
+            self.set_mark_activities(value, comment)
+        elif user.role.id == 6:
+            self.set_mark_culture(value, comment)
+        elif user.role.id == 7:
+            self.set_mark_sport(value, comment)
 
     def set_mark_studies(self, value, comment):
         self.mark_studies = value
@@ -324,18 +331,30 @@ class Statement(models.Model):
         elif self.status.id == 2:
             self.status = Status.objects.get(id = 0)
 
+    def remove_files(self):
+        if self.status.id == 0:
+            self.status = Status.objects.get(id = 1)
+        elif self.status.id == 2:
+            self.status = Status.objects.get(id = 0)
+
 
     @staticmethod
     def upload(user, json):
-        statement_temp = Statement.get_by_user(user)
+        date = datetime.now(timezone.utc)
+        if Period.is_require(date):
+            statement_temp = Statement.get_by_user(user)
+            if statement_temp is not None and statement_temp.cache_status is not True:
+                statement_temp.json = json
+                statement_temp.date = datetime.now()
+            else:
+                statement_temp.remove_files()
+                statement_temp = Statement.objects.create(id=Statement.generate_id(), user=user, json=json, date=date)
 
-        if statement_temp is not None:
-            statement_temp.json = json
-            statement_temp.date = datetime.now()
+            statement_temp.save()
+
+            return True
         else:
-            statement_temp = Statement.objects.create(id=Statement.generate_id(), user=user, json=json, date=datetime.now())
-
-        statement_temp.save()
+            return False
 
 
     @staticmethod
@@ -390,30 +409,33 @@ class Statement(models.Model):
         statements_info = {}
         for i in statuses:
             statements_info[i] = []
-            for s in Statement.objects.filter(status__name = i):
+            for s in Statement.objects.filter(status__name = i, cache_status = False):
                 statements_info[i].append(s.get_data())
 
         return statements_info
 
     @staticmethod
-    def get_statement(statement_id):
-        statement = Statement.objects.filter(id=statement_id).json
-        return statement
+    def get_statements_cache():
+        statements_info = []
+        for s in Statement.objects.filter(cache_status = True):
+            statements_info.append(s.get_data())
+
+        return statements_info
 
     @staticmethod
     def get_part_statement(user, statement_id):
-        statement = Statement.get_statement(statement_id)
-        python_dict = json.loads(statement.json)
+        statement = Statement.get_by_id(statement_id)
+        statement = statement.get_json_data()
         if user.role.id == 3:
-            return json.dumps(python_dict["studies"], ensure_ascii=False, indent=4)
+            return statement["studies"]
         elif user.role.id == 4:
-            return json.dumps(python_dict["science"], ensure_ascii=False, indent=4)
+            return statement["science"]
         elif user.role.id == 5:
-            return json.dumps(python_dict["activities"], ensure_ascii=False, indent=4)
+            return statement["activities"]
         elif user.role.id == 6:
-            return json.dumps(python_dict["culture"], ensure_ascii=False, indent=4)
+            return statement["culture"]
         elif user.role.id == 7:
-            return json.dumps(python_dict["sport"], ensure_ascii=False, indent=4)
+            return statement["sport"]
         return None
 
 
@@ -423,10 +445,16 @@ class Statement(models.Model):
             key = ""
             for i in range(50):
                 key += random("abcde!?:fghi^jkl*mnopq_+rstuv$wxy=zAB&CDEFG-HIJKLMNO#PQRSTUV@WXYZ0123456789")
-            if not MyModel.objects.filter(unique_id=key).exists():  # Проверка на уникальность
+            if not Statement.objects.filter(id=key).exists():  # Проверка на уникальность
                 return key
 
 
+    @staticmethod
+    def cache():
+        statements = Statement.objects.filter(cache_status = False)
+        for s in statements:
+            s.cache_status = True
+            s.save()
 
 
 
@@ -451,7 +479,10 @@ class Period(models.Model):
 
     @staticmethod
     def is_require(date):
-        return Period.objects.get(id = 0).date < date < Period.objects.get(id = 1).date
+        period_start = Period.objects.get(id=0).date
+        period_end = Period.objects.get(id=1).date
+
+        return period_start < date < period_end
 
     @staticmethod
     def set_start_and_end(datestr_start, datestr_end):
@@ -490,18 +521,37 @@ class Log(models.Model):
     statement_copy = models.JSONField("Контент", blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="logs")
     date = models.DateTimeField("Дата", default=datetime.now(), blank=True)
+    data = models.TextField("Примечание", default="")
 
     def get_data(self):
         return {"user" : str(self.user),
                 "statement" : self.statement_copy,
                 "event": self.event,
-                "date": self.date
+                "date": self.date,
+                "data":self.data
                 }
 
     @staticmethod
-    def add(user, event, json):
-        statement_temp = Log.objects.create(user=user, event=event ,statement_copy=json, date=datetime.now())
+    def add(user, event, data, json):
+        statement_temp = Log.objects.create(user=user, event=event, data=data, statement_copy=json, date=datetime.now())
         statement_temp.save()
+
+    @staticmethod
+    def get_list():
+        logs = []
+        for l in Log.objects.all():
+            logs.append(l.get_data())
+
+        return logs
+
+
+    @staticmethod
+    def reset():
+        for s in Log.objects.all():
+            s.delete()
+
+
+
 
 
 
