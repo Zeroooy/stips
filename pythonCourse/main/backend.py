@@ -1,6 +1,5 @@
 import json
 import copy
-import re
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.views.decorators.http import require_POST
@@ -79,8 +78,7 @@ def upload_statement(request):
         json_data = json.loads(data.get("json"))
         user = User.get_by_session(data.get("session"))
         if user is not None and user.is_student() and json_data.get("studies") is not None and json_data.get("science") is not None and json_data.get("activities") is not None and json_data.get("culture") is not None and json_data.get("sport") is not None and (json_data.get("studies") != {} or json_data.get("science") != {} or json_data.get("activities") != {} or json_data.get("culture") != {} or json_data.get("sport") != {}):
-            json_change = replace_at_values_with_links(json_data, request.FILES)
-            if Statement.upload(user, json_change):
+            if Statement.upload(user, json_data, request.FILES):
                 Log.add(user, "Загрузка заявления", "", copy.deepcopy(Statement.get_by_user(user).get_json_data()))
                 response = {"answer": True}
             else:
@@ -403,13 +401,13 @@ def set_period(request):
 
 # Закешировать все
 @csrf_exempt
-def cache(request):
+def set_old(request):
     try:
         data = json.loads(request.body)
         user = User.get_by_session(data.get("session"))
         if user is not None and user.is_admin():
-            Statement.cache()
-            Log.add(user, "Кеширование заявлений", "", {})
+            Statement.set_old()
+            Log.add(user, "Перевод заявлений в статус устаревших", "", {})
             response = {"answer": True}
         else:
             response = {"answer": False}
@@ -421,12 +419,12 @@ def cache(request):
 
 # Просмотреть кешированные
 @csrf_exempt
-def get_list_cache(request):
+def get_statements_old(request):
     try:
         data = json.loads(request.body)
         user = User.get_by_session(data.get("session"))
         if user is not None and user.is_admin():
-            response = {"statements": Statement.get_statements_cache()}
+            response = {"statements": Statement.get_statements_old()}
         else:
             response = {"answer": False}
     except:
@@ -488,48 +486,3 @@ def reset_log(request):
 
 
 
-
-# Функция для сохранения файла и генерации ссылки
-def save_file_and_generate_link(uploaded_file):
-
-    # Возвращаем ссылку на сохранённый файл
-    fs = FileSystemStorage(location="files")
-
-    # Сохраняем файл на сервере
-    filename = fs.save(uploaded_file.name, uploaded_file)
-
-    # Получаем путь к сохраненному файлу
-    return fs.url(filename)
-
-
-# Функция для замены значений "@n" на ссылки
-def replace_at_values_with_links(data, files):
-    a = 1
-    def replace_values(item, files_):
-        if isinstance(item, dict):
-            for key, value in item.items():
-                item[key] = replace_values(value, files_)
-        elif isinstance(item, list):
-            item = [replace_values(elem, files_) for elem in item]
-        elif isinstance(item, str):  # Проверка, что item - строка
-            match = re.fullmatch(r"@(\d+)", item)
-            if match:
-                index = int(match.group(1))  # Получаем число после @
-                if index < len(files_):
-                    item = save_file_and_generate_link(files_[index])
-                else:
-                    raise ValueError(f"Файл с индексом {index} отсутствует в переданном массиве файлов.")
-        return item
-
-    # Создаем копию данных и передаем её для обработки
-    values = replace_values(data, files.getlist("files[]"))
-    return values
-
-
-
-def compare_files(file1, file2):
-    """
-    Сравнивает два файла побайтово и возвращает True, если они идентичны.
-    """
-    with open(file1, 'rb') as f1, open(file2, 'rb') as f2:
-        return f1.read() == f2.read()

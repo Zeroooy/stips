@@ -58,8 +58,8 @@ urlpatterns = [
     path('api/changeRole', backend.change_role_user),
 
     # КЕШ В АДМИНКЕ
-    path('api/cache', backend.cache),
-    path('api/getListCache', backend.get_list_cache),
+    path('api/setOld', backend.set_old),
+    path('api/getStatementsOld', backend.get_statements_old),
 
     # ЛОГИ
     path('api/getLog', backend.get_log),

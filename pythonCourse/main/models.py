@@ -3,6 +3,8 @@ from email.policy import default
 
 from django.db import models
 from django.template.defaultfilters import random
+from django.core.files.storage import FileSystemStorage
+import re
 # Create your models here.
 
 
@@ -230,6 +232,7 @@ class Statement(models.Model):
     status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name='statements', blank=True, default=0)
 
     json = models.JSONField("Json", default=list, blank=True)
+    urls = models.JSONField("Json", default=list, blank=True)
 
     mark_studies = models.IntegerField("Оценка учеба", default=False, blank=True)
     comment_studies = models.TextField("Комментарий учеба", blank=True)
@@ -250,7 +253,7 @@ class Statement(models.Model):
 
     points = models.IntegerField("Баллы", default=0, blank=True)
 
-    cache_status = models.BooleanField("Кеш-статус", blank=True, default=False)
+    old_status = models.BooleanField("Кеш-статус", blank=True, default=False)
 
 
     def get_data(self):
@@ -259,7 +262,7 @@ class Statement(models.Model):
                 "points": self.points,
                 "date": self.date.strftime("%H:%M %d.%m.%Y"),
                 "statement-id": self.id,
-                "cache-status": self.cache_status
+                "old-status": self.old_status
                 }
 
     def get_json_data(self):
@@ -332,23 +335,32 @@ class Statement(models.Model):
             self.status = Status.objects.get(id = 0)
 
     def remove_files(self):
-        if self.status.id == 0:
-            self.status = Status.objects.get(id = 1)
-        elif self.status.id == 2:
-            self.status = Status.objects.get(id = 0)
+        if self.urls is not [] or self.urls is not None:
+            for file in self.urls:
+                fs = FileSystemStorage(location="files")
+                if fs.exists(file):
+                    fs.delete(file)
+            self.urls = {}
+            self.save()
 
+    def delete(self, *args, **kwargs):
+        remove_files()
+        super().delete(*args, **kwargs)
 
     @staticmethod
-    def upload(user, json):
+    def upload(user, json, files):
         date = datetime.now(timezone.utc)
         if Period.is_require(date):
             statement_temp = Statement.get_by_user(user)
-            if statement_temp is not None and statement_temp.cache_status is not True:
-                statement_temp.json = json
+            if statement_temp is not None and statement_temp.old_status is not True:
+                statement_temp.remove_files()
+                json_change = Statement.replace_at_values_with_links(json, files)
+                statement_temp.json = json_change[0]
+                statement_temp.urls = json_change[1]
                 statement_temp.date = datetime.now()
             else:
-                statement_temp.remove_files()
-                statement_temp = Statement.objects.create(id=Statement.generate_id(), user=user, json=json, date=date)
+                json_change = Statement.replace_at_values_with_links(json, files)
+                statement_temp = Statement.objects.create(id=Statement.generate_id(), user=user, json=json_change[0], date=date, urls = json_change[1])
 
             statement_temp.save()
 
@@ -409,15 +421,15 @@ class Statement(models.Model):
         statements_info = {}
         for i in statuses:
             statements_info[i] = []
-            for s in Statement.objects.filter(status__name = i, cache_status = False):
+            for s in Statement.objects.filter(status__name = i, old_status = False):
                 statements_info[i].append(s.get_data())
 
         return statements_info
 
     @staticmethod
-    def get_statements_cache():
+    def get_statements_old():
         statements_info = []
-        for s in Statement.objects.filter(cache_status = True):
+        for s in Statement.objects.filter(old_status = True):
             statements_info.append(s.get_data())
 
         return statements_info
@@ -450,12 +462,40 @@ class Statement(models.Model):
 
 
     @staticmethod
-    def cache():
-        statements = Statement.objects.filter(cache_status = False)
+    def set_old():
+        statements = Statement.objects.filter(old_status = False)
         for s in statements:
-            s.cache_status = True
+            s.old_status = True
             s.save()
 
+
+    # Функция для замены значений "@n" на ссылки
+    @staticmethod
+    def replace_at_values_with_links(data, files):
+        urls = []
+        def replace_values(item, files_):
+            nonlocal urls
+            if isinstance(item, dict):
+                for key, value in item.items():
+                    item[key] = replace_values(value, files_)
+            elif isinstance(item, list):
+                item = [replace_values(elem, files_) for elem in item]
+            elif isinstance(item, str):  # Проверка, что item - строка
+                match = re.fullmatch(r"@(\d+)", item)
+                if match:
+                    index = int(match.group(1))  # Получаем число после @
+                    if index < len(files_):
+                        fs = FileSystemStorage(location="files")
+                        filename = fs.save(files_[index].name, files_[index])
+                        item = fs.url(filename)
+                        urls.append(filename)
+                    else:
+                        raise ValueError(f"Файл с индексом {index} отсутствует в переданном массиве файлов.")
+            return item
+
+        # Создаем копию данных и передаем её для обработки
+        values = replace_values(data, files.getlist("files[]"))
+        return [values, urls]
 
 
 
