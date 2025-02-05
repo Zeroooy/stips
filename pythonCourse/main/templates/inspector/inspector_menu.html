@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню</title>
+    <link rel="stylesheet" href="{% static 'main/css/menu.css' %}">
+</head>
+<body>
+<!-- Кнопка "Назад", группа кнопок и даты -->
+    <div class="top-controls">
+        <!-- Кнопка "Назад" -->
+        <button class="back-button" onclick="window.location.href='inspectormain'">Назад</button>
+
+        <!-- Группа кнопок -->
+        <div class="formButton">
+            <button class="perehod" data-status="verified">Проверено</button>
+            <button class="perehod" data-status="process">На проверке</button>
+            <button class="perehod"  data-status="error">Ошибочно</button>
+        </div>
+
+        <!-- Даты -->
+        <div class="date-container" id="period-container">
+            <span class="date-label">Дата начала:</span>
+            <span class="date-value" id="start-date"></span>
+            <span class="date-label">Дата конца:</span>
+            <span class="date-value" id="end-date"></span>
+        </div>
+    </div>
+
+    <div class="frame">
+        <!-- Заголовки полей -->
+        <div class="field-row">
+            <div>ФИО</div>
+            <div>Статус</div>
+            <div>Баллы</div>
+            <div>Дата</div>
+        </div>
+
+        <!-- Мини-формочки заявлений -->
+        <div class="form-container" id="statements-container">
+        </div>
+    </div>
+<script>var csrftoken = '{{ csrf_token }}'</script>
+<script src="{% static 'main/js/site.js' %}"></script>
+<script src="{% static 'main/js/inspector_menu.js' %}"></script>
+</body>
+</html>

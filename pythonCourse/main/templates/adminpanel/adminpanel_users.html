@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+    <link rel="stylesheet" href="{% static 'main/css/menu.css' %}">
+</head>
+<body>
+    <div class="top-controls">
+        <button class="back-button"  onclick="window.location.href='adminpanel'">Назад</button>
+
+        <div class="formButton">
+            <button class="perehod" data-status="Student">Студенты</button>
+            <button class="perehod" data-status="Administrator">Администраторы</button>
+            <button class="perehod" data-status="Jury">Жюри</button>
+            <button class="perehod" data-status="Inspector">Инспекторы</button>
+        </div>
+
+        <div class="date-container" id="period-container">
+            <span class="date-label">Дата начала:</span>
+            <span class="date-value" id="start-date">Не задано</span>
+            <span class="date-label">Дата конца:</span>
+            <span class="date-value" id="end-date">Не задано</span>
+            <button class="set-date-button" onclick="window.location.href='adminpaneldata'">Задать дату</button>
+        </div>
+    </div>
+
+    <div class="frame">
+        <!-- Таблица пользователей рендерится здесь -->
+    </div>
+
+    <script>var csrftoken = '{{ csrf_token }}';</script>
+    <script src="{% static 'main/js/adminpanel_users.js' %}"></script>
+    <script src="{% static 'main/js/site.js' %}"></script>
+</body>
+</html>

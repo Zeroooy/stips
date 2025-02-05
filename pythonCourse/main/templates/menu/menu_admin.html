@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+    <link rel="stylesheet" href="{% static 'main/css/menu.css' %}">
+</head>
+<body>
+<!-- Кнопка "Назад", группа кнопок и даты -->
+    <div class="top-controls">
+        <!-- Кнопка "Назад" -->
+        <button class="back-button">Назад</button>
+
+        <!-- Группа кнопок -->
+        <div class="formButton">
+            <button class="perehod">Студент</button>
+            <button class="perehod">Проверяющий</button>
+            <button class="perehod">Жюри</button>
+        </div>
+
+        <!-- Даты -->
+        <div class="date-container">
+            <span class="date-label">Дата начала:</span>
+            <span class="date-value">01.11.2024</span>
+            <span class="date-label">Дата конца:</span>
+            <span class="date-value">30.11.2024</span>
+            <button class="set-date-button">Задать дату</button>
+        </div>
+    </div>
+
+    <div class="frame">
+        <!-- Заголовки полей -->
+        <div class="field-row">
+            <div>ID</div>
+            <div>SESSION_ID</div>
+            <div>LOGIN</div>
+            <div>ROLE</div>
+        </div>
+
+        <!-- Мини-формочки заявлений -->
+        <div class="form-container">
+            <div>0</div>
+            <div>asesadasdsad2323</div>
+            <div>sasa</div>
+            <div>0</div>
+        </div>
+        <div class="form-container">
+            <div>1</div>
+            <div>fdgfdgfgfg2334</div>
+            <div>sasa2</div>
+            <div>1</div>
+        </div>
+        <div class="form-container">
+            <div>2</div>
+            <div>hgjhhgjhgj2323</div>
+            <div>sasa3</div>
+            <div>2</div>
+        </div>
+    </div>
+<script src="{% static 'main/js/site.js' %}"></script>
+</body>
+</html>

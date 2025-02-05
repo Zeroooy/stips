@@ -1,0 +1,231 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f7f7f7;
+    box-sizing: border-box;
+}
+
+.top-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    background-color: transparent;
+    border: 2px solid #e63946;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #e63946;
+    transition: background-color 0.3s, color 0.3s;
+    position: absolute; /* Абсолютное позиционирование */
+    left: 20px;
+    top: 22px;
+
+}
+
+.back-button:hover {
+    background-color: rgba(230, 57, 70, 0.2);
+    color: #e63946;
+}
+
+.formButton {
+    border: 2px solid #e63946; /* Красная рамка */
+    background-color: #fff; /* Белый блок */
+    border-radius: 30px; /* Скругленные углы для внешней рамки */
+    display: flex;
+    flex-flow: row nowrap; /* Ряд кнопок в одну строку */
+    gap: 10px; /* Промежуток между кнопками */
+    padding: 10px;
+    text-align: center;
+    margin: 20px 0; /* Увеличенный отступ сверху и снизу */
+}
+
+.perehod {
+    background-color: transparent; /* Прозрачный фон кнопок */
+    border: none; /* Убираем рамки кнопок */
+    padding: 10px 20px; /* Отступы для кнопок */
+    font-size: 14px; /* Размер текста */
+    font-weight: bold;
+    cursor: pointer;
+    color: #e63946; /* Цвет текста */
+    border-radius: 20px; /* Закругленные края кнопок */
+    transition: background-color 0.3s, color 0.3s; /* Плавный переход */
+}
+
+.perehod:hover {
+    background-color: rgba(230, 57, 70, 0.2); /* Легкий красный фон при наведении */
+    color: #e63946;
+}
+
+.perehod.active {
+    background-color: #e63946; /* Красный фон активной кнопки */
+    color: #fff; /* Белый текст */
+}
+
+.frame {
+    width: 90%;
+    height: auto;
+    margin: 20px auto;
+    border: 2px solid #e63946;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.field-row div {
+    font-weight: bold;
+    color: #e63946;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column; /* Вытягиваем каждый блок вертикально */
+    gap: 20px; /* Промежуток между заявками */
+}
+
+
+
+
+
+.statement-form {
+    display: flex;
+    gap: 20px; /* Промежуток между полями формы */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.statement-form input {
+    padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #FF0000;
+    border-radius: 5px;
+}
+
+.form-container div {
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #e63946;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.date-container {
+    margin-left: auto; /* Сдвиг блока дат вправо */
+    margin-right: 20px; /* Дополнительный отступ от правого края */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Промежуток между элементами */
+    font-size: 14px;
+    color: #333; /* Темно-серый текст */
+    position: absolute; /* Абсолютное позиционирование */
+    right: 20px;
+}
+
+
+.date-label {
+    font-weight: bold;
+    color: #e63946;
+}
+
+.date-value {
+    color: #555; /* Немного светлее для даты */
+    padding: 0 5px;
+    background-color: #fff;
+    border: 1px solid #e63946;
+    border-radius: 5px;
+}
+.set-date-button {
+    background-color: #fff; /* Белый фон */
+    border: 2px solid #e63946; /* Красная рамка */
+    border-radius: 20px; /* Закругленные края */
+    padding: 5px 15px; /* Отступы */
+    font-size: 14px; /* Размер текста */
+    font-weight: bold;
+    cursor: pointer;
+    color: #e63946; /* Красный текст */
+    transition: background-color 0.3s, color 0.3s; /* Плавный переход при наведении */
+}
+
+.set-date-button:hover {
+    background-color: rgba(230, 57, 70, 0.2); /* Легкий красный фон при наведении */
+    color: #e63946;
+}
+.field-row {
+    display: grid;
+    
+    gap: 10px;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.clickable-statement {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr; /* Четыре равные колонки */
+    gap: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    border-radius: 5px;
+}
+
+.clickable-statement input {
+    width: 100%; /* Растягиваем input */
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box; /* Учитываем отступы */
+}
+
+.clickable-statement:hover {
+    background-color: #e9e9e9;
+}
+
+#mark-all-outdated {
+    background-color: #fff;
+    border: 2px solid #e63946;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #e63946;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#mark-all-outdated:hover {
+    background-color: rgba(230, 57, 70, 0.2);
+    color: #e63946;
+    transform: scale(1.05); /* Легкое увеличение при наведении */
+}

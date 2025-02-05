@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Оценка заявления</title>
+    <link rel="stylesheet" href="{% static 'main/css/statment.css' %}">
+</head>
+<body>
+<!-- Кнопка "Назад" -->
+    <div class="top-controls">
+        <button class="back-button">Назад</button>
+    </div>
+
+    <!-- Большой фрейм -->
+    <div class="frame">
+        <!-- Маленький фрейм -->
+        <div class="small-frame">
+            <div class="field-row">
+                <div>ФИО:</div>
+                <div>Иванов Иван Иванович</div>
+            </div>
+            <div class="field-row">
+                <div>Статус:</div>
+                <div>Проверено</div>
+            </div>
+            <div class="field-row">
+                <div>Баллы:</div>
+                <div>85</div>
+            </div>
+            <div class="field-row">
+                <div>Дата:</div>
+                <div>27.11.2024</div>
+            </div>
+        </div>
+
+        <!-- Данные о критериях -->
+        <div class="criteria-list">
+            <div class="criteria-row">
+                <div>1. Уровень мероприятия/достижения:</div>
+                <div>Международный</div>
+            </div>
+            <div class="criteria-row">
+                <div>2. Название мероприятия:</div>
+                <div>Олимпиада по информатике</div>
+            </div>
+            <div class="criteria-row">
+                <div>3. Дата проведения:</div>
+                <div>25.10.2024</div>
+            </div>
+            <div class="criteria-row">
+                <div>4. Копия наградного документа:</div>
+                <div>Файл загружен</div>
+            </div>
+            <div class="criteria-row">
+                <div>5. Количество баллов:</div>
+                <div>40</div>
+            </div>
+        </div>
+    </div>
+  <div class="action-buttons">
+        <button class="action-button approve">Одобрить</button>
+        <button class="action-button reject">Отклонить</button>
+    </div>
+
+</body>
+</html>

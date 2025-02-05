@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Смена пользователя</title>
+    <link rel="stylesheet" href="{% static 'main/css/statment.css' %}">
+</head>
+<body>
+<!-- Кнопка "Назад" -->
+    <div class="top-controls">
+        <button class="back-button">Назад</button>
+    </div>
+
+    <!-- Большой фрейм -->
+    <div class="frame-admin">
+      <div class="field-row">
+          <div>ID</div>
+          <div>0</div>
+      </div>
+      <div class="field-row">
+          <div>SESSION_ID</div>
+          <div>DADSADSAD2323</div>
+      </div>
+      <div class="field-row">
+          <div>LOGIN</div>
+          <div>ADMIN</div>
+      </div>
+      <div class="field-row">
+          <div>ROLE</div>
+          <div>0</div>
+      </div>
+    </div>
+<div class="role-buttons">
+    <div class="role-group">
+        <button class="role-button approve">Дать роль Жюри</button>
+        <button class="role-button reject">Снять роль Жюри</button>
+    </div>
+    <div class="role-group">
+        <button class="role-button approve">Дать роль Проверяющий</button>
+        <button class="role-button reject">Снять роль Проверяющий</button>
+    </div>
+    <div class="role-group">
+        <button class="role-button approve">Дать роль Администратор</button>
+        <button class="role-button reject">Снять роль Администратор</button>
+    </div>
+</div>
+
+
+
+</body>
+</html>

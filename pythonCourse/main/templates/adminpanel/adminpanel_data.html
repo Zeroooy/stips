@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Задать дату</title>
+    <link rel="stylesheet" href="{% static 'main/css/statment.css' %}">
+</head>
+<body>
+    <!-- Кнопка "Назад" -->
+    <div class="top-controls">
+        <button class="back-button" onclick="window.history.back()">Назад</button>
+    </div>
+
+    <!-- Фрейм для ввода дат -->
+    <div class="frame-admin">
+        <div class="field-row">
+            <div>Дата начала</div>
+            <input type="date" class="date-input" id="start-date">
+        </div>
+        <div class="field-row">
+            <div>Дата конца</div>
+            <input type="date" class="date-input" id="end-date">
+        </div>
+    </div>
+
+    <!-- Кнопка "Сохранить даты" -->
+    <div class="save-button-container">
+        <!-- Добавляем вызов setPeriod() при нажатии на кнопку -->
+        <button class="save-button" onclick="setPeriod()">Сохранить даты</button>
+    </div>
+
+    <script>var csrftoken = '{{ csrf_token }}'</script>
+    <script src="{% static 'main/js/site.js' %}"></script>
+    <script src="{% static 'main/js/adminpanel_data.js' %}"></script>
+</body>
+</html>

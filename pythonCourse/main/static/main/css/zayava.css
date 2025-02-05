@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Располагаем элементы по вертикали */
+    justify-content: space-between; /* Распределяем элементы с пространством между ними */
+    align-items: center;
+    min-height: 100vh; /* Высота экрана */
+    background-color: #f7f7f7; /* Светло-серый фон */
+    box-sizing: border-box;
+}
+
+.formButton {
+    border: 2px solid #e63946; /* Красная рамка */
+    background-color: #fff; /* Белый блок */
+    border-radius: 30px; /* Скругленные углы для внешней рамки */
+    display: flex;
+    flex-flow: row nowrap; /* Ряд кнопок в одну строку */
+    gap: 10px; /* Промежуток между кнопками */
+    padding: 10px;
+    text-align: center;
+    margin: 20px 0; /* Увеличенный отступ сверху и снизу */
+}
+
+.perehod {
+    background-color: transparent; /* Прозрачный фон кнопок */
+    border: none; /* Убираем рамки кнопок */
+    padding: 10px 20px; /* Отступы для кнопок */
+    font-size: 14px; /* Размер текста */
+    font-weight: bold;
+    cursor: pointer;
+    color: #e63946; /* Цвет текста */
+    border-radius: 20px; /* Закругленные края кнопок */
+    transition: background-color 0.3s, color 0.3s; /* Плавный переход */
+}
+
+.perehod:hover {
+    background-color: rgba(230, 57, 70, 0.2); /* Легкий красный фон при наведении */
+    color: #e63946;
+}
+
+.perehod.active {
+    background-color: #e63946; /* Красный фон активной кнопки */
+    color: #fff; /* Белый текст */
+}
+
+.frame {
+    width: 80%; /* Ширина фрейма */
+    height: 80vh; /* Высота фрейма - половина экрана */
+    margin: auto; /* Центрирование фрейма */
+    margin-top: 10px; /* Уменьшенный отступ сверху */
+    border: 2px solid #e63946; /* Красная рамка */
+    border-radius: 15px; /* Скругленные углы */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    overflow: hidden;
+}
+
+.frame-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 20px;
+    font-size: 16px;
+    resize: none;
+    outline: none;
+    box-sizing: border-box; /* Включить padding в расчет размеров */
+}
+
+.submit-container {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Центрируем кнопку */
+    margin-top: 10px; /* Уменьшенный отступ сверху */
+    margin-bottom: 10px; /* Уменьшенный отступ снизу */
+}
+
+.submit-button {
+    width: auto;
+    padding: 10px 30px;
+    font-size: 16px;
+    background-color: transparent;
+    border-radius: 20px;
+    border: 2px solid #e63946; /* Красная рамка кнопки */
+    color: #e63946;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #e63946;
+    color: #fff;
+}

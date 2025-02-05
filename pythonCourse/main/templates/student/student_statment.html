@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заполнение заявления</title>
+    <link rel="stylesheet" href="{% static 'main/css/zayava.css' %}">
+</head>
+<body>
+    <div class="formButton">
+        <button class="perehod">Учеба</button>
+        <button class="perehod">Наука</button>
+        <button class="perehod">Общественная деятельность</button>
+        <button class="perehod">Культура и творечество</button>
+        <button class="perehod">Спорт</button>
+    </div>
+
+
+    <div class="frame">
+        <textarea class="frame-input" placeholder="Введите текст заявления..."></textarea>
+    </div>
+
+
+    <div class="submit-container">
+        <button class="perehod submit-button">Отправить заявление</button>
+    </div>
+<script src="{% static 'main/js/site.js' %}"></script>
+<script>var csrftoken = '{{ csrf_token }}'</script>
+</body>
+</html>

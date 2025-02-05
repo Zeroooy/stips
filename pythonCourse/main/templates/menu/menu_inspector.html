@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список заявлений</title>
+    <link rel="stylesheet" href="{% static 'main/css/menu.css' %}">
+</head>
+<body>
+<!-- Кнопка "Назад", группа кнопок и даты -->
+    <div class="top-controls">
+        <!-- Кнопка "Назад" -->
+        <button class="back-button">Назад</button>
+
+        <!-- Группа кнопок -->
+        <div class="formButton">
+            <button class="perehod">Проверено</button>
+            <button class="perehod">На проверке</button>
+            <button class="perehod">Ошибочно</button>
+        </div>
+
+        <!-- Даты -->
+        <div class="date-container">
+            <span class="date-label">Дата начала:</span>
+            <span class="date-value">01.11.2024</span>
+            <span class="date-label">Дата конца:</span>
+            <span class="date-value">30.11.2024</span>
+        </div>
+    </div>
+
+    <div class="frame">
+        <!-- Заголовки полей -->
+        <div class="field-row">
+            <div>ФИО</div>
+            <div>Статус</div>
+            <div>Баллы</div>
+            <div>Дата</div>
+        </div>
+
+        <!-- Мини-формочки заявлений -->
+        <div class="form-container">
+            <div>Иванов Иван</div>
+            <div>Проверено</div>
+            <div>85</div>
+            <div>27.11.2024</div>
+        </div>
+        <div class="form-container">
+            <div>Петров Петр</div>
+            <div>На проверке</div>
+            <div>90</div>
+            <div>26.11.2024</div>
+        </div>
+        <div class="form-container">
+            <div>Сидорова Мария</div>
+            <div>Ошибочно</div>
+            <div>70</div>
+            <div>25.11.2024</div>
+        </div>
+    </div>
+<script src="{% static 'main/js/site.js' %}"></script>
+</body>
+</html>
