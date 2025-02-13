@@ -92,23 +92,56 @@ class statement{
                 }
             },
             "science":{
-                "work": {  # Научная штука
-                    "criteria": data.get("work-criteria"),  # критерий
-                    "criteria-concrete": data.get("work-criteria-concrete"),  # конкретика критерия
-                    "type-document": data.get("work-type-document"),  # вид документов
-                    "name": data.get("work-name"),  # название
-                    "date": data.get("work-date"),  # дата
-                    "place": data.get("work-date"),  # дата
-                    "url": data.get("work-url")  # ссылка
-                },
+                "list": [
+                    "work": {  # Научная штука
+                        "criteria": "",  # критерий
+                        "criteria-concrete": "",  # конкретика критерия
+                        "type-document": "",  # вид документов
+                        "name": "",  # название
+                        "date": "",  # дата
+                        "place": "",  # место
+                        "url": ""  # ссылка
+                    },
+                ],
+
             },
             "activities":{
-
+                "list": [
+                    "work": {  # активности
+                        "criteria-concrete": "",  # конкретика критерия
+                        "vid-pod-doc": "",  # вид подтверждающих документов
+                        "forma-proved": "",  # форма провередения
+                        "name": "",  # название
+                        "date": "",  # дата
+                        "url": ""  # ссылка
+                    },
+                ],
 
             },
             "culture":{
-
+                "list": [
+                    "work": {  # культура
+                        "criteria-concrete": "",  # конкретика критерия
+                        "vid-pod-doc": "",  # вид подтверждающих документов
+                        "forma-proved": "",  # форма провередения
+                        "name": "",  # название
+                        "date": "",  # дата
+                        "organizator": "",  # организатор
+                        "url": ""  # ссылка
+                    },
+                ],
             },
             "sport":{
-                "works": data.get("sport-works")
-            }*/
+                "list": [
+                    "work": {  # спорт
+                        "criteria": "",  # критерии
+                        "criteria-concrete": "",  # конкретика критерия
+                        "name": "",  # название
+                        "date": "",  # дата
+                        "place": "",  # место
+                        "copy-protocol": "",  # копия протокола
+                        "copy-calendar": ""  # копия календаря
+                    },
+                ],
+            }
+}*/
