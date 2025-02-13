@@ -6,7 +6,7 @@ function HttpRequestPost(URL, Func, data, isForm, timeout = 30000) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                if (xhr.responseText == "error_by_connection" || xhr.responseText == "error_by_link" || xhr.responseText == "bad_login") window.location.href = '/login'
+                if (xhr.responseText == "error_by_connection" || xhr.responseText == "error_by_link" || xhr.responseText == "bad_login"|| xhr.responseText == "bad request2") window.location.href = '/login'
                 else Func(JSON.parse(xhr.responseText))
             } else {
                 console.error('ERROR BY "' + URL + '":' + xhr.responseText);
@@ -141,6 +141,18 @@ function createAlertSuccess(text, Func){
         });
     }
 }
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('.perehod');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Убираем активный класс у всех кнопок
+            buttons.forEach(btn => btn.classList.remove('active'));
+            // Добавляем активный класс текущей кнопке
+            this.classList.add('active');
+        });
+    });
+});
 
 
 

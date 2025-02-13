@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотреть список закешированных заявлений</title>
+    <link rel="stylesheet" href="{% static 'main/css/menu.css' %}">
+</head>
+<body>
+<!-- Кнопка "Назад", группа кнопок и даты -->
+    <div class="top-controls">
+        <!-- Кнопка "Назад" -->
+        <button class="back-button" onclick="window.location.href='adminpanel'">Назад</button>
+
+        <div class="formButton">
+            <button class="perehod" data-status="deny">Отклонённое</button>
+            <button class="perehod" data-status="confirm">Одобренное</button>
+            <button class="perehod" data-status="conflict">Конфликтное</button>
+            <button class="perehod" data-status="verified">Проверенное</button>
+            <button class="perehod" data-status="process">На проверке</button>
+            <button class="perehod" data-status="error">Ошибочное</button>
+        </div>
+        <!-- Даты -->
+        <div class="date-container" id="period-container">
+            <span class="date-label">Дата начала:</span>
+            <span class="date-value" id="start-date">Не задано</span>
+            <span class="date-label">Дата конца:</span>
+            <span class="date-value" id="end-date">Не задано</span>
+            <button class="set-date-button" onclick="window.location.href='adminpaneldata'">Задать дату</button>
+        </div>
+    </div>
+
+<button id="mark-all-outdated" onclick="markAllStatementsOutdated()">Все заявления сделать устаревшими</button>
+
+    <div class="frame">
+        <!-- Заголовки полей -->
+        <div class="field-row">
+            <div>USER</div>
+            <div>STATUS</div>
+            <div>POINTS</div>
+            <div>DATE</div>
+            <div>STATMENT_ID</div>
+            <div>CACHE_STATUS</div>
+        </div>
+
+        <!-- Мини-формочки заявлений -->
+        <div class="form-container" id="statements-container">
+
+        </div>
+    </div>
+    <script>var csrftoken = '{{ csrf_token }}';</script>
+    <script src="{% static 'main/js/adminpanel_cache.js' %}"></script>
+    <script src="{% static 'main/js/site.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главное меню админа</title>
+    <link rel="stylesheet" href="{% static 'main/css/menu_admin.css' %}">
+</head>
+<body>
+<div class="container">
+        <h1>Добро пожаловать в панель управления</h1>
+        <div class="card-container">
+            <div class="card">
+                <h2>ПРОСМОТРЕТЬ СПИСОК ПОЛЬЗОВАТЕЛЕЙ</h2>
+                <p>Просмотрите актуальный список зарегистрированных пользователей.</p>
+                <button class="card-button" onclick="window.location.href='adminpanelusers'">Перейти</button>
+            </div>
+            <div class="card">
+                <h2>ЗАДАТЬ ДАТУ НАЧАЛА И КОНЦА ПОДАЧИ ЗАЯВЛЕНИЙ</h2>
+                <p>Установите временные рамки для сбора данных.</p>
+                <button class="card-button" onclick="window.location.href='adminpaneldata'">Перейти</button>
+            </div>
+            <div class="card">
+                <h2>ПРОСМОТРЕТЬ СПИСОК ЗАЯВЛЕНИЙ</h2>
+                <p>Просмотрите полный список поступивших заявлений.</p>
+                <button class="card-button" onclick="window.location.href='adminpanelstatments'">Перейти</button>
+            </div>
+            <div class="card">
+                <h2>ПРОСМОТРЕТЬ СПИСОК УСТАРЕВШИХ ЗАЯВЛЕНИЙ</h2>
+                <p>Посмотрите закешированные данные для быстрой обработки.</p>
+                <button class="card-button" onclick="window.location.href='adminpanelcache'">Перейти</button>
+            </div>
+            <div class="card">
+                <h2>ПРОСМОТРЕТЬ ИСТОРИЮ ДЕЙСТВИЙ</h2>
+                <p>Посмотрите историю действий на сайте, чтобы выявить ошибки.</p>
+                <button class="card-button" onclick="window.location.href='adminpanellog'">Перейти</button>
+            </div>
+        </div>
+    </div>
+<script src="{% static 'main/js/site.js' %}"></script>
+</body>
+</html>
+
+

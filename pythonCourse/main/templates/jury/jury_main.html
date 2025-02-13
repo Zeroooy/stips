@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню жюри</title>
+    <link rel="stylesheet" href="{% static 'main/css/menu_admin.css' %}">
+</head>
+<body>
+<div class="container">
+        <h1>Добро пожаловать в панель управления</h1>
+        <div class="card-container">
+            <div class="card">
+                <h2>ПРОСМОТРЕТЬ СПИСОК ЗАЯВЛЕНИЙ</h2>
+                <p>Просмотр списка заявлений со статусом "Отклонённое" и "Конфликтное", "Одобренное"</p>
+                <button class="card-button" onclick="window.location.href='jurymenu'">Перейти</button>
+            </div>
+        </div>
+</div>
+<script>var csrftoken = '{{ csrf_token }}'</script>
+<script src="{% static 'main/js/site.js' %}"></script>
+</body>
+</html>

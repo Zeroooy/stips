@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр заявлений</title>
+    <link rel="stylesheet" href="{% static 'main/css/menu.css' %}">
+</head>
+<body>
+
+<!-- Верхние элементы управления -->
+<div class="top-controls">
+    <!-- Кнопка "Назад" -->
+    <button class="back-button" onclick="history.back()">Назад</button>
+
+    <!-- Группа кнопок фильтрации -->
+    <div class="formButton">
+        <button class="perehod" data-status="deny">Отклонённое</button>
+        <button class="perehod" data-status="confirm">Одобренное</button>
+        <button class="perehod" data-status="conflict">Конфликтное</button>
+        <button class="perehod" data-status="verified">Проверенное</button>
+        <button class="perehod" data-status="process">На проверке</button>
+        <button class="perehod" data-status="error">Ошибочное</button>
+    </div>
+
+
+
+
+
+    <!-- Даты начала и окончания периода -->
+    <div class="date-container" id="period-container">
+        <span class="date-label">Дата начала:</span>
+        <span class="date-value" id="start-date"></span>
+        <span class="date-label">Дата конца:</span>
+        <span class="date-value" id="end-date"></span>
+        <button class="set-date-button" onclick="window.location.href='adminpaneldata'">Задать дату</button>
+    </div>
+</div>
+
+<div class="frame">
+        <!-- Заголовки полей -->
+        <div class="field-row">
+            <div>ФИО</div>
+            <div>Статус</div>
+            <div>Баллы</div>
+            <div>Дата</div>
+        </div>
+
+        <!-- Мини-формочки заявлений -->
+        <div class="form-container" id="statements-container">
+        </div>
+</div>
+
+<script>var csrftoken = '{{ csrf_token }}';</script>
+<script src="{% static 'main/js/site.js' %}"></script>
+<script src="{% static 'main/js/admin_statments.js' %}"></script>
+
+</body>
+</html>
