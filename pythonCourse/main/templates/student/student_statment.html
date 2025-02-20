@@ -1,31 +1,130 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Заполнение заявления</title>
-    <link rel="stylesheet" href="{% static 'main/css/zayava.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/menu.css' %}">
 </head>
 <body>
+
+<div class="top-controls">
+    <button class="back-button form-button" onclick="window.location.href='studentmain'">Назад</button>
+
     <div class="formButton">
-        <button class="perehod">Учеба</button>
-        <button class="perehod">Наука</button>
-        <button class="perehod">Общественная деятельность</button>
-        <button class="perehod">Культура и творечество</button>
-        <button class="perehod">Спорт</button>
+        <button class="perehod form-button">Общие сведения</button>
+        <button class="perehod form-button">Учеба</button>
+        <button class="perehod form-button">Наука</button>
+        <button class="perehod form-button">Общественная деятельность</button>
+        <button class="perehod form-button">Культура и творчество</button>
+        <button class="perehod form-button">Спорт</button>
     </div>
 
+    <div class="date-container" id="period-container">
+        <span class="date-label">Дата начала:</span>
+        <span class="date-value" id="start-date"></span>
+        <span class="date-label">Дата конца:</span>
+        <span class="date-value" id="end-date"></span>
+    </div>
+</div>
 
+<div class="frame">
+    <h1> Заявление на получение повышенной стипендии за достижения в </h1>
+
+    <div class="form-container">
+        <select>
+            <option value="" disabled selected>Выберите вариант 1</option>
+            <option value="Учеба">Учеба</option>
+            <option value="Наука">Наука</option>
+            <option value="Общественная деятельность">Общественная деятельность</option>
+            <option value="Культура и творчество">Культура и творчество</option>
+            <option value="Спорт">Спорт</option>
+        </select>
+    </div>
+
+    <div class="form-container">
+        <select>
+            <option value="" disabled selected>Выберите вариант 2</option>
+            <option value="Учеба">Учеба</option>
+            <option value="Наука">Наука</option>
+            <option value="Общественная деятельность">Общественная деятельность</option>
+            <option value="Культура и творчество">Культура и творчество</option>
+            <option value="Спорт">Спорт</option>
+        </select>
+    </div>
+
+    <div class="form-container">
+        <select>
+            <option value="" disabled selected>Выберите вариант 3</option>
+            <option value="Учеба">Учеба</option>
+            <option value="Наука">Наука</option>
+            <option value="Общественная деятельность">Общественная деятельность</option>
+            <option value="Культура и творчество">Культура и творчество</option>
+            <option value="Спорт">Спорт</option>
+        </select>
+    </div>
+
+    <div class="form-container">
+        <select>
+            <option value="" disabled selected>Выберите вариант 4</option>
+            <option value="Учеба">Учеба</option>
+            <option value="Наука">Наука</option>
+            <option value="Общественная деятельность">Общественная деятельность</option>
+            <option value="Культура и творчество">Культура и творчество</option>
+            <option value="Спорт">Спорт</option>
+        </select>
+    </div>
+
+    <div class="form-container">
+        <select>
+            <option value="" disabled selected>Выберите вариант 5</option>
+            <option value="Учеба">Учеба</option>
+            <option value="Наука">Наука</option>
+            <option value="Общественная деятельность">Общественная деятельность</option>
+            <option value="Культура и творчество">Культура и творчество</option>
+            <option value="Спорт">Спорт</option>
+        </select>
+    </div>
+</div>
+<div class="frame">
+    <!-- Средний блок -->
     <div class="frame">
-        <textarea class="frame-input" placeholder="Введите текст заявления..."></textarea>
-    </div>
+        <!-- Поле для ФИО -->
+
+            <div class="form-container"><input type="text" placeholder="ФИО"></div>
 
 
-    <div class="submit-container">
-        <button class="perehod submit-button">Отправить заявление</button>
+        <div class="frame-mid-none">
+            <!-- Левый блок: телефон и институт -->
+            <div class="frame-left">
+                <div class="form-container"><input type="text" placeholder="Контактный телефон"></div>
+                <div class="form-container"><input type="text" placeholder="Институт/Факультет"></div>
+            </div>
+            <!-- Правый блок: почта и группа -->
+            <div class="frame-right">
+                <div class="form-container"><input type="text" placeholder="Электронная почта"></div>
+                <div class="form-container"><input type="text" placeholder="Группа"></div>
+            </div>
+        </div>
     </div>
-<script src="{% static 'main/js/site.js' %}"></script>
+    <!-- Нижний блок -->
+    <div class="frame">
+        <div class="frame-mid">
+            <input type="checkbox" id="agree-checkbox">
+            <label for="agree-checkbox">Я даю своё согласие на обработку моих персональных данных, указанных в настоящем заявлении, с целью их публикации на сайте и в социальных сетях университета</label>
+        </div>
+        <div class="frame-mid">
+            <p>Приложение: подтверждающие документы, предоставление в электронном виде</p>
+        </div>
+    </div>
+</div>
+
+<button id="mark-all-outdated" class="form-button">Отправить заявления</button>
+
 <script>var csrftoken = '{{ csrf_token }}'</script>
+<script src="{% static 'main/js/site.js' %}"></script>
+<script src="{% static 'main/js/student_statment.js' %}"></script>
+
 </body>
 </html>
