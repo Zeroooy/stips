@@ -71,3 +71,11 @@ function getPeriod() {
         }
     }, {});
 }
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".frame-mid2").forEach(section => {
+        for (let i = 1; i <= 9; i++) {
+            let clonedFields = section.cloneNode(true); // Клонируем блок формы
+            section.parentNode.appendChild(clonedFields); // Добавляем в конец родителя
+        }
+    });
+});
