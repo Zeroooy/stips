@@ -321,6 +321,8 @@ class Statement(models.Model):
         if self.mark_studies and self.mark_science and self.mark_activities and self.mark_culture and self.mark_sport and self.status == 0:
             self.status = 2
 
+    def set_status(self, id_):
+        self.status.id = Status.objects.get(id=id_)
 
     def set_status_up(self):
         if self.status.id == 1:

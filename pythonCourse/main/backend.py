@@ -1,5 +1,7 @@
 import json
 import copy
+from multiprocessing.managers import State
+
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.views.decorators.http import require_POST
@@ -281,6 +283,48 @@ def deny_statement_jury(request):
     return JsonResponse(response)
 
 
+# Выгрузить список человек получивших стипендию
+@csrf_exempt
+def get_word_success(request):
+    try:
+        data = json.loads(request.body)
+        user = User.get_by_session(data.get("session"))
+        if user is not None and (user.is_jury() or user.is_admin()):
+            temp = []
+            for s in Statement.objects.filter(status__name="confirm", old_status=False):
+                temp.append(s.user)
+            Log.add(user, "Выгрузка списка человек получивших стипендию", "Выполнил: "+str(user), {})
+            response = {"answer": create_word_with_sucess(temp)}
+        else:
+            response = {"answer": False}
+    except:
+        return HttpResponse("bad request")
+
+    return JsonResponse(response)
+
+
+# Выгрузить список человек подавших заявления
+@csrf_exempt
+def get_word_all(request):
+    try:
+        data = json.loads(request.body)
+        user = User.get_by_session(data.get("session"))
+        if user is not None and (user.is_jury() or user.is_admin()):
+            temp = []
+            for s in Statement.objects.filter(old_status=False):
+                temp.append(s.user)
+            Log.add(user, "Выгрузка списка человек получивших стипендию", "Выполнил: "+str(user), {})
+            response = {"answer": create_word_with_sucess(temp)}
+        else:
+            response = {"answer": False}
+    except:
+        return HttpResponse("bad request")
+
+    return JsonResponse(response)
+
+
+
+
 ########################################
 #                АДМИН
 ########################################
@@ -362,7 +406,23 @@ def change_role_user(request):
 
     return JsonResponse(response)
 
+# Сменить статус заявления
+@csrf_exempt
+def change_status(request):
+    try:
+        data = json.loads(request.body)
+        user = User.get_by_session(data.get("session"))
+        if user is not None and user.is_admin():
+            statement = Statement.get_by_id(data.get("statment-id"))
+            statement.change_status("status")
+            Log.add(user, "Изменение статуса заявления", "У заявления " + str(data.get("statment-id")) + " статус изменен на " + str(data.get("status")), {})
+            response = {"answer": True}
+        else:
+            response = {"answer": False}
+    except:
+        return HttpResponse("bad request")
 
+    return JsonResponse(response)
 
 # Просмотреть список пользователей
 @csrf_exempt
@@ -472,9 +532,32 @@ def reset_log(request):
 
 
 
+from docx import Document
+from docx.shared import Pt
+from datetime import datetime
+
+# Функция файла docx
+
+def create_word_with_list(items, title):
+    doc = Document()
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    filename = f"{title}_{timestamp}.docx"
+    i = 1
+    for item in items:
+        para = doc.add_paragraph(str(i) + ". " + str(item))
+        run = para.runs[0]
+        run.font.name = "Times New Roman"
+        run.font.size = Pt(14)
+        i+=1
+    doc.save("files/" + filename)
+    return filename
+
+def create_word_with_sucess(items):
+    return create_word_with_list("Отчет_со_списком_получивших_стипендию", items)
 
 
-
+def create_word_with_all(items):
+    return create_word_with_list("Отчет_со_списком_подавших_заявления", items)
 
 
 

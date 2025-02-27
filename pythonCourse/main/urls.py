@@ -79,6 +79,8 @@ urlpatterns = [
     path('api/confirmStatement', backend.confirm_statement_jury),
     path('api/denyStatement', backend.deny_statement_jury),
 
+    path('api/getWordSuccess', backend.get_word_success),
+    path('api/getWordAll', backend.get_word_all),
 
     # АДМИН
     path('api/setPeriod', backend.set_period),
@@ -87,6 +89,7 @@ urlpatterns = [
     path('api/getUser', backend.get_user),
 
     path('api/changeRole', backend.change_role_user),
+    path('api/changeStatus', backend.change_status),
 
     path('api/getStatement', backend.get_statement_admin),
     path('api/getListStatements', backend.get_list_statements_admin),
