@@ -1,31 +1,423 @@
 {% load static %}
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Заполнение заявления</title>
-    <link rel="stylesheet" href="{% static 'main/css/zayava.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/menu.css' %}">
 </head>
 <body>
+
+<div class="top-controls">
+    <button class="back-button form-button" onclick="window.location.href='studentmain'">Назад</button>
+
     <div class="formButton">
-        <button class="perehod">Учеба</button>
-        <button class="perehod">Наука</button>
-        <button class="perehod">Общественная деятельность</button>
-        <button class="perehod">Культура и творечество</button>
-        <button class="perehod">Спорт</button>
+        <button class="perehod form-button" onclick="show(0)">Общие сведения</button>
+        <button class="perehod form-button" onclick="show(1)">Учеба</button>
+        <button class="perehod form-button" onclick="show(2)">Наука</button>
+        <button class="perehod form-button" onclick="show(3)">Общественная деятельность</button>
+        <button class="perehod form-button" onclick="show(4)">Культура и творчество</button>
+        <button class="perehod form-button" onclick="show(5)">Спорт</button>
     </div>
 
-
+    <div class="date-container" id="period-container">
+        <span class="date-label">Дата начала:</span>
+        <span class="date-value" id="start-date"></span>
+        <span class="date-label">Дата конца:</span>
+        <span class="date-value" id="end-date"></span>
+    </div>
+</div>
+<div class="all-frame" id="0">
+    <!-- Блок с заголовком -->
     <div class="frame">
-        <textarea class="frame-input" placeholder="Введите текст заявления..."></textarea>
+        <h1> Заявление на получение повышенной стипендии за достижения в </h1>
+
+        <!-- Фрейм для динамической формы -->
+        <div id="form-frame" class="frame"></div>
+    </div>
+
+    <!-- Контактные данные (Остаются неизменными) -->
+    <div class="frame">
+        <div class="form-container">
+            <input type="text" placeholder="ФИО">
+        </div>
+
+        <div class="frame-mid-none">
+            <div class="frame-left">
+                <div class="form-container"><input type="text" placeholder="Контактный телефон"></div>
+                <div class="form-container"><input type="text" placeholder="Институт/Факультет"></div>
+            </div>
+            <div class="frame-right">
+                <div class="form-container"><input type="text" placeholder="Электронная почта"></div>
+                <div class="form-container"><input type="text" placeholder="Группа"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Нижний блок -->
+    <div class="frame">
+        <div class="frame-mid">
+            <input type="checkbox" id="agree-checkbox">
+            <label for="agree-checkbox">Я даю своё согласие на обработку моих персональных данных, указанных в настоящем заявлении, с целью их публикации на сайте и в социальных сетях университета</label>
+        </div>
+        <div class="frame-mid">
+            <p>Приложение: подтверждающие документы, предоставление в электронном виде</p>
+        </div>
+    </div>
+
+    <button id="mark-all-outdated" class="form-button" disabled>Отправить заявление</button>
+</div>
+
+
+
+
+
+
+
+<div class="all-frame" id="1">
+    <!-- Блок с заголовком -->
+    <div class="frame">
+           <div class="frame">
+               <div class="frame-center"><p> (А) получение студентом в течение не менее 2-х последних семестров только оценок</p></div>
+               <div class="frame-mid">
+                   <div class="form-container">
+                        <select>
+                            <option value="" disabled selected>Выберите вариант 1</option>
+                            <option value="только отлично">только "отлично"</option>
+                            <option value="хорошо и отлично">"хорошо" и "отлично"</option>
+                        </select>
+                   </div>
+               </div>
+           </div>
+
+
+           <div class="frame">
+                <div class="frame-center"><p> (Б) получение студентом в течение предшествующего года награды (приза) за результаты проектной деятельности и (или) опытно-конструкторской работы</p></div>
+               <div class="frame-mid">
+                   <div class="form-container">
+                         <select>
+                            <option value="" disabled selected>Выберите вариант 1</option>
+                            <option value="Международный, всероссийский">Международный, всероссийский</option>
+                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
+                             <option value="Вузовский">Вузовский</option>
+                        </select>
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Название мероприятия">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Дата проведения">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Копия наградного документа">
+                   </div>
+               </div>
+               <div class="frame-mid">
+                   <div class="form-container">
+                         <select>
+                            <option value="" disabled selected>Выберите вариант 1</option>
+                            <option value="Международный, всероссийский">Международный, всероссийский</option>
+                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
+                             <option value="Вузовский">Вузовский</option>
+                        </select>
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Название мероприятия">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Дата проведения">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Копия наградного документа">
+                   </div>
+               </div>
+               <div class="frame-mid">
+                   <div class="form-container">
+                         <select>
+                            <option value="" disabled selected>Выберите вариант 1</option>
+                            <option value="Международный, всероссийский">Международный, всероссийский</option>
+                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
+                             <option value="Вузовский">Вузовский</option>
+                        </select>
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Название мероприятия">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Дата проведения">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Копия наградного документа">
+                   </div>
+               </div>
+               <div class="frame-mid">
+                   <div class="form-container">
+                         <select>
+                            <option value="" disabled selected>Выберите вариант 1</option>
+                            <option value="Международный, всероссийский">Международный, всероссийский</option>
+                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
+                             <option value="Вузовский">Вузовский</option>
+                        </select>
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Название мероприятия">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Дата проведения">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Копия наградного документа">
+                   </div>
+               </div>
+           </div>
+
+
+        <div class="frame">
+               <div class="frame-center"><p> (В) признание студента победителем или призером международной, всероссийской, ведомственной или региональной олимпиады, конкурса, соревнования, состязания или иного мероприятия, направленные на выявление учебных достижений студентов, проведенных в  течение года, предшествующего назначению повышенной государственной академической стипендии</p></div>
+               <div class="frame-mid">
+                   <div class="form-container">
+                        <select>
+                            <option value="" disabled selected>Выберите вариант 1</option>
+                            <option value="Международный, всероссийский">Международный, всероссийский</option>
+                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
+                        </select>
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Название мероприятия">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Дата проведения">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Копия наградного документа">
+                   </div>
+               </div>
+            <div class="frame-mid">
+                   <div class="form-container">
+                        <select>
+                            <option value="" disabled selected>Выберите вариант 1</option>
+                            <option value="Международный, всероссийский">Международный, всероссийский</option>
+                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
+                        </select>
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Название мероприятия">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Дата проведения">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Копия наградного документа">
+                   </div>
+               </div>
+            <div class="frame-mid">
+                   <div class="form-container">
+                        <select>
+                            <option value="" disabled selected>Выберите вариант 1</option>
+                            <option value="Международный, всероссийский">Международный, всероссийский</option>
+                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
+                        </select>
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Название мероприятия">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Дата проведения">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Копия наградного документа">
+                   </div>
+               </div>
+            <div class="frame-mid">
+                   <div class="form-container">
+                        <select>
+                            <option value="" disabled selected>Выберите вариант 1</option>
+                            <option value="Международный, всероссийский">Международный, всероссийский</option>
+                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
+                        </select>
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Название мероприятия">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Дата проведения">
+                   </div>
+                   <div class="form-container">
+                        <input type="text" placeholder="Копия наградного документа">
+                   </div>
+               </div>
+       </div>
+    </div>
+</div>
+    <div class="all-frame" id="2">
+        <!-- Блок с заголовком -->
+        <div class="frame">
+            <div class="frame">
+                <div class="frame-center"><p>(А.1) Получение наград (призов) за результаты научно-исследовательской работы в рамках мероприятий, организаторами которых являются Министерство науки и высшего образования РФ и государственные организации высшего образования</p></div>
+                <div class="frame-mid">
+                       <div class="form-container">
+                             <select>
+                                <option value="" disabled selected>Конкретизация критерия</option>
+                                <option value="Диплом 1 степени">Диплом 1 степени</option>
+                                <option value="Диплом 2 степени">Диплом 2 степени</option>
+                                 <option value="Диплом 3 степени">Диплом 3 степени</option>
+                            </select>
+                       </div>
+                       <div class="form-container">
+                            <input type="text" value="Копия диплома" readonly>
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Название мероприятия">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Дата проведения">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Место проведения">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Подтверждающие документы">
+                       </div>
+                </div>
+            </div>
+            <div class="frame">
+                <div class="frame-center"><p>(А.2) Получение благодарственных писем, грамот органов власти и управления за участие в научных мероприятиях</p></div>
+                <div class="frame-mid">
+                       <div class="form-container">
+                             <select>
+                                <option value="" disabled selected>Конкретизация критерия</option>
+                                <option value="Федерального уровня (Министерство образования и науки РФ и ведомства)">Федерального уровня (Министерство образования и науки РФ и ведомства)</option>
+                                <option value="Регионального и городского уровня (Правительство ВО, Губернатор и мэр)">Регионального и городского уровня (Правительство ВО, Губернатор и мэр</option>
+                                 <option value="Внутриуниверситетского уровня (ректор) - за работу в рамках хоздоговора, сумма договора до 50.000 на 1 студента">Внутриуниверситетского уровня (ректор) - за работу в рамках хоздоговора, сумма договора до 50.000 на 1 студента</option>
+                                 <option value="Внутриуниверситетского уровня (ректор) - за работу в рамках хоздоговора, сумма договора 51.000 - 100.000 на 1 студента">Внутриуниверситетского уровня (ректор) - за работу в рамках хоздоговора, сумма договора 51.000 - 100.000 на 1 студента</option>
+                                 <option value="Внутриуниверситетского уровня (ректор) - за работу в рамках хоздоговора, сумма договора 101.000 - 300.000 на 1 студента">Внутриуниверситетского уровня (ректор) - за работу в рамках хоздоговора, сумма договора 101.000 - 300.000 на 1 студента</option>
+                                 <option value="Внутриуниверситетского уровня (ректор) - за работу в рамках хоздоговора, сумма договора до 301.000 - 500.000 на 1 студента">Внутриуниверситетского уровня (ректор) - за работу в рамках хоздоговора, сумма договора до 301.000 - 500.000 на 1 студента</option>
+                                 <option value="Внутриуниверситетского уровня (ректор) - за работу в рамках хоздоговора, сумма договора свыше 501.000 на 1 студента">Внутриуниверситетского уровня (ректор) - за работу в рамках хоздоговора, сумма договора свыше 501.000 на 1 студента</option>
+                                 <option value="Внутриуниверситетского уровня (ректор) - за участие в организации научного мероприятия">Внутриуниверситетского уровня (ректор) - за участие в организации научного мероприятия</option>
+                                 <option value="Внутриуниверситетского уровня (директор института/декан факультета)">Внутриуниверситетского уровня (директор института/декан факультета)</option>
+                             </select>
+                       </div>
+                       <div class="form-container">
+                            <input type="text" value="Копия благодарственного письма / грамоты / приказа ректора / распоряжения директора института или декана факультета по представлению руководителя научного объединения" readonly>
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Название мероприятия">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Дата проведения">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Место проведения">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Подтверждающие документы">
+                       </div>
+                </div>
+            </div>
+
+            <div class="frame">
+                <div class="frame-center"><p>(А.3) Получение документов, подтверждающих исключительное право студента на достигнутый им научный результат интеллектуальной деятельности, получивших правовую охрану</p></div>
+                <div class="frame-mid">
+                       <div class="form-container">
+                             <select>
+                                <option value="" disabled selected>Конкретизация критерия</option>
+                                <option value="Индивидуальное достижение">Индивидуальное достижение</option>
+                                <option value="В соавторстве">В соавторстве</option>
+
+                             </select>
+                       </div>
+                       <div class="form-container">
+                            <input type="text" value="Копия патента, свидетельства" readonly>
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Название мероприятия">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Дата проведения">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Место проведения">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Подтверждающие документы">
+                       </div>
+                </div>
+            </div>
+
+
+            <div class="frame">
+                <div class="frame-center"><p>(А.4) Получение грантов на выполнение научно-исследовательской работы</p></div>
+                <div class="frame-mid">
+                       <div class="form-container">
+                             <select>
+                                <option value="" disabled selected>Конкретизация критерия</option>
+                                <option value="Под руководством студента">Под руководством студента</option>
+                                <option value="В составе коллектива">В составе коллектива</option>
+
+                             </select>
+                       </div>
+                       <div class="form-container">
+                            <input type="text" value="Копия грантового соглашения, договора о выделении гранта, копия информационного письма грантодающей организации о присуждении гранта (Государственное задание, РНФ, РГО, РИО, Росмолодежь, Фонд содействия инновациям, внутриуниверситетские конкурсы)" readonly>
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Название мероприятия">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Дата проведения">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Место проведения">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Подтверждающие документы">
+                       </div>
+                </div>
+            </div>
+
+
+            <div class="frame">
+                <div class="frame-center"><p>(Б) Наличие публикации в научном издании</p></div>
+                <div class="frame-mid">
+                       <div class="form-container">
+                             <select>
+                                <option value="" disabled selected>Конкретизация критерия</option>
+                                <option value="Белый список научных журналов">"Белый список" научных журналов</option>
+                                <option value="Публикации, проиндексированные в WoS, Scopus, RSCI, не вошедшие в Белый список">Публикации, проиндексированные в WoS, Scopus, RSCI, не вошедшие в "Белый список"</option>
+                                <option value="ВАК">ВАК"</option>
+                                <option value="Научные журналы уровня РИНЦ (с № ISSN)">Научные журналы уровня РИНЦ (с № ISSN)</option>
+                                <option value="Статья в сборниках уровня РИНЦ по материалам международных, всероссийских конференций">Статья в сборниках уровня РИНЦ по материалам международных, всероссийских конференций</option>
+                                <option value="Тезисы в сборниках уровня РИНЦ по материалам международных, всероссийских конференций">Тезисы в сборниках уровня РИНЦ по материалам международных, всероссийских конференций</option>
+                                <option value="Иные публикации, размещенные на elibrary">Иные публикации, размещенные на elibrary</option>
+
+                             </select>
+                       </div>
+                       <div class="form-container">
+                            <input type="text" value="Ссылка на публикацию в открытом онлайн-доступе, копии: титульного листа, содержания журнала/сборника с ФИО автора, первой страницы публикации и скриншот страницы профиля автора из elibrary c отражением публикаций" readonly>
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Название мероприятия">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Дата проведения">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Место проведения">
+                       </div>
+                        <div class="form-container">
+                            <input type="text" placeholder="Подтверждающие документы">
+                       </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
 
-    <div class="submit-container">
-        <button class="perehod submit-button">Отправить заявление</button>
-    </div>
-<script src="{% static 'main/js/site.js' %}"></script>
+
+
 <script>var csrftoken = '{{ csrf_token }}'</script>
+<script src="{% static 'main/js/site.js' %}"></script>
+<script src="{% static 'main/js/student_statment.js' %}"></script>
+
 </body>
 </html>
