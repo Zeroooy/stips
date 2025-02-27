@@ -72,7 +72,7 @@ body {
 }
 
 .frame {
-    width: 90%;
+    width: 100%;
     height: auto;
     margin: 20px auto;
     border: 2px solid #e63946;
@@ -81,8 +81,26 @@ body {
     background-color: #fff;
     padding: 20px;
     box-sizing: border-box;
+
+}
+input[readonly] {
+    background-color: #f0f0f0; /* Серый фон, чтобы показать, что редактирование запрещено */
+    color: #333; /* Темный текст */
+    border: 1px solid #ccc; /* Стандартная граница */
+    cursor: not-allowed; /* Указывает, что нельзя редактировать */
 }
 
+.all-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрируем содержимое */
+    justify-content: center;
+    width: 100%; /* Растягиваем на всю ширину */
+
+    margin: 0 auto; /* Центрирование */
+    padding: 20px;
+    box-sizing: border-box;
+}
 .field-row {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -100,6 +118,8 @@ body {
     flex-direction: column;
     gap: 15px;
     margin-top: 20px;
+
+
 }
 
 
@@ -352,6 +372,9 @@ input[type="text"] {
     gap: 10px;
     margin-top: 10px;
 
+}
+.frame-center{
+    text-align:center
 }
 .frame-mid {
     display: flex;
