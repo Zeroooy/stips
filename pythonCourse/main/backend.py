@@ -90,6 +90,9 @@ def upload_statement(request):
     except:
         return HttpResponse("bad request")
 
+    #    except Exception as e:
+    #    return HttpResponse(str(e))
+
     return JsonResponse(response)
 
 

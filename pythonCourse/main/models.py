@@ -363,6 +363,7 @@ class Statement(models.Model):
             else:
                 json_change = Statement.replace_at_values_with_links(json, files)
                 statement_temp = Statement.objects.create(id=Statement.generate_id(), user=user, json=json_change[0], date=date, urls = json_change[1])
+                # statement_temp = Statement.objects.create(id=Statement.generate_id(), user=user, json=json_change[0], date=date, urls = json_change[1])
 
             statement_temp.save()
 
