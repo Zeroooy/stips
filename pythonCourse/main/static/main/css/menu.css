@@ -396,6 +396,76 @@ input[type="text"] {
     width: 100%;
 
 }
+.frame-mid3 {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    border: 2px solid #000;
+    width: 100%;
+    flex-grow: 1;
+    width: 100%;
+
+}
+.frame-mid4 {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    border: 2px solid #000;
+    width: 100%;
+    flex-grow: 1;
+    width: 100%;
+
+}
+.frame-mid5 {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    border: 2px solid #000;
+    width: 100%;
+    flex-grow: 1;
+    width: 100%;
+
+}
+.frame-mid6 {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    border: 2px solid #000;
+    width: 100%;
+    flex-grow: 1;
+    width: 100%;
+
+}
+.frame-mid7 {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    border: 2px solid #000;
+    width: 100%;
+    flex-grow: 1;
+    width: 100%;
+
+}
+.frame-mid8 {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    border: 2px solid #000;
+    width: 100%;
+    flex-grow: 1;
+    width: 100%;
+
+}
+.frame-mid9 {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    border: 2px solid #000;
+    width: 100%;
+    flex-grow: 1;
+    width: 100%;
+
+}
 .frame-left, .frame-right {
     flex: 1;
     border: 2px solid #000;
