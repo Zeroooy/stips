@@ -79,3 +79,61 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".frame-mid3").forEach(section => {
+        for (let i = 1; i <= 4; i++) {
+            let clonedFields = section.cloneNode(true); // Клонируем блок формы
+            section.parentNode.appendChild(clonedFields); // Добавляем в конец родителя
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".frame-mid4").forEach(section => {
+        for (let i = 1; i <= 24; i++) {
+            let clonedFields = section.cloneNode(true); // Клонируем блок формы
+            section.parentNode.appendChild(clonedFields); // Добавляем в конец родителя
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".frame-mid5").forEach(section => {
+        for (let i = 1; i <= 3; i++) {
+            let clonedFields = section.cloneNode(true); // Клонируем блок формы
+            section.parentNode.appendChild(clonedFields); // Добавляем в конец родителя
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".frame-mid6").forEach(section => {
+        for (let i = 1; i <= 17; i++) {
+            let clonedFields = section.cloneNode(true);
+            section.insertAdjacentElement("afterend", clonedFields); // Вставляем сразу после оригинального блока
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".frame-mid7").forEach(section => {
+        for (let i = 1; i <= 2; i++) {
+            let clonedFields = section.cloneNode(true);
+            section.insertAdjacentElement("afterend", clonedFields); // Вставляем сразу после оригинального блока
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".frame-mid8").forEach(section => {
+        for (let i = 1; i <= 5; i++) {
+            let clonedFields = section.cloneNode(true);
+            section.insertAdjacentElement("afterend", clonedFields); // Вставляем сразу после оригинального блока
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".frame-mid9").forEach(section => {
+        for (let i = 1; i <= 1; i++) {
+            let clonedFields = section.cloneNode(true);
+            section.insertAdjacentElement("afterend", clonedFields); // Вставляем сразу после оригинального блока
+        }
+    });
+});
