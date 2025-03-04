@@ -116,7 +116,7 @@ class User(models.Model):
     def generate_session(self):
         key = ""
         for i in range(50):
-            key += random("abcde!?:fghi^jkl*mnopq_+rstuv$wxy=zAB&CDEFG-HIJKLMNO#PQRSTUV@WXYZ0123456789")
+            key += random("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
         self.session = key
         self.save()
         return key
@@ -207,7 +207,7 @@ class User(models.Model):
         while True:
             key = ""
             for i in range(50):
-                key += random("abcde!?:fghi^jkl*mnopq_+rstuv$wxy=zAB&CDEFG-HIJKLMNO#PQRSTUV@WXYZ0123456789")
+                key += random("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
             if not User.objects.filter(id=key).exists():  # Проверка на уникальность
                 return key
 
@@ -459,7 +459,7 @@ class Statement(models.Model):
         while True:
             key = ""
             for i in range(50):
-                key += random("abcde!?:fghi^jkl*mnopq_+rstuv$wxy=zAB&CDEFG-HIJKLMNO#PQRSTUV@WXYZ0123456789")
+                key += random("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
             if not Statement.objects.filter(id=key).exists():  # Проверка на уникальность
                 return key
 
