@@ -88,15 +88,26 @@ body {
 }
 
 .field-row {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    display: flex;
+    justify-content: space-between; /* Раздвигаем текст по краям */
+    align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
+    padding: 8px 0;
+    font-size: 16px; /* Улучшаем читаемость */
+    border-bottom: 1px solid #eee; /* Легкое разделение строк */
 }
 
-.field-row div {
+.field-row:last-child {
+    border-bottom: none; /* Убираем границу у последнего элемента */
+}
+
+.field-row div:first-child {
     font-weight: bold;
     color: #e63946;
+}
+
+.field-row div:last-child {
+    color: #333;
 }
 
 .form-container {
@@ -139,15 +150,15 @@ body {
     transform: scale(1.05); /* Легкое увеличение при наведении */
 }
 .frame-admin {
-    width: auto;
-    height: auto;
+    max-width: 600px; /* Ограничиваем ширину */
+    width: 90%; /* Делаем адаптивным */
     margin-top: 20px;
     border: 2px solid #e63946;
     border-radius: 15px;
     background-color: #fff;
-    position: relative;
     padding: 20px;
     box-sizing: border-box;
+    text-align: left;
 }
 /* Кнопки ролей */
 .role-buttons {

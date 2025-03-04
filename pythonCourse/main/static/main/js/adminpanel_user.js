@@ -38,26 +38,28 @@ function loadUserData() {
 
 // Функция заполнения полей данными пользователя
 function fillUserFields(userData) {
+    const container = document.querySelector(".frame-admin");
+    container.innerHTML = ""; // Очищаем перед добавлением новых данных
+
     const fieldMapping = {
         "ID": "user-id",
-        "SESSION_ID": "session",
-        "SURNAME": "surname",
-        "LOGIN": "login",
-        "PASSWORD": "password",
-        "NAME": "name",
-        "MIDDLENAME": "middlename",
-        "ROLE": "role",
-        "USER_ID": "user-id",
-        "EMAIL": "email",
-        "PHONE": "phone"
+        "Сессия": "session",
+        "Фамилия": "surname",
+        "Логин": "login",
+        "Пароль": "password",
+        "Имя": "name",
+        "Отчество": "middlename",
+        "Роль": "role",
+        "Email": "email",
+        "Телефон": "phone"
     };
 
-    document.querySelectorAll(".field-row").forEach((row) => {
-        const label = row.children[0].textContent.trim();
-        const fieldKey = fieldMapping[label];
-
-        if (fieldKey && userData[fieldKey] !== undefined) {
-            row.children[1].textContent = userData[fieldKey] || "Не указано";
-        }
+    Object.entries(fieldMapping).forEach(([label, key]) => {
+        const value = userData[key] || "Не указано";
+        const row = document.createElement("div");
+        row.classList.add("field-row");
+        row.innerHTML = `<div>${label}</div><div>${value}</div>`;
+        container.appendChild(row);
     });
 }
+
