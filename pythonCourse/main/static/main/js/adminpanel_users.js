@@ -51,6 +51,7 @@ function loadUsers() {
 }
 
 // Отображение таблицы пользователей
+// Отображение таблицы пользователей
 function renderUserTable(usersData) {
     const container = document.querySelector(".frame");
     container.innerHTML = ""; // Очистка контейнера
@@ -73,14 +74,15 @@ function renderUserTable(usersData) {
 
         userRow.setAttribute("data-role", user.role);
 
-        // Добавляем ссылку на профиль пользователя
+        // Изменяем логику перехода на adminpaneluser
         userRow.addEventListener("click", () => {
-            window.location.href = `userProfile?userId=${user["user-id"]}`;
+            window.location.href = `adminpaneluser?userId=${user["user-id"]}`;
         });
 
         container.appendChild(userRow);
     });
 }
+
 
 // Создание строки таблицы
 function createTableRow(data, className) {
