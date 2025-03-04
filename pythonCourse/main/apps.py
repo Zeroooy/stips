@@ -5,13 +5,13 @@ class MainConfig(AppConfig):
     name = 'main'
 
     # Если новая БД то чтобы не вставлять
-#    def ready(self):
-#        create_default_records()
+    #def ready(self):
+    #    create_default_records()
 
 
 
 def create_default_records():
-    from .models import Status, Role, Period
+    from .models import Status, Role, Period, User
     from django.db.utils import OperationalError
 
     try:
@@ -19,6 +19,7 @@ def create_default_records():
         Period.create_default_records()
         Status.create_default_records()
         Role.create_default_records()
+        User.create_default_records()
     except OperationalError:
         # Если база данных ещё не готова (например, при миграциях), пропускаем
         pass

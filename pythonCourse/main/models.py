@@ -213,7 +213,44 @@ class User(models.Model):
 
 
 
+    @classmethod
+    def create_default_records(cls):
+        # Данные для записи
+        default_records = [
+            {'login': "admin", 'password': "admin", 'role': Role.objects.get(id=1), 'surname': "Ульянов", 'name': "Александр", 'middlename': "Сергеевич", 'email': "herobrinechekplay@gmail.com", 'phone': "89005442577"},
+            {'login': "admin2", 'password': "admin2", 'role': Role.objects.get(id=1), 'surname': "Гибалов", 'name': "Евгений", 'middlename': "Алексеевич", 'email': "process", 'phone': "process"},
 
+            {'login': "inspector1", 'password': "inspector1", 'role': Role.objects.get(id=3), 'surname': "1 (Учеба)", 'name': "Инспектор", 'middlename': "-", 'email': "-", 'phone': "-"},
+            {'login': "inspector2", 'password': "inspector2", 'role': Role.objects.get(id=4), 'surname': "2 (Наука)", 'name': "Инспектор", 'middlename': "-", 'email': "-", 'phone': "-"},
+            {'login': "inspector3", 'password': "inspector3", 'role': Role.objects.get(id=5), 'surname': "Role.objects.get(id=3) (Активность)", 'name': "Инспектор", 'middlename': "-", 'email': "-", 'phone': "-"},
+            {'login': "inspector4", 'password': "inspector4", 'role': Role.objects.get(id=6), 'surname': "4 (Культура)", 'name': "Инспектор", 'middlename': "-", 'email': "-", 'phone': "-"},
+            {'login': "inspector5", 'password': "inspector5", 'role': Role.objects.get(id=7), 'surname': "5 (Спорт)", 'name': "Инспектор", 'middlename': "-", 'email': "-", 'phone': "-"},
+
+            {'login': "jury", 'password': "jury", 'role': Role.objects.get(id=2), 'surname': "-", 'name': "Жюри", 'middlename': "-", 'email': "-", 'phone': "-"},
+
+            {'login': "student", 'password': "student", 'role': Role.objects.get(id=0), 'surname': "Иванов", 'name': "Иван",
+             'middlename': "Иванович", 'email': "ivan@gmail.com", 'phone': "909090909"},
+            {'login': "student1", 'password': "student1", 'role': Role.objects.get(id=0), 'surname': "Александров", 'name': "Александр",
+             'middlename': "Александрович", 'email': "alex@gmail.com", 'phone': "909090909"},
+            {'login': "student2", 'password': "student2", 'role': Role.objects.get(id=0), 'surname': "Левкин", 'name': "Лев",
+             'middlename': "Львович", 'email': "lev@gmail.com", 'phone': "909090909"},
+            {'login': "student3", 'password': "student3", 'role': Role.objects.get(id=0), 'surname': "Евгеньев", 'name': "Евгений",
+             'middlename': "Евгенич", 'email': "evgen@gmail.com", 'phone': "909090909"},
+            {'login': "student4", 'password': "student4", 'role': Role.objects.get(id=0), 'surname': "Ярослав", 'name': "Ярослав",
+             'middlename': "Ярослав", 'email': "yar@gmail.com", 'phone': "909090909"},
+            {'login': "student5", 'password': "student5", 'role': Role.objects.get(id=0), 'surname': "Дима", 'name': "Дима",
+             'middlename': "Дима", 'email': "dima@gmail.com", 'phone': "909090909"},
+            {'login': "student6", 'password': "student6", 'role': Role.objects.get(id=0), 'surname': "Алексей", 'name': "Алексей",
+             'middlename': "Алексей", 'email': "alexey@gmail.com", 'phone': "909090909"},
+            {'login': "student7", 'password': "student7", 'role': Role.objects.get(id=0), 'surname': "Рафаель", 'name': "Рафаель",
+             'middlename': "Рафаель", 'email': "raf@gmail.com", 'phone': "909090909"},
+            {'login': "student8", 'password': "student8", 'role': Role.objects.get(id=0), 'surname': "Дони", 'name': "Дони",
+             'middlename': "Дони", 'email': "doni@gmail.com", 'phone': "909090909"},
+            {'login': "student9", 'password': "student9", 'role': Role.objects.get(id=0), 'surname': "Мики", 'name': "Мики",
+             'middlename': "Мики", 'email': "miki@gmail.com", 'phone': "909090909"}
+        ]
+        for record in default_records:
+            cls.objects.get_or_create(**record)
 
 
 
@@ -346,7 +383,7 @@ class Statement(models.Model):
             self.save()
 
     def delete(self, *args, **kwargs):
-        remove_files()
+        self.remove_files()
         super().delete(*args, **kwargs)
 
     @staticmethod
