@@ -138,3 +138,48 @@ body {
     color: #e63946;
     transform: scale(1.05); /* Легкое увеличение при наведении */
 }
+.frame-admin {
+    width: auto;
+    height: auto;
+    margin-top: 20px;
+    border: 2px solid #e63946;
+    border-radius: 15px;
+    background-color: #fff;
+    position: relative;
+    padding: 20px;
+    box-sizing: border-box;
+}
+/* Кнопки ролей */
+.role-buttons {
+    display: flex;
+    flex-direction: row; /* Группы располагаются вертикально */
+    gap: 20px; /* Отступы между группами кнопок */
+    margin-top: 20px;
+}
+.role-group {
+    display: flex;
+    flex-direction: column; /* Кнопки в группе располагаются вертикально */
+    gap: 10px; /* Отступ между кнопками в группе */
+}
+
+.role-button {
+    background-color: transparent;
+    border: 2px solid #e63946; /* Тонкая рамка */
+    border-radius: 15px; /* Скругленные углы */
+    padding: 8px 20px; /* Компактные отступы */
+    font-size: 14px; /* Уменьшенный размер текста */
+    font-weight: bold;
+    cursor: pointer;
+    color: #e63946;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.role-button:hover {
+    background-color: rgba(230, 57, 70, 0.2);
+    color: #e63946;
+}
+
+.role-button.approve {
+    color: #4caf50; /* Зеленый цвет для одобрения */
+    border-color: #4caf50;
+}
