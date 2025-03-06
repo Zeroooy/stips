@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Проверяем, требует ли текущая страница авторизации
     for (const [page, allowedRoles] of Object.entries(protectedPages)) {
-        if (currentPage.includes(page)) {
+        if (currentPage.startsWith(page)) {
             // Если нет sessionId – выкидываем на login
             if (!sessionId) {
                 alert("Вы не авторизованы! Войдите в систему.");
