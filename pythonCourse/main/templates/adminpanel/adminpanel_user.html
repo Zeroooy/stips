@@ -32,20 +32,21 @@
     </div>
 
     <!-- Кнопки для изменения ролей пользователя -->
-    <div class="role-buttons">
-        <div class="role-group">
-            <button class="role-button approve" data-role="jury">Дать роль Жюри</button>
-            <button class="role-button reject" data-role="jury">Снять роль Жюри</button>
-        </div>
-        <div class="role-group">
-            <button class="role-button approve" data-role="checker">Дать роль Проверяющий</button>
-            <button class="role-button reject" data-role="checker">Снять роль Проверяющий</button>
-        </div>
-        <div class="role-group">
-            <button class="role-button approve" data-role="admin">Дать роль Администратор</button>
-            <button class="role-button reject" data-role="admin">Снять роль Администратор</button>
-        </div>
+    <div class="role-selection">
+        <label for="role-select">Выберите роль:</label>
+        <select id="role-select">
+            <option value="0">Студент</option>
+            <option value="1">Администратор</option>
+            <option value="2">Жюри</option>
+            <option value="3">Инспектор учеба</option>
+            <option value="4">Инспектор наука</option>
+            <option value="5">Инспектор общественная деятельность</option>
+            <option value="6">Инспектор культура и творчество</option>
+            <option value="7">Инспектор спорта</option>
+        </select>
+        <button id="change-role-button">Подтвердить</button>
     </div>
+
 
     <!-- Подключение JavaScript -->
     <script>var csrftoken = '{{ csrf_token }}';</script>

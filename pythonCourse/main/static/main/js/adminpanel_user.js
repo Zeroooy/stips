@@ -62,4 +62,33 @@ function fillUserFields(userData) {
         container.appendChild(row);
     });
 }
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("change-role-button").addEventListener("click", changeUserRole);
+});
+
+function changeUserRole() {
+    const sessionId = sessionStorage.getItem("sessionId");
+    const userId = new URLSearchParams(window.location.search).get("userId");
+    const newRole = document.getElementById("role-select").value;
+
+    if (!sessionId || !userId) {
+        alert("Ошибка: отсутствует sessionId или userId");
+        return;
+    }
+
+    const requestData = {
+        "session": sessionId,
+        "user-id": userId,
+        "user-role": parseInt(newRole)
+    };
+
+    HttpRequestPostJson("changeRole", (response) => {
+        if (response.answer === true) {
+            alert("Роль успешно изменена!");
+            location.reload();
+        } else {
+            alert("Ошибка изменения роли");
+        }
+    }, requestData);
+}
 
