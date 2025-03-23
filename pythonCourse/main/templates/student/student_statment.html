@@ -8,80 +8,79 @@
 </head>
 <body>
 
-<div class="top-controls">
-    <button class="back-button form-button" onclick="window.location.href='studentmain'">Назад</button>
+    <div class="top-controls">
+        <button class="back-button form-button" onclick="window.location.href='studentmain'">Назад</button>
 
-    <div class="formButton">
-        <button class="perehod form-button" onclick="show(0)">Общие сведения</button>
-        <button class="perehod form-button" onclick="show(1)">Учеба</button>
-        <button class="perehod form-button" onclick="show(2)">Наука</button>
-        <button class="perehod form-button" onclick="show(3)">Общественная деятельность</button>
-        <button class="perehod form-button" onclick="show(4)">Культура и творчество</button>
-        <button class="perehod form-button" onclick="show(5)">Спорт</button>
-    </div>
-
-    <div class="date-container" id="period-container">
-        <span class="date-label">Дата начала:</span>
-        <span class="date-value" id="start-date"></span>
-        <span class="date-label">Дата конца:</span>
-        <span class="date-value" id="end-date"></span>
-    </div>
-</div>
-<div class="all-frame" id="0">
-    <!-- Блок с заголовком -->
-    <div class="frame">
-        <h1> Заявление на получение повышенной стипендии за достижения в </h1>
-
-        <!-- Фрейм для динамической формы -->
-        <div id="form-frame" class="frame"></div>
-    </div>
-
-    <!-- Контактные данные (Остаются неизменными) -->
-    <div class="frame">
-        <div class="form-container">
-            <input type="text" placeholder="ФИО">
+        <div class="formButton">
+            <button class="perehod form-button" onclick="setActiveFrame(0)">Общие сведения</button>
+            <button class="perehod form-button" onclick="setActiveFrame(1)">Учеба</button>
+            <button class="perehod form-button" onclick="setActiveFrame(2)">Наука</button>
+            <button class="perehod form-button" onclick="setActiveFrame(3)">Общественная деятельность</button>
+            <button class="perehod form-button" onclick="setActiveFrame(4)">Культура и творчество</button>
+            <button class="perehod form-button" onclick="setActiveFrame(5)">Спорт</button>
         </div>
 
-        <div class="frame-mid-none">
-            <div class="frame-left">
-                <div class="form-container"><input type="text" placeholder="Контактный телефон"></div>
-                <div class="form-container"><input type="text" placeholder="Институт/Факультет"></div>
+        <div class="date-container" id="period-container">
+            <span class="date-label">Дата начала:</span>
+            <span class="date-value" id="start-date"></span>
+            <span class="date-label">Дата конца:</span>
+            <span class="date-value" id="end-date"></span>
+        </div>
+    </div>
+
+
+
+    <div class="all-frame" id="0">
+        <!-- Блок с заголовком -->
+        <div class="frame">
+            <h1> Заявление на получение повышенной стипендии за достижения в </h1>
+
+            <!-- Фрейм для динамической формы -->
+            <div id="form-frame" class="frame"></div>
+        </div>
+
+        <!-- Контактные данные (Остаются неизменными) -->
+        <div class="frame">
+            <div class="form-container">
+                <input id="input-field-fio" type="text" placeholder="ФИО">
             </div>
-            <div class="frame-right">
-                <div class="form-container"><input type="text" placeholder="Электронная почта"></div>
-                <div class="form-container"><input type="text" placeholder="Группа"></div>
+
+            <div class="frame-mid-none">
+                <div class="frame-left">
+                    <div class="form-container"><input id="input-field-phone" type="text" placeholder="Контактный телефон"></div>
+                    <div class="form-container"><input id="input-field-inst" type="text" placeholder="Институт/Факультет"></div>
+                </div>
+                <div class="frame-right">
+                    <div class="form-container"><input id="input-field-mail" type="text" placeholder="Электронная почта"></div>
+                    <div class="form-container"><input id="input-field-group" type="text" placeholder="Группа"></div>
+                </div>
             </div>
         </div>
+
+        <!-- Нижний блок -->
+        <div class="frame">
+            <div class="frame-mid- frame-mid">
+                <input type="checkbox" id="agree-checkbox">
+                <label for="agree-checkbox">Я даю своё согласие на обработку моих персональных данных, указанных в настоящем заявлении, с целью их публикации на сайте и в социальных сетях университета</label>
+            </div>
+            <div class="frame-mid- frame-mid">
+                <p>Приложение: подтверждающие документы, предоставление в электронном виде</p>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Нижний блок -->
-    <div class="frame">
-        <div class="frame-mid">
-            <input type="checkbox" id="agree-checkbox">
-            <label for="agree-checkbox">Я даю своё согласие на обработку моих персональных данных, указанных в настоящем заявлении, с целью их публикации на сайте и в социальных сетях университета</label>
-        </div>
-        <div class="frame-mid">
-            <p>Приложение: подтверждающие документы, предоставление в электронном виде</p>
-        </div>
-    </div>
-
-    <button id="mark-all-outdated" class="form-button" disabled>Отправить заявление</button>
-</div>
 
 
 
-
-
-
-
-<div class="all-frame" id="1">
+    <div class="all-frame" id="1">
     <!-- Блок с заголовком -->
-    <div class="frame">
+        <div class="frame">
            <div class="frame">
-               <div class="frame-center"><p> (А) получение студентом в течение не менее 2-х последних семестров только оценок</p></div>
-               <div class="frame-mid">
+               <div class=" frame-center criteria"><p> (А) получение студентом в течение не менее 2-х последних семестров только оценок</p></div>
+               <div class="frame-mid- frame-mid">
                    <div class="form-container">
-                        <select>
+                        <select id="onlyFive">
                             <option value="" disabled selected>Выберите вариант 1</option>
                             <option value="только отлично">только "отлично"</option>
                             <option value="хорошо и отлично">"хорошо" и "отлично"</option>
@@ -92,174 +91,68 @@
 
 
            <div class="frame">
-                <div class="frame-center"><p> (Б) получение студентом в течение предшествующего года награды (приза) за результаты проектной деятельности и (или) опытно-конструкторской работы</p></div>
-               <div class="frame-mid">
+                <div class=" frame-center criteria"><p> (Б) получение студентом в течение предшествующего года награды (приза) за результаты проектной деятельности и (или) опытно-конструкторской работы</p></div>
+               <div class="frame-mid- frame-mid project-works">
                    <div class="form-container">
-                         <select>
+                         <select class="work-select">
                             <option value="" disabled selected>Выберите вариант 1</option>
                             <option value="Международный, всероссийский">Международный, всероссийский</option>
                             <option value="Ведомственный, региональный">Ведомственный, региональный</option>
-                             <option value="Вузовский">Вузовский</option>
+                            <option value="Вузовский">Вузовский</option>
                         </select>
                    </div>
                    <div class="form-container">
-                        <input type="text" placeholder="Название мероприятия">
+                        <input class="work-input" type="text" placeholder="Название мероприятия">
                    </div>
                    <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
+                        <input class="work-input" type="text" placeholder="Дата проведения">
                    </div>
                    <div class="form-container">
-                        <input type="text" placeholder="Копия наградного документа">
-                   </div>
-               </div>
-               <div class="frame-mid">
-                   <div class="form-container">
-                         <select>
-                            <option value="" disabled selected>Выберите вариант 1</option>
-                            <option value="Международный, всероссийский">Международный, всероссийский</option>
-                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
-                             <option value="Вузовский">Вузовский</option>
-                        </select>
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Название мероприятия">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Копия наградного документа">
-                   </div>
-               </div>
-               <div class="frame-mid">
-                   <div class="form-container">
-                         <select>
-                            <option value="" disabled selected>Выберите вариант 1</option>
-                            <option value="Международный, всероссийский">Международный, всероссийский</option>
-                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
-                             <option value="Вузовский">Вузовский</option>
-                        </select>
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Название мероприятия">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Копия наградного документа">
-                   </div>
-               </div>
-               <div class="frame-mid">
-                   <div class="form-container">
-                         <select>
-                            <option value="" disabled selected>Выберите вариант 1</option>
-                            <option value="Международный, всероссийский">Международный, всероссийский</option>
-                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
-                             <option value="Вузовский">Вузовский</option>
-                        </select>
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Название мероприятия">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Копия наградного документа">
+                        <input class="work-input" type="text" placeholder="Копия наградного документа">
                    </div>
                </div>
            </div>
+        </div>
 
 
         <div class="frame">
-               <div class="frame-center"><p> (В) признание студента победителем или призером международной, всероссийской, ведомственной или региональной олимпиады, конкурса, соревнования, состязания или иного мероприятия, направленные на выявление учебных достижений студентов, проведенных в  течение года, предшествующего назначению повышенной государственной академической стипендии</p></div>
-               <div class="frame-mid">
+               <div class=" frame-center criteria"><p> (В) признание студента победителем или призером международной, всероссийской, ведомственной или региональной олимпиады, конкурса, соревнования, состязания или иного мероприятия, направленные на выявление учебных достижений студентов, проведенных в  течение года, предшествующего назначению повышенной государственной академической стипендии</p></div>
+               <div class="frame-mid- frame-mid wins-works">
                    <div class="form-container">
-                        <select>
+                        <select class="work-select">
                             <option value="" disabled selected>Выберите вариант 1</option>
                             <option value="Международный, всероссийский">Международный, всероссийский</option>
                             <option value="Ведомственный, региональный">Ведомственный, региональный</option>
                         </select>
                    </div>
                    <div class="form-container">
-                        <input type="text" placeholder="Название мероприятия">
+                        <input class="work-input" type="text" placeholder="Название мероприятия">
                    </div>
                    <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
+                        <input class="work-input" type="text" placeholder="Дата проведения">
                    </div>
                    <div class="form-container">
-                        <input type="text" placeholder="Копия наградного документа">
+                        <input class="work-input" type="text" placeholder="Копия наградного документа">
                    </div>
                </div>
-            <div class="frame-mid">
-                   <div class="form-container">
-                        <select>
-                            <option value="" disabled selected>Выберите вариант 1</option>
-                            <option value="Международный, всероссийский">Международный, всероссийский</option>
-                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
-                        </select>
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Название мероприятия">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Копия наградного документа">
-                   </div>
-               </div>
-            <div class="frame-mid">
-                   <div class="form-container">
-                        <select>
-                            <option value="" disabled selected>Выберите вариант 1</option>
-                            <option value="Международный, всероссийский">Международный, всероссийский</option>
-                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
-                        </select>
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Название мероприятия">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Копия наградного документа">
-                   </div>
-               </div>
-            <div class="frame-mid">
-                   <div class="form-container">
-                        <select>
-                            <option value="" disabled selected>Выберите вариант 1</option>
-                            <option value="Международный, всероссийский">Международный, всероссийский</option>
-                            <option value="Ведомственный, региональный">Ведомственный, региональный</option>
-                        </select>
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Название мероприятия">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
-                   </div>
-                   <div class="form-container">
-                        <input type="text" placeholder="Копия наградного документа">
-                   </div>
-               </div>
-       </div>
+        </div>
     </div>
-</div>
+
+
+
+
+
     <div class="all-frame" id="2">
         <!-- Блок с заголовком -->
         <div class="frame">
             <div class="frame">
-                <div class="frame-center"><p>(А.1) Получение наград (призов) за результаты научно-исследовательской работы в рамках мероприятий, организаторами которых являются Министерство науки и высшего образования РФ и государственные организации высшего образования</p></div>
-                <div class="frame-mid2">
+                <div class=" frame-center criteria"><p>(А.1) Получение наград (призов) за результаты научно-исследовательской работы в рамках мероприятий, организаторами которых являются Министерство науки и высшего образования РФ и государственные организации высшего образования</p></div>
+                <div class="frame-mid- frame-mid2">
                         <div class="form-container">
-                            <input type="text" value="(А.1) Получение наград (призов) за результаты научно-исследовательской работы в рамках мероприятий, организаторами которых являются Министерство науки и высшего образования РФ и государственные организации высшего образования" readonly>
+                            <input class="work-criteria" type="text" value="(А.1) Получение наград (призов) за результаты научно-исследовательской работы в рамках мероприятий, организаторами которых являются Министерство науки и высшего образования РФ и государственные организации высшего образования" readonly>
                        </div>
                        <div class="form-container">
-                             <select>
+                             <select class="work-select">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="Диплом 1 степени">Диплом 1 степени</option>
                                 <option value="Диплом 2 степени">Диплом 2 степени</option>
@@ -267,30 +160,30 @@
                             </select>
                        </div>
                        <div class="form-container">
-                            <input type="text" value="Копия диплома" readonly>
+                            <input class="work-input" type="text" value="Копия диплома" readonly>
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Подтверждающие документы">
+                            <input class="work-input" type="text" placeholder="Подтверждающие документы">
                        </div>
                 </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(А.2) Получение благодарственных писем, грамот органов власти и управления за участие в научных мероприятиях</p></div>
-                <div class="frame-mid2">
+                <div class="frame-center criteria"><p>(А.2) Получение благодарственных писем, грамот органов власти и управления за участие в научных мероприятиях</p></div>
+                <div class="frame-mid- frame-mid3">
                         <div class="form-container">
-                            <input type="text" value="(А.2) Получение благодарственных писем, грамот органов власти и управления за участие в научных мероприятиях" readonly>
+                            <input class="work-criteria" type="text" value="(А.2) Получение благодарственных писем, грамот органов власти и управления за участие в научных мероприятиях" readonly>
                        </div>
                        <div class="form-container">
-                             <select>
+                             <select class="work-select">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="Федерального уровня (Министерство образования и науки РФ и ведомства)">Федерального уровня (Министерство образования и науки РФ и ведомства)</option>
                                 <option value="Регионального и городского уровня (Правительство ВО, Губернатор и мэр)">Регионального и городского уровня (Правительство ВО, Губернатор и мэр</option>
@@ -304,31 +197,31 @@
                              </select>
                        </div>
                        <div class="form-container">
-                            <input type="text" value="Копия благодарственного письма / грамоты / приказа ректора / распоряжения директора института или декана факультета по представлению руководителя научного объединения" readonly>
+                            <input class="work-input" type="text" value="Копия благодарственного письма / грамоты / приказа ректора / распоряжения директора института или декана факультета по представлению руководителя научного объединения" readonly>
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Подтверждающие документы">
+                            <input class="work-input" type="text" placeholder="Подтверждающие документы">
                        </div>
                 </div>
             </div>
 
             <div class="frame">
-                <div class="frame-center"><p>(А.3) Получение документов, подтверждающих исключительное право студента на достигнутый им научный результат интеллектуальной деятельности, получивших правовую охрану</p></div>
-                <div class="frame-mid2">
+                <div class=" frame-center criteria"><p>(А.3) Получение документов, подтверждающих исключительное право студента на достигнутый им научный результат интеллектуальной деятельности, получивших правовую охрану</p></div>
+                <div class="frame-mid- frame-mid4">
                         <div class="form-container">
-                            <input type="text" value="Получение документов, подтверждающих исключительное право студента на достигнутый им научный результат интеллектуальной деятельности, получивших правовую охрану" readonly>
+                            <input class="work-criteria" type="text" value="Получение документов, подтверждающих исключительное право студента на достигнутый им научный результат интеллектуальной деятельности, получивших правовую охрану" readonly>
                        </div>
                        <div class="form-container">
-                             <select>
+                             <select class="work-select">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="Индивидуальное достижение">Индивидуальное достижение</option>
                                 <option value="В соавторстве">В соавторстве</option>
@@ -336,65 +229,64 @@
                              </select>
                        </div>
                        <div class="form-container">
-                            <input type="text" value="Копия патента, свидетельства" readonly>
+                            <input class="work-input" type="text" value="Копия патента, свидетельства" readonly>
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Подтверждающие документы">
+                            <input class="work-input" type="text" placeholder="Подтверждающие документы">
                        </div>
                 </div>
             </div>
 
 
             <div class="frame">
-                <div class="frame-center"><p>(А.4) Получение грантов на выполнение научно-исследовательской работы</p></div>
-                <div class="frame-mid2">
+                <div class=" frame-center criteria"><p>(А.4) Получение грантов на выполнение научно-исследовательской работы</p></div>
+                <div class="frame-mid- frame-mid5">
                         <div class="form-container">
-                            <input type="text" value="(А.4) Получение грантов на выполнение научно-исследовательской работы" readonly>
+                            <input class="work-criteria" type="text" value="(А.4) Получение грантов на выполнение научно-исследовательской работы" readonly>
                        </div>
                        <div class="form-container">
-                             <select>
+                             <select class="work-select">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="Под руководством студента">Под руководством студента</option>
                                 <option value="В составе коллектива">В составе коллектива</option>
-
                              </select>
                        </div>
                        <div class="form-container">
-                            <input type="text" value="Копия грантового соглашения, договора о выделении гранта, копия информационного письма грантодающей организации о присуждении гранта (Государственное задание, РНФ, РГО, РИО, Росмолодежь, Фонд содействия инновациям, внутриуниверситетские конкурсы)" readonly>
+                            <input class="work-input" type="text" value="Копия грантового соглашения, договора о выделении гранта, копия информационного письма грантодающей организации о присуждении гранта (Государственное задание, РНФ, РГО, РИО, Росмолодежь, Фонд содействия инновациям, внутриуниверситетские конкурсы)" readonly>
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Подтверждающие документы">
+                            <input class="work-input" type="text" placeholder="Подтверждающие документы">
                        </div>
                 </div>
             </div>
 
 
             <div class="frame">
-                <div class="frame-center"><p>(Б) Наличие публикации в научном издании</p></div>
-                <div class="frame-mid2">
+                <div class=" frame-center criteria"><p>(Б) Наличие публикации в научном издании</p></div>
+                <div class="frame-mid- frame-mid6">
                         <div class="form-container">
-                            <input type="text" value="(Б) Наличие публикации в научном издании" readonly>
+                            <input class="work-criteria" type="text" value="(Б) Наличие публикации в научном издании" readonly>
                        </div>
                        <div class="form-container">
-                             <select>
+                             <select class="work-select">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="Белый список научных журналов">"Белый список" научных журналов</option>
                                 <option value="Публикации, проиндексированные в WoS, Scopus, RSCI, не вошедшие в Белый список">Публикации, проиндексированные в WoS, Scopus, RSCI, не вошедшие в "Белый список"</option>
@@ -403,23 +295,22 @@
                                 <option value="Статья в сборниках уровня РИНЦ по материалам международных, всероссийских конференций">Статья в сборниках уровня РИНЦ по материалам международных, всероссийских конференций</option>
                                 <option value="Тезисы в сборниках уровня РИНЦ по материалам международных, всероссийских конференций">Тезисы в сборниках уровня РИНЦ по материалам международных, всероссийских конференций</option>
                                 <option value="Иные публикации, размещенные на elibrary">Иные публикации, размещенные на elibrary</option>
-
                              </select>
                        </div>
                        <div class="form-container">
-                            <input type="text" value="Ссылка на публикацию в открытом онлайн-доступе, копии: титульного листа, содержания журнала/сборника с ФИО автора, первой страницы публикации и скриншот страницы профиля автора из elibrary c отражением публикаций" readonly>
+                            <input class="work-input" type="text" value="Ссылка на публикацию в открытом онлайн-доступе, копии: титульного листа, содержания журнала/сборника с ФИО автора, первой страницы публикации и скриншот страницы профиля автора из elibrary c отражением публикаций" readonly>
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Подтверждающие документы">
+                            <input class="work-input" type="text" placeholder="Подтверждающие документы">
                        </div>
                 </div>
             </div>
@@ -427,115 +318,118 @@
         </div>
     </div>
 
-<div class="all-frame" id="3">
+
+
+
+
+    <div class="all-frame" id="3">
         <!-- Блок с заголовком -->
         <div class="frame">
             <div class="frame">
-                <div class="frame-center"><p>Критерий «а1». Получение благодарности, благодарственного письма, почетной грамоты за результаты общественной деятельности</p></div>
-                <div class="frame-mid9">
+                <div class=" frame-center criteria"><p>Критерий «а1». Получение благодарности, благодарственного письма, почетной грамоты за результаты общественной деятельности</p></div>
+                <div class="frame-mid- frame-mid7">
                     <div class="form-container">
-                            <input type="text" value="Благодарность, благодарственное письмо директора/декана" readonly>
+                        <input class="work-criteria" type="text" value="Благодарность, благодарственное письмо директора/декана" readonly>
                     </div>
                     <div class="form-container">
-                            <input type="text" value="Копия благодарности, благодарственного письма" readonly>
+                        <input class="type-document" type="text" value="Копия благодарности, благодарственного письма" readonly>
                     </div>
                     <div class="form-container">
-                             <select>
-                                <option value="" disabled selected>Форма проведения/участия</option>
-                                <option value="смешанная">смешанная</option>
-                                <option value="очная">очная</option>
-                                <option value="заочная">заочная</option>
-
-                             </select>
+                         <select class="work-input">
+                            <option value="" disabled selected>Форма проведения/участия</option>
+                            <option value="смешанная">смешанная</option>
+                            <option value="очная">очная</option>
+                            <option value="заочная">заочная</option>
+                         </select>
                     </div>
                     <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
-                       </div>
-                        <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
-                       </div>
-                        <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
-                       </div>
-                        <div class="form-container">
-                            <input type="text" placeholder="Подтверждающие документы">
-                       </div>
+                        <input class="work-input" type="text" placeholder="Название мероприятия">
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Дата проведения">
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Место проведения">
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Подтверждающие документы">
+                    </div>
                 </div>
-                <div class="frame-mid9">
-                    <div class="form-container">
-                            <input type="text" value="Почетная грамота директора/декана" readonly>
-                    </div>
-                    <div class="form-container">
-                            <input type="text" value="Копия почетной грамоты" readonly>
-                    </div>
-                    <div class="form-container">
-                             <select>
-                                <option value="" disabled selected>Форма проведения/участия</option>
-                                <option value="смешанная">смешанная</option>
-                                <option value="очная">очная</option>
-                                <option value="заочная">заочная</option>
 
-                             </select>
+                <div class="frame-mid- frame-mid8">
+                    <div class="work-criteria">
+                        <input class="type-document" type="text" value="Почетная грамота директора/декана" readonly>
+                    </div>
+                    <div class="type-document">
+                        <input class="work-input" type="text" value="Копия почетной грамоты" readonly>
                     </div>
                     <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
-                       </div>
-                        <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
-                       </div>
-                        <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
-                       </div>
-                        <div class="form-container">
-                            <input type="text" placeholder="Подтверждающие документы">
-                       </div>
+                         <select class="work-input">
+                            <option value="" disabled selected>Форма проведения/участия</option>
+                            <option value="смешанная">смешанная</option>
+                            <option value="очная">очная</option>
+                            <option value="заочная">заочная</option>
+                         </select>
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Название мероприятия">
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Дата проведения">
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Место проведения">
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Подтверждающие документы">
+                    </div>
                 </div>
-                <div class="frame-mid8">
-                    <div class="form-container">
-                            <input type="text" value="Награда образовательных учреждений, учреждений культуры и спорта, предприятий, органов власти" readonly>
-                    </div>
-                    <div class="form-container">
-                            <input type="text" value="Копия наградного документа" readonly>
-                    </div>
-                    <div class="form-container">
-                             <select>
-                                <option value="" disabled selected>Форма проведения/участия</option>
-                                <option value="смешанная">смешанная</option>
-                                <option value="очная">очная</option>
-                                <option value="заочная">заочная</option>
 
-                             </select>
+                <div class="frame-mid- frame-mid9">
+                    <div class="form-container">
+                        <input class="work-input" type="text" value="Награда образовательных учреждений, учреждений культуры и спорта, предприятий, органов власти" readonly>
                     </div>
                     <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
-                       </div>
-                        <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
-                       </div>
-                        <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
-                       </div>
-                        <div class="form-container">
-                            <input type="text" placeholder="Подтверждающие документы">
-                       </div>
-                </div>
-                <div class="frame-mid10">
+                        <input class="work-input" type="text" value="Копия наградного документа" readonly>
+                    </div>
                     <div class="form-container">
-                             <select>
+                         <select class="work-select">
+                            <option value="" disabled selected>Форма проведения/участия</option>
+                            <option value="смешанная">смешанная</option>
+                            <option value="очная">очная</option>
+                            <option value="заочная">заочная</option>
+                         </select>
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Название мероприятия">
+                   </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Дата проведения">
+                   </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Место проведения">
+                   </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Подтверждающие документы">
+                   </div>
+                </div>
+
+                <div class="frame-mid- frame-mid10">
+                    <div class="form-container">
+                             <select class="selector1">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="Благодарность, благодарственное письмо ректора">Благодарность, благодарственное письмо ректора</option>
                                 <option value="Почетная грамота ректора">Почетная грамота ректора</option>
                                 <option value="Награда мэра, городской Думы">Награда мэра, городской Думы</option>
                                 <option value="Награда губернатора">Награда губернатора</option>
                                 <option value="Награда органа исполнительной власти федерального уровня">Награда органа исполнительной власти федерального уровня</option>
-
                              </select>
                     </div>
                     <div class="form-container">
-                            <input type="text" value="" readonly>
+                            <input class="selector2" type="text" value="" readonly>
                     </div>
                     <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Форма проведения/участия</option>
                                 <option value="смешанная">смешанная</option>
                                 <option value="очная">очная</option>
@@ -559,10 +453,10 @@
 
             </div>
             <div class="frame">
-                <div class="frame-center"><p>Критерий «а2». Руководство/членство в организациях и объединениях</p></div>
-                <div class="frame-mid11">
+                <div class=" frame-center criteria"><p>Критерий «а2». Руководство/членство в организациях и объединениях</p></div>
+                <div class="frame-mid- frame-mid11">
                     <div class="form-container">
-                         <select>
+                         <select class="selector1">
                             <option value="" disabled selected>Конкретизация критерия</option>
                             <option value="Членство в общественных организациях, студенческих объединениях">Членство в общественных организациях, студенческих объединениях</option>
                             <option value="Членство в ученом совете университета, института, факультета">Членство в ученом совете университета, института, факультета</option>
@@ -573,7 +467,7 @@
                          </select>
                     </div>
                     <div class="form-container">
-                            <input type="text" value="" readonly>
+                            <input class="selector2" type="text" value="" readonly>
                     </div>
                     <div class="form-container">
                          <select>
@@ -599,10 +493,10 @@
                 </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>Критерий «а3». Получение грантовой поддержки на реализацию социального проекта</p></div>
-                <div class="frame-mid3">
+                <div class="frame-center criteria"><p>Критерий «а3». Получение грантовой поддержки на реализацию социального проекта</p></div>
+                <div class="frame-mid- frame-mid12">
                     <div class="form-container">
-                         <select>
+                         <select class="criteria-concrete">
                             <option value="" disabled selected>Конкретизация критерия</option>
                             <option value="Участник команды проекта">Участник команды проекта</option>
                             <option value="Руководитель проекта">Руководитель проекта</option>
@@ -635,8 +529,8 @@
                 </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>Критерий «а4». Участие в организации и проведении мероприятий</p></div>
-                <div class="frame-mid13">
+                <div class=" frame-center criteria"><p>Критерий «а4». Участие в организации и проведении мероприятий</p></div>
+                <div class="frame-mid- frame-mid13">
                     <div class="form-container">
                         <input type="text" value="Участие в одном пероприятии" readonly>
                     </div>
@@ -664,7 +558,7 @@
                             <input type="text" placeholder="Подтверждающие документы">
                        </div>
                 </div>
-                <div class="frame-mid9">
+                <div class="frame-mid- frame-mid14">
                     <div class="form-container">
                         <input type="text" value="Менеджмент мероприятия" readonly>
                     </div>
@@ -694,8 +588,8 @@
                 </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>Критерий «а5». Участие в региональных и федеральных конкурсах общественной направленности</p></div>
-                <div class="frame-mid14">
+                <div class="frame-center criteria"><p>Критерий «а5». Участие в региональных и федеральных конкурсах общественной направленности</p></div>
+                <div class="frame-mid- frame-mid15">
                     <div class="form-container">
                          <select>
                             <option value="" disabled selected>Конкретизация критерия</option>
@@ -731,16 +625,16 @@
                 </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>Критерий «б». Систематическое участие студента по информационному обеспечению общественно значимых мероприятий, общественной жизни федеральной государственной образовательной организации высшего образования или с её участием, подтверждаемое документально</p></div>
-                <div class="frame-mid7">
+                <div class="frame-center criteria"><p>Критерий «б». Систематическое участие студента по информационному обеспечению общественно значимых мероприятий, общественной жизни федеральной государственной образовательной организации высшего образования или с её участием, подтверждаемое документально</p></div>
+                <div class="frame-mid- frame-mid16">
                     <div class="form-container">
-                        <input type="text" value="Победа в университетских конкурсах информационного сопровождения" readonly>
+                        <input class="criteria-concrete" type="text" value="Победа в университетских конкурсах информационного сопровождения" readonly>
                     </div>
                     <div class="form-container">
-                        <input type="text" value="Копия документа, подтверждающего участие (сертификат/диплом)" readonly>
+                        <input class="work-input" type="text" value="Копия документа, подтверждающего участие (сертификат/диплом)" readonly>
                     </div>
                     <div class="form-container">
-                         <select>
+                         <select class="form-participation">
                             <option value="" disabled selected>Форма проведения/участия</option>
                             <option value="смешанная">смешанная</option>
                             <option value="очная">очная</option>
@@ -748,21 +642,21 @@
                          </select>
                     </div>
                     <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Подтверждающие документы">
+                            <input class="work-input" type="text" placeholder="Подтверждающие документы">
                        </div>
                 </div>
-                <div class="frame-mid12">
+                <div class="frame-mid- frame-mid17">
                     <div class="form-container">
-                         <select>
+                         <select class="criteria-concrete">
                             <option value="" disabled selected>Конкретизация критерия</option>
                             <option value="Член редакции студенческого центра кафедры / проекта">Член редакции студенческого центра кафедры / проекта</option>
                             <option value="Член редакции студенческого центра института / университета">Член редакции студенческого центра института / университета</option>
@@ -771,10 +665,10 @@
                          </select>
                     </div>
                     <div class="form-container">
-                        <input type="text" value="" readonly>
+                        <input class="work-input" type="text" value="" readonly>
                     </div>
                     <div class="form-container">
-                         <select>
+                         <select class="form-participation">
                             <option value="" disabled selected>Форма проведения/участия</option>
                             <option value="смешанная">смешанная</option>
                             <option value="очная">очная</option>
@@ -782,30 +676,30 @@
                          </select>
                     </div>
                     <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Подтверждающие документы">
+                            <input class="work-input" type="text" placeholder="Подтверждающие документы">
                        </div>
                 </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>Критерий «в». Систематическое участие студента в течение года, предшествующего назначению повышенной государственной академической стипендии, в проведении (обеспечении проведения) общественно значимой деятельности, направленной на формирование у детей и молодежи общероссийской гражданской идентичности, патриотизма и гражданской ответственности, культуры межнационального (межэтнического) и межконфессионального общения, организуемой субъектами, осуществляющими деятельность в сфере молодежной политики, подтверждаемое документально</p></div>
-                <div class="frame-mid10">
+                <div class=" frame-center criteria"><p>Критерий «в». Систематическое участие студента в течение года, предшествующего назначению повышенной государственной академической стипендии, в проведении (обеспечении проведения) общественно значимой деятельности, направленной на формирование у детей и молодежи общероссийской гражданской идентичности, патриотизма и гражданской ответственности, культуры межнационального (межэтнического) и межконфессионального общения, организуемой субъектами, осуществляющими деятельность в сфере молодежной политики, подтверждаемое документально</p></div>
+                <div class="frame-mid- frame-mid18">
                     <div class="form-container">
-                        <input type="text" value="Участие в одном мероприятии" readonly>
+                        <input class="criteria-concrete" type="text" value="Участие в одном мероприятии" readonly>
                     </div>
                     <div class="form-container">
-                        <input type="text" value="Справка, подтверждающая количество участий студента" readonly>
+                        <input  class="work-input" type="text" value="Справка, подтверждающая количество участий студента" readonly>
                     </div>
                     <div class="form-container">
-                         <select>
+                         <select class="form-participation">
                             <option value="" disabled selected>Форма проведения/участия</option>
                             <option value="смешанная">смешанная</option>
                             <option value="очная">очная</option>
@@ -813,16 +707,16 @@
                          </select>
                     </div>
                     <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                        </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Подтверждающие документы">
+                            <input class="work-input" type="text" placeholder="Подтверждающие документы">
                        </div>
                 </div>
             </div>
@@ -834,10 +728,10 @@
         <!-- Блок с заголовком -->
         <div class="frame">
             <div class="frame">
-                <div class="frame-center"><p>Критерий «а». Получение студентом в течение года, да, предшествующего назначению повышенной государственной академической стипендии, награды (приза) за результаты культурно-творческой деятельности, осуществленной им в рамках деятельности, проводимой федеральной государственной организацией ВО или иной организацией, в том числе в рамках конкурса, смотра и иного аналогичного международного, всероссийского,  ведомственного, регионального мероприятия, подтверждаемое документально</p></div>
-                <div class="frame-mid6">
+                <div class="frame-center criteria"><p>Критерий «а». Получение студентом в течение года, да, предшествующего назначению повышенной государственной академической стипендии, награды (приза) за результаты культурно-творческой деятельности, осуществленной им в рамках деятельности, проводимой федеральной государственной организацией ВО или иной организацией, в том числе в рамках конкурса, смотра и иного аналогичного международного, всероссийского,  ведомственного, регионального мероприятия, подтверждаемое документально</p></div>
+                <div class="frame-mid- frame-mid19">
                     <div class="form-container">
-                         <select>
+                         <select class="criteria-concrete">
                             <option value="" disabled selected>Конкретизация критерия</option>
                             <option value="Всероссийский, международный уровень, победа/призовое место">Всероссийский, международный уровень, победа/призовое место</option>
                             <option value="Областной уровень, победа/призовое место">Областной уровень, победа/призовое место</option>
@@ -850,11 +744,11 @@
                          </select>
                     </div>
                     <div class="form-container">
-                        <input type="text" value="Наградной документ" readonly>
+                        <input class="work-input" type="text" value="Наградной документ" readonly>
                     </div>
 
                     <div class="form-container">
-                         <select>
+                         <select class="forma-participation">
                             <option value="" disabled selected>Форма участия</option>
                             <option value="смешанная">смешанная</option>
                             <option value="очная">очная</option>
@@ -863,114 +757,118 @@
                     </div>
 
                     <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
-                   </div>
-                    <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
+                        <input class="work-input" type="text" placeholder="Название мероприятия">
                     </div>
                     <div class="form-container">
-                        <input type="text" placeholder="Организатор">
+                        <input class="work-input" type="text" placeholder="Дата проведения">
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Организатор">
                    </div>
                     <div class="form-container">
-                        <input type="text" placeholder="Подтверждающие документы">
+                        <input class="work-input" type="text" placeholder="Подтверждающие документы">
                    </div>
                 </div>
 
-                <div class="frame-mid7">
+                <div class="frame-mid- frame-mid20">
                     <div class="form-container">
-                        <input type="text" value="Победа в заочных конкурсах,интернет-конкурсах любого уровня" readonly>
+                        <input class="criteria-concrete" type="text" value="Победа в заочных конкурсах,интернет-конкурсах любого уровня" readonly>
                     </div>
                     <div class="form-container">
-                        <input type="text" value="Наградной документ" readonly>
+                        <input class="form-document" type="text" value="Наградной документ" readonly>
                     </div>
                     <div class="form-container">
-                        <input type="text" value="Заочная" readonly>
+                        <input class="forma-participation" type="text" value="Заочная" readonly>
+                    </div>
+
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Название мероприятия">
                     </div>
                     <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                        <input class="work-input" type="text" placeholder="Дата проведения">
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Организатор">
                    </div>
                     <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
-                    </div>
-                    <div class="form-container">
-                        <input type="text" placeholder="Организатор">
-                   </div>
-                    <div class="form-container">
-                        <input type="text" placeholder="Подтверждающие документы">
+                        <input class="work-input" type="text" placeholder="Подтверждающие документы">
                    </div>
                 </div>
             </div>
+
+
             <div class="frame">
-                <div class="frame-center"><p>Критерий «б». Публичное представление студентом в течение года, предшествующего назнаению повышенной государственной академической стипендии, созданного им произведения литературы или искусства, подтверждаемое документально(в рамках внеучебной деятельности)</p></div>
-                <div class="frame-mid3">
+                <div class="frame-center criteria"><p>Критерий «б». Публичное представление студентом в течение года, предшествующего назнаению повышенной государственной академической стипендии, созданного им произведения литературы или искусства, подтверждаемое документально(в рамках внеучебной деятельности)</p></div>
+                <div class="frame-mid- frame-mid21">
                     <div class="form-container">
-                        <input type="text" value="Одно произведение" readonly>
+                        <input class="criteria-concrete" type="text" value="Одно произведение" readonly>
                     </div>
                     <div class="form-container">
-                        <input type="text" value="Ссылка на публичное представление созданного произведения" readonly>
+                        <input class="work-input" type="text" value="Ссылка на публичное представление созданного произведения" readonly>
                     </div>
                     <div class="form-container">
-                         <select>
+                         <select class="forma-participation">
                             <option value="" disabled selected>Форма участия</option>
                             <option value="смешанная">смешанная</option>
                             <option value="очная">очная</option>
                             <option value="заочная">заочная"</option>
                          </select>
                     </div>
+
                     <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
-                   </div>
-                    <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
+                        <input class="work-input" type="text" placeholder="Название мероприятия">
                     </div>
                     <div class="form-container">
-                        <input type="text" placeholder="Организатор">
+                        <input class="work-input" type="text" placeholder="Дата проведения">
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Организатор">
                    </div>
                     <div class="form-container">
-                        <input type="text" placeholder="Подтверждающие документы">
+                        <input class="work-input" type="text" placeholder="Подтверждающие документы">
+                    </div>
+                </div>
+            </div>
+            <div class="frame">
+                <div class=" frame-center criteria"><p>Критерий «в1». Систематическое участие студента в течение года, предшествующего назначению повышенной государственной академической стипендии, в проведении (обеспечении проведения) публичной культурно-творческой деятельности воспитательного, пропагандистского характера и иной общественно значимой публично культурно-творческой деятельности, подтверждаемое документально (в рамках внеучебной деятельности)</p></div>
+                <div class="frame-mid- frame-mid22">
+                    <div class="form-container">
+                        <input class="criteria-concrete" type="text" value="Одно мероприятие" readonly>
+                    </div>
+                    <div class="form-container">
+                        <input class="form-document" type="text" value="Копия справки, подтверждающий участие студента в культурно-творческой деятельности / сертификата, диплома участника, благодарственного письма / ссылка на пост в официальной группе проекта" readonly>
+                    </div>
+                    <div class="form-container">
+                         <input class="forma-participation" type="text" placeholder="Форма участия">
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Название мероприятия">
+                   </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Дата проведения">
+                    </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Организатор">
+                   </div>
+                    <div class="form-container">
+                        <input class="work-input" type="text" placeholder="Подтверждающие документы">
                    </div>
                 </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>Критерий «в1». Систематическое участие студента в течение года, предшествующего назначению повышенной государственной академической стипендии, в проведении (обеспечении проведения) публичной культурно-творческой деятельности воспитательного, пропагандистского характера и иной общественно значимой публично культурно-творческой деятельности, подтверждаемое документально (в рамках внеучебной деятельности)</p></div>
-                <div class="frame-mid4">
+                <div class=" frame-center criteria"><p>Критерий "В2" Членство студента в течение года, предшествующего назначению повышенной государственной академической стипендии, в художественных студиях ЦСКиТ</p></div>
+                <div class="frame-mid- frame-mid23">
                     <div class="form-container">
-                        <input type="text" value="Одно мероприятие" readonly>
+                        <input class="criteria-concrete" type="text" value="Членство в одной студии" readonly>
                     </div>
                     <div class="form-container">
-                        <input type="text" value="Копия справки, подтверждающий участие студента в культурно-творческой деятельности / сертификата, диплома участника, благодарственного письма / ссылка на пост в официальной группе проекта" readonly>
+                        <input class="form-document" type="text" value="Копия справки, подтверждающий участие студента в культурно-творческой деятельности / сертификата, диплома участника, благодарственного письма / ссылка на пост в официальной группе проекта" readonly>
                     </div>
                     <div class="form-container">
-                         <input type="text" placeholder="Форма участия">
+                        <input class="forma-participation" type="text" value="участник коллектива" readonly>
                     </div>
                     <div class="form-container">
-                        <input type="text" placeholder="Название мероприятия">
-                   </div>
-                    <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
-                    </div>
-                    <div class="form-container">
-                        <input type="text" placeholder="Организатор">
-                   </div>
-                    <div class="form-container">
-                        <input type="text" placeholder="Подтверждающие документы">
-                   </div>
-                </div>
-            </div>
-            <div class="frame">
-                <div class="frame-center"><p>Критерий "В2" Членство студента в течение года, предшествующего назначению повышенной государственной академической стипендии, в художественных студиях ЦСКиТ</p></div>
-                <div class="frame-mid5">
-                    <div class="form-container">
-                        <input type="text" value="Членство в одной студии" readonly>
-                    </div>
-                    <div class="form-container">
-                        <input type="text" value="Копия справки, подтверждающий участие студента в культурно-творческой деятельности / сертификата, диплома участника, благодарственного письма / ссылка на пост в официальной группе проекта" readonly>
-                    </div>
-                    <div class="form-container">
-                        <input type="text" value="участник коллектива" readonly>
-                    </div>
-                    <div class="form-container">
-                         <select>
+                         <select class="work-input">
                             <option value="" disabled selected>Название мероприятия</option>
                             <option value="ВЭС «Бриз»">ВЭС «Бриз»</option>
                             <option value="Студия «DanceFM»">Студия «DanceFM»</option>
@@ -980,990 +878,997 @@
                          </select>
                     </div>
                     <div class="form-container">
-                        <input type="text" placeholder="Дата проведения">
+                        <input class="work-input" type="text" placeholder="Дата проведения">
                     </div>
                     <div class="form-container">
-                        <input type="text" placeholder="Организатор">
+                        <input class="work-input" type="text" placeholder="Организатор">
                    </div>
                     <div class="form-container">
-                        <input type="text" placeholder="Подтверждающие документы">
+                        <input class="work-input" type="text" placeholder="Подтверждающие документы">
                    </div>
                 </div>
             </div>
         </div>
 </div>
+
+
+
 <div class="all-frame" id="5">
         <!-- Блок с заголовком -->
         <div class="frame">
             <div class="frame">
-                <div class="frame-center"><p>(А.1) В рамках спортивных соревнований международного уровня (олимпийский вид спорта) - I-III место</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(А.1) В рамках спортивных соревнований международного уровня (олимпийский вид спорта) - I-III место</p></div>
+                    <div class="frame-mid- frame-mid24">
                         <div class="form-container">
-                            <input type="text" value="(А.1) В рамках спортивных соревнований международного уровня (олимпийский вид спорта) - I-III место" readonly>
+                            <input class="criteria" type="text" value="(А.1) В рамках спортивных соревнований международного уровня (олимпийский вид спорта) - I-III место" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(А.2) В рамках спортивных соревнований международного уровня (олимпийский вид спорта) - I-III место</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(А.2) В рамках спортивных соревнований международного уровня (олимпийский вид спорта) - I-III место</p></div>
+                    <div class="frame-mid- frame-mid25">
                         <div class="form-container">
-                            <input type="text" value="(А.2) В рамках спортивных соревнований международного уровня (неолимпийский вид спорта) - I-III место" readonly>
+                            <input class="criteria" type="text" value="(А.2) В рамках спортивных соревнований международного уровня (неолимпийский вид спорта) - I-III место" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(А.3) В составе сборной команды университета в рамках финальных этапов Всероссийских студенческих соревнований по видам спорта, Чемпионатов (Кубков) студенческих спортивных лиг (ассоциаций) и/или Всероссийской летней/зимней Универсиады - I-III место</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(А.3) В составе сборной команды университета в рамках финальных этапов Всероссийских студенческих соревнований по видам спорта, Чемпионатов (Кубков) студенческих спортивных лиг (ассоциаций) и/или Всероссийской летней/зимней Универсиады - I-III место</p></div>
+                    <div class="frame-mid- frame-mid26">
                         <div class="form-container">
-                            <input type="text" value="(А.3) В составе сборной команды университета в рамках финальных этапов Всероссийских студенческих соревнований по видам спорта, Чемпионатов (Кубков) студенческих спортивных лиг (ассоциаций) и/или Всероссийской летней/зимней Универсиады - I-III место" readonly>
+                            <input class="criteria" type="text" value="(А.3) В составе сборной команды университета в рамках финальных этапов Всероссийских студенческих соревнований по видам спорта, Чемпионатов (Кубков) студенческих спортивных лиг (ассоциаций) и/или Всероссийской летней/зимней Универсиады - I-III место" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(А.4) В рамках спортивных соревнований всероссийского или межрегионального уровня (олимпийский вид спорта) - I-III место</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(А.4) В рамках спортивных соревнований всероссийского или межрегионального уровня (олимпийский вид спорта) - I-III место</p></div>
+                    <div class="frame-mid- frame-mid27">
                         <div class="form-container">
-                            <input type="text" value="(А.4) В рамках спортивных соревнований всероссийского или межрегионального уровня (олимпийский вид спорта) - I-III место" readonly>
+                            <input class="criteria" type="text" value="(А.4) В рамках спортивных соревнований всероссийского или межрегионального уровня (олимпийский вид спорта) - I-III место" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(А.5) В рамках спортивных соревнований всероссийского или межрегионального уровня (не олимпийский вид спорта) - I-III место</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(А.5) В рамках спортивных соревнований всероссийского или межрегионального уровня (не олимпийский вид спорта) - I-III место</p></div>
+                    <div class="frame-mid- frame-mid28">
                         <div class="form-container">
-                            <input type="text" value="(А.5) В рамках спортивных соревнований всероссийского или межрегионального уровня (не олимпийский вид спорта) - I-III место" readonly>
+                            <input class="criteria" type="text" value="(А.5) В рамках спортивных соревнований всероссийского или межрегионального уровня (не олимпийский вид спорта) - I-III место" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(А.6) В рамках спортивных соревнований регионального уровня (олимпийский вид спорта) - I-III место</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(А.6) В рамках спортивных соревнований регионального уровня (олимпийский вид спорта) - I-III место</p></div>
+                    <div class="frame-mid- frame-mid29">
                         <div class="form-container">
-                            <input type="text" value="(А.6) В рамках спортивных соревнований регионального уровня (олимпийский вид спорта) - I-III место" readonly>
+                            <input class="criteria" type="text" value="(А.6) В рамках спортивных соревнований регионального уровня (олимпийский вид спорта) - I-III место" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(А.7) В рамках спортивных соревнований регионального уровня (неолимпийский вид спорта) - I-III место</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(А.7) В рамках спортивных соревнований регионального уровня (неолимпийский вид спорта) - I-III место</p></div>
+                    <div class="frame-mid- frame-mid30">
                         <div class="form-container">
-                            <input type="text" value="(А.7) В рамках спортивных соревнований регионального уровня (неолимпийский вид спорта) - I-III место" readonly>
+                            <input class="criteria" type="text" value="(А.7) В рамках спортивных соревнований регионального уровня (неолимпийский вид спорта) - I-III место" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(А.8) В рамках спортивных соревнований муниципального уровня (олимпийский вид спорта) - I-III место</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(А.8) В рамках спортивных соревнований муниципального уровня (олимпийский вид спорта) - I-III место</p></div>
+                    <div class="frame-mid- frame-mid31">
                         <div class="form-container">
-                            <input type="text" value="(А.8) В рамках спортивных соревнований муниципального уровня (олимпийский вид спорта) - I-III место" readonly>
+                            <input class="criteria" type="text" value="(А.8) В рамках спортивных соревнований муниципального уровня (олимпийский вид спорта) - I-III место" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(А.9) В рамках спортивных соревнований муниципального уровня (неолимпийский вид спорта) - I-III место</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(А.9) В рамках спортивных соревнований муниципального уровня (неолимпийский вид спорта) - I-III место</p></div>
+                    <div class="frame-mid- frame-mid32">
                         <div class="form-container">
-                            <input type="text" value="(А.9) В рамках спортивных соревнований муниципального уровня (неолимпийский вид спорта) - I-III место" readonly>
+                            <input class="criteria" type="text" value="(А.9) В рамках спортивных соревнований муниципального уровня (неолимпийский вид спорта) - I-III место" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
              <div class="frame">
-                <div class="frame-center"><p>(А.10) В рамках спортивных соревнований, проводимых в университете - I-III место</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(А.10) В рамках спортивных соревнований, проводимых в университете - I-III место</p></div>
+                    <div class="frame-mid- frame-mid33">
                         <div class="form-container">
-                            <input type="text" value="(А.10) В рамках спортивных соревнований, проводимых в университете - I-III место" readonly>
+                            <input class="criteria" type="text" value="(А.10) В рамках спортивных соревнований, проводимых в университете - I-III место" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(А.11) В рамках массовых физкультурно-спортивных мероприятий (Кросс нации, Лыжня России, российский Азимут и другие) - I-III</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(А.11) В рамках массовых физкультурно-спортивных мероприятий (Кросс нации, Лыжня России, российский Азимут и другие) - I-III</p></div>
+                    <div class="frame-mid- frame-mid34">
                         <div class="form-container">
-                            <input type="text" value="(А.11) В рамках массовых физкультурно-спортивных мероприятий (Кросс нации, Лыжня России, российский Азимут и другие) - I-III" readonly>
+                            <input class="criteria" type="text" value="(А.11) В рамках массовых физкультурно-спортивных мероприятий (Кросс нации, Лыжня России, российский Азимут и другие) - I-III" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.1) Участие в первенстве/чемпионате международного уровня (олимпийский вид спорта)</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(Б.1) Участие в первенстве/чемпионате международного уровня (олимпийский вид спорта)</p></div>
+                    <div class="frame-mid- frame-mid35">
                         <div class="form-container">
-                            <input type="text" value="(Б.1) Участие в первенстве/чемпионате международного уровня (олимпийский вид спорта)" readonly>
+                            <input class="criteria" type="text" value="(Б.1) Участие в первенстве/чемпионате международного уровня (олимпийский вид спорта)" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.2) Участие в первенстве/чемпионате международного уровня (неолимпийский вид спорта)</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(Б.2) Участие в первенстве/чемпионате международного уровня (неолимпийский вид спорта)</p></div>
+                    <div class="frame-mid- frame-mid36">
                         <div class="form-container">
-                            <input type="text" value="(Б.2) Участие в первенстве/чемпионате международного уровня (неолимпийский вид спорта)" readonly>
+                            <input class="criteria" type="text" value="(Б.2) Участие в первенстве/чемпионате международного уровня (неолимпийский вид спорта)" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.3) Участие в составе сборной команды университета в финальных этапах Всероссийских студенческих соревнований по видам спорта, Чемпионатов (Кубков) студенческих спортивных лиг (ассоциаций) и/или Всероссийской летней/зимней Универсиады</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(Б.3) Участие в составе сборной команды университета в финальных этапах Всероссийских студенческих соревнований по видам спорта, Чемпионатов (Кубков) студенческих спортивных лиг (ассоциаций) и/или Всероссийской летней/зимней Универсиады</p></div>
+                    <div class="frame-mid- frame-mid37">
                         <div class="form-container">
-                            <input type="text" value="(Б.3) Участие в составе сборной команды университета в финальных этапах Всероссийских студенческих соревнований по видам спорта, Чемпионатов (Кубков) студенческих спортивных лиг (ассоциаций) и/или Всероссийской летней/зимней Универсиады" readonly>
+                            <input class="criteria" type="text" value="(Б.3) Участие в составе сборной команды университета в финальных этапах Всероссийских студенческих соревнований по видам спорта, Чемпионатов (Кубков) студенческих спортивных лиг (ассоциаций) и/или Всероссийской летней/зимней Универсиады" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.4) Участие в соревнованиях всероссийского или межрегионального уровня (олимпийский вид спорта)</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(Б.4) Участие в соревнованиях всероссийского или межрегионального уровня (олимпийский вид спорта)</p></div>
+                    <div class="frame-mid- frame-mid38">
                         <div class="form-container">
-                            <input type="text" value="(Б.4) Участие в соревнованиях всероссийского или межрегионального уровня (олимпийский вид спорта)" readonly>
+                            <input class="criteria" type="text" value="(Б.4) Участие в соревнованиях всероссийского или межрегионального уровня (олимпийский вид спорта)" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.5) Участие в соревнованиях всероссийского или межрегионального уровня (неолимпийский вид спорта)</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(Б.5) Участие в соревнованиях всероссийского или межрегионального уровня (неолимпийский вид спорта)</p></div>
+                    <div class="frame-mid- frame-mid39">
                         <div class="form-container">
-                            <input type="text" value="(Б.5) Участие в соревнованиях всероссийского или межрегионального уровня (неолимпийский вид спорта)" readonly>
+                            <input class="criteria" type="text" value="(Б.5) Участие в соревнованиях всероссийского или межрегионального уровня (неолимпийский вид спорта)" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.6) Участие в первенстве/чемпионате области (олимпийский вид спорта)</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(Б.6) Участие в первенстве/чемпионате области (олимпийский вид спорта)</p></div>
+                    <div class="frame-mid- frame-mid40">
                         <div class="form-container">
-                            <input type="text" value="(Б.6) Участие в первенстве/чемпионате области (олимпийский вид спорта)" readonly>
+                            <input class="criteria" type="text" value="(Б.6) Участие в первенстве/чемпионате области (олимпийский вид спорта)" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.7) Участие в первенстве/чемпионате области (неолимпийский вид спорта)</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(Б.7) Участие в первенстве/чемпионате области (неолимпийский вид спорта)</p></div>
+                    <div class="frame-mid- frame-mid41">
                         <div class="form-container">
-                            <input type="text" value="(Б.7) Участие в первенстве/чемпионате области (неолимпийский вид спорта)" readonly>
+                            <input class="criteria" type="text" value="(Б.7) Участие в первенстве/чемпионате области (неолимпийский вид спорта)" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.8) Участие в первенстве/чемпионате города (олимпийский вид спорта)</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(Б.8) Участие в первенстве/чемпионате города (олимпийский вид спорта)</p></div>
+                    <div class="frame-mid- frame-mid42">
                         <div class="form-container">
-                            <input type="text" value="(Б.8) Участие в первенстве/чемпионате города (олимпийский вид спорта)" readonly>
+                            <input class="criteria" type="text" value="(Б.8) Участие в первенстве/чемпионате города (олимпийский вид спорта)" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.9) Участие в первенстве/чемпионате города (неолимпийский вид спорта)</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(Б.9) Участие в первенстве/чемпионате города (неолимпийский вид спорта)</p></div>
+                    <div class="frame-mid- frame-mid43">
                         <div class="form-container">
-                            <input type="text" value="(Б.9) Участие в первенстве/чемпионате города (неолимпийский вид спорта)" readonly>
+                            <input class="criteria" type="text" value="(Б.9) Участие в первенстве/чемпионате города (неолимпийский вид спорта)" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.10) Участие в спортивных мероприятиях, проводимых в университете</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(Б.10) Участие в спортивных мероприятиях, проводимых в университете</p></div>
+                    <div class="frame-mid- frame-mid44">
                         <div class="form-container">
-                            <input type="text" value="(Б.10) Участие в спортивных мероприятиях, проводимых в университете" readonly>
+                            <input class="criteria" type="text" value="(Б.10) Участие в спортивных мероприятиях, проводимых в университете" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
              <div class="frame">
-                <div class="frame-center"><p>(Б.11) Участие в массовых физкультурно-спортивных мероприятиях (Кросс нации, Лыжня России, Российский Азимут и другие)</p></div>
-                    <div class="frame-mid8">
+                <div class=" frame-center criteria"><p>(Б.11) Участие в массовых физкультурно-спортивных мероприятиях (Кросс нации, Лыжня России, Российский Азимут и другие)</p></div>
+                    <div class="frame-mid- frame-mid45">
                         <div class="form-container">
-                            <input type="text" value="(Б.11) Участие в массовых физкультурно-спортивных мероприятиях (Кросс нации, Лыжня России, Российский Азимут и другие)" readonly>
+                            <input class="criteria" type="text" value="(Б.11) Участие в массовых физкультурно-спортивных мероприятиях (Кросс нации, Лыжня России, Российский Азимут и другие)" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                                 <option value="в составе команды">в составе команды</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.12) Судейство соревнований областных, городских, университетских</p></div>
-                    <div class="frame-mid9">
+                <div class=" frame-center criteria"><p>(Б.12) Судейство соревнований областных, городских, университетских</p></div>
+                    <div class="frame-mid- frame-mid46">
                         <div class="form-container">
-                            <input type="text" value="(Б.12) Судейство соревнований областных, городских, университетских" readonly>
+                            <input class="criteria" type="text" value="(Б.12) Судейство соревнований областных, городских, университетских" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.13) Волонтерская деятельность в сфере физической культуры и спорта</p></div>
-                    <div class="frame-mid9">
+                <div class=" frame-center criteria"><p>(Б.13) Волонтерская деятельность в сфере физической культуры и спорта</p></div>
+                    <div class="frame-mid- frame-mid47">
                         <div class="form-container">
-                            <input type="text" value="(Б.13) Волонтерская деятельность в сфере физической культуры и спорта" readonly>
+                            <input class="criteria" type="text" value="(Б.13) Волонтерская деятельность в сфере физической культуры и спорта" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.14) Участие в мероприятиях ВФСК ГТО с получением серебряного знака отличия</p></div>
-                    <div class="frame-mid">
+                <div class=" frame-center criteria"><p>(Б.14) Участие в мероприятиях ВФСК ГТО с получением серебряного знака отличия</p></div>
+                    <div class="frame-mid- frame-mid48">
                         <div class="form-container">
-                            <input type="text" value="(Б.14) Участие в мероприятиях ВФСК ГТО с получением серебряного знака отличия" readonly>
+                            <input class="criteria" type="text" value="(Б.14) Участие в мероприятиях ВФСК ГТО с получением серебряного знака отличия" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(Б.15) Участие в мероприятиях ВФСК ГТО с получением бронзового знака отличия</p></div>
-                    <div class="frame-mid">
+                <div class=" frame-center criteria"><p>(Б.15) Участие в мероприятиях ВФСК ГТО с получением бронзового знака отличия</p></div>
+                    <div class="frame-mid- frame-mid49">
                         <div class="form-container">
-                            <input type="text" value="(Б.15) Участие в мероприятиях ВФСК ГТО с получением бронзового знака отличия" readonly>
+                            <input class="criteria" type="text" value="(Б.15) Участие в мероприятиях ВФСК ГТО с получением бронзового знака отличия" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
             <div class="frame">
-                <div class="frame-center"><p>(В.1) Выполнение нормативов и требований ВФСК ГТО в официальном центре тестирования, получение золотого знака отличия</p></div>
-                    <div class="frame-mid">
+                <div class=" frame-center criteria"><p>(В.1) Выполнение нормативов и требований ВФСК ГТО в официальном центре тестирования, получение золотого знака отличия</p></div>
+                    <div class="frame-mid- frame-mid50">
                         <div class="form-container">
-                            <input type="text" value="(В.1) Выполнение нормативов и требований ВФСК ГТО в официальном центре тестирования, получение золотого знака отличия" readonly>
+                            <input class="criteria" type="text" value="(В.1) Выполнение нормативов и требований ВФСК ГТО в официальном центре тестирования, получение золотого знака отличия" readonly>
                         </div>
                         <div class="form-container">
-                             <select>
+                             <select class="criteria-concrete">
                                 <option value="" disabled selected>Конкретизация критерия</option>
                                 <option value="индивидуальное участие">индивидуальное участие</option>
                              </select>
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Название мероприятия">
+                            <input class="work-input" type="text" placeholder="Название мероприятия">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Дата проведения">
+                            <input class="work-input" type="text" placeholder="Дата проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Место проведения">
+                            <input class="work-input" type="text" placeholder="Место проведения">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия протокола">
+                            <input class="work-input" type="text" placeholder="Копия протокола">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия календаря">
+                            <input class="work-input" type="text" placeholder="Копия календаря">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия справки">
+                            <input class="work-input" type="text" placeholder="Копия справки">
                         </div>
                         <div class="form-container">
-                            <input type="text" placeholder="Копия наградного документа / удостоверения / приказа">
+                            <input class="work-input" type="text" placeholder="Копия наградного документа / удостоверения / приказа">
                         </div>
                     </div>
             </div>
         </div>
 </div>
+
+
+
+<button id="mark-all-outdated" class="form-button" onclick="createJson()">Отправить заявление</button>
 
 
 
@@ -1971,6 +1876,7 @@
 <script>var csrftoken = '{{ csrf_token }}'</script>
 <script src="{% static 'main/js/site.js' %}"></script>
 <script src="{% static 'main/js/student_statment.js' %}"></script>
+<script src="{% static 'main/js/statement.js' %}"></script>
 <script src="{% static 'main/js/roleControl.js' %}"></script>
 </body>
 </html>

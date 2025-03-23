@@ -376,7 +376,8 @@ input[type="text"] {
 .frame-center{
     text-align:center
 }
-.frame-mid {
+
+.frame-mid- {
     display: flex;
     gap: 10px;
     margin-top: 10px;
@@ -386,136 +387,7 @@ input[type="text"] {
     width: 100%;
 
 }
-.frame-mid2 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
 
-}
-.frame-mid3 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
-.frame-mid4 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
-.frame-mid5 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
-.frame-mid6 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
-.frame-mid7 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
-.frame-mid8 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
-.frame-mid9 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
-.frame-mid10 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
-.frame-mid11 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
-.frame-mid12 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
-.frame-mid13 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
-.frame-mid14 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    border: 2px solid #000;
-    width: 100%;
-    flex-grow: 1;
-    width: 100%;
-
-}
 .frame-left, .frame-right {
     flex: 1;
     border: 2px solid #000;

@@ -1,133 +1,197 @@
 function createJson(){
+    // ИНФОРМАЦИЯ
+
+    var information = {
+        "achievements": [],
+        "fio": document.getElementById("input-field-fio").value,
+        "inst": document.getElementById("input-field-inst").value,
+        "phone": document.getElementById("input-field-phone").value,
+        "group": document.getElementById("input-field-group").value,
+        "agree": document.getElementById("agree-checkbox").value
+    }
+    document.querySelectorAll("#form-frame select").forEach(el => {
+        information["achievements"].push(el.value)
+    })
+
+    if(information["achievements"].length == 0){ return }
+    if(information["inst"] == ''){ return }
+    if(information["phone"] == ''){ return }
+    if(information["inst"] == ''){ return }
+    if(information["group"] == ''){ return }
+    if(information["agree-checkbox"] == 'off'){ return }
+
+    console.log(information)
+
+
 
     // УЧЕБА
     var studies = {
-        "onlyFive": document.getElementById("onlyFive"),   // только ли пятерки?
-        "project-work":{    // Получение студентом в течении предыдущего года награды по проектной деятельности
-            "international": {
-                "level": document.getElementById("project-work-international-level").value,   // уровень
-                "name": document.getElementById("project-work-international-name").value,   // название
-                "date": document.getElementById("project-work-international-date").value,   // дата
-                "url": document.getElementById("project-work-international-url").value    // ссылка
-            },
-            "regional": {
-                "level": document.getElementById("project-work-regional-level").value,   // уровень
-                "name": document.getElementById("project-work-regional-name").value,   // название
-                "date": document.getElementById("project-work-regional-date").value,   // дата
-                "url": document.getElementById("project-work-regional-url").value    // ссылка
-            },
-            "university": {
-                "level": document.getElementById("project-work-university-level").value,   // уровень
-                "name": document.getElementById("project-work-university-name").value,   // название
-                "date": document.getElementById("project-work-university-date").value,   // дата
-                "url": document.getElementById("project-work-university-url").value    // ссылка
-            }
-        },
-        "student-wins":{    # Признание студента победителем
-            "international": {
-                "level": document.getElementById("student-wins-international-level").value,  // уровень
-                "name": document.getElementById("student-wins-international-name").value,  // название
-                "date": document.getElementById("student-wins-international-date").value,  // дата
-                "url": document.getElementById("student-wins-international-url").value  // ссылка
-            },
-            "regional": {
-                "level": document.getElementById("student-wins-regional-level").value,  // уровень
-                "name": document.getElementById("student-wins-regional-name").value,  // название
-                "date": document.getElementById("student-wins-regional-date").value,  // дата
-                "url": document.getElementById("student-wins-regional-url").value  // ссылка
-            }
-        }
+        "onlyFive": document.getElementById("onlyFive").value,   // только ли пятерки?
+        "project-works":[],    // Получение студентом в течении предыдущего года награды по проектной деятельности
+        "wins-works":[]
     }
+
+    document.querySelectorAll(".project-works").forEach(el => {
+        studies["project-works"].push(
+            {
+                "level": el.querySelector(".work-select").value,   // уровень
+                "name": el.querySelector(".work-input").value,   // название
+                "date": el.querySelector(".work-input").value,   // дата
+                "url": el.querySelector(".work-input").value    // ссылка
+            })
+    })
+
+    document.querySelectorAll(".wins-works").forEach(el => {
+        studies["wins-works"].push(
+            {
+                "level": el.querySelector(".work-select").value,   // уровень
+                "name": el.querySelector(".work-input").value,   // название
+                "date": el.querySelector(".work-input").value,   // дата
+                "url": el.querySelector(".work-input").value    // ссылка
+            })
+    })
+
+
+    // if(studies["onlyFive"] == ''){ return }
+
+    // if(studies["project-works"].length == 0 && studies["wins-works"].length == 0){ studies = {} } // оптимизатор
+
+    console.log(studies)
+
+
 
 
 
     // НАУКА
 
-    var list_science = []
-    for(var i = 0; i < 45;i++){
-        list_science.append({
-            "criteria": document.getElementById("science-wins-criteria-" + i).value,  // критерий
-            "criteria-concrete": document.getElementById("science-criteria-concrete-" + i).value,  // конкретика критерия ДЛЯ А1 ["Диплом 1 степени", "Диплом 2 степени", "Диплом 3 степени"]
-            "type-document": document.getElementById("science-type-document-" + i).value,  // вид документов ДЛЯ А1["Копия диплома"]
-
-            "name": document.getElementById("science-name-" + i).value,  // название
-            "date": document.getElementById("science-date-" + i).value,  // дата
-            "place": document.getElementById("science-place-" + i).value,  // место
-            "url": document.getElementById("science-url-" + i).value  // ссылка
-        })
-    }
 
     var science = {
-        "list": list_science,
+        "list": [],
     }
+
+    document.querySelectorAll(".frame-mid2").forEach(el => {
+        var els = el.querySelectorAll(".work-input")
+        if(el.querySelector(".work-select").value != '' && el.querySelector(".work-criteria").value != '' && els[0].value != '' && els[1].value != '' && els[2].value != '' && els[3].value != '' && els[4].value != ''){
+            science["list"].push({
+                "criteria": el.querySelector(".work-criteria").value,   // критерий
+                "criteria-concrete": el.querySelector(".work-select").value,   // название
+                "type-document": els[0].value,   // вид
+                "name": els[1].value,    // название
+                "date": els[2].value,  // дата
+                "place": els[3].value,  // место
+                "url": els[4].value  // ссылка
+            })
+        }
+    })
+
+
+
+    console.log(science)
+
 
 
 
     // АКТИВНОСТЬ
 
-    var list_activities = []
 
-    for(var i = 0; i < 81; i++){
-        list_activities.append({
-            "criteria-concrete": document.getElementById("activities-criteria-concrete-" + i).value,  // конкретика критерия
-            "type-document": document.getElementById("activities-type-document-" + i).value,  // вид документов
-            "form-activities": document.getElementById("activities-form-activities-" + i).value,  // название
-            "name": document.getElementById("activities-name-" + i).value,  // название
-            "date": document.getElementById("activities-date-" + i).value,  // дата
-            "place": document.getElementById("activities-place-" + i).value,  // место
-            "url": document.getElementById("activities-url-" + i).value,  // ссылочка
-        })
-    }
     var activities = {
-        "list": list_activities
+        "list": []
     }
 
+    document.querySelectorAll(".frame-mid9").forEach(el => {
+        var els = el.querySelectorAll(".work-input")
+        if(el.querySelector(".type-document").value != '' && el.querySelector(".work-criteria").value != '' && els[0].value != '' && els[1].value != '' && els[2].value != '' && els[3].value != '' && els[4].value != ''){
+            activities["list"].push({
+                "criteria": el.querySelector(".work-criteria").value,   // критерий
+                "type-document": el.querySelector(".type-document").value,   // название
+                "form-activities": els[0].value,   // вид
+                "name": els[1].value,    // название
+                "date": els[2].value,  // дата
+                "place": els[3].value,  // место
+                "url": els[4].value  // ссылка
+            })
+        }
+    })
 
+    console.log(activities)
 
     // КУЛЬТУРА
 
-    var list_culture = []
-        for(var i = 0; i < 45;i++){
-            list_culture.append({
-                "forma-participation": document.getElementById("culture-forma-participation-" + i).value,  // критерий
-                "criteria-concrete": document.getElementById("culture-criteria-concrete-" + i).value,  // конкретика критерия
-                "type-document": document.getElementById("culture-type-document-" + i).value,  // вид документов
-
-                "name": document.getElementById("culture-name-" + i).value,  // название
-                "date": document.getElementById("culture-date-" + i).value,  // дата
-                "organizator": document.getElementById("culture-organizator-" + i).value,  // место
-                "url": document.getElementById("culture-url-" + i).value  // ссылка
-        })
-    }
-
     var culture = {
-        "list": list_culture
+        "list": []
     }
 
+    var elementsCount = [6, 7, 3, 4, 5]
+    var elements = []
+    elementsCount.forEach(el => {
+        elements.push(...document.querySelectorAll(".frame-mid"+el))
+    })
 
+    elements.forEach(el => {
+        var els = el.querySelectorAll(".work-input")
+        if(el.querySelector(".forma-participation").value != '' && el.querySelector(".criteria-concrete").value != '' && els[0].value != '' && els[1].value != '' && els[2].value != '' && els[3].value != '' && els[4].value != ''){
+            culture["list"].push({
+                "forma-participation": el.querySelector(".forma-participation").value,   // критерий
+                "criteria-concrete": el.querySelector(".criteria-concrete").value,   // название
+                "form-document": els[0].value,   // вид
+                "name": els[1].value,    // название
+                "date": els[2].value,  // дата
+                "organizator": els[3].value,  // место
+                "url": els[4].value  // ссылка
+            })
+        }
+    })
+
+
+
+
+
+
+
+
+    console.log(culture)
 
     // СПОРТ
 
-    var list_sport = []
-    for(var i = 0; i < 139; i++){
-        list_sport.append({
-            "criteria": document.getElementById("sport-criteria-" + i).value,  // критерии
-            "criteria-concrete": document.getElementById("sport-criteria-concrete-" + i).value,  // конкретика критерия
-            "name": document.getElementById("sport-name-" + i).value,  // название
-            "date": document.getElementById("sport-date-" + i).value,  // дата
-            "place": document.getElementById("sport-place-" + i).value,  // место
-            "copy-protocol": document.getElementById("sport-copy-protocol-" + i).value,  // копия протокола
-            "copy-calendar": document.getElementById("sport-copy-calendar-" + i).value  // копия календаря
-        })
-    }
     var sport = {
-        "list": list_sport,
+        "list": [],
     }
 
 
+    elementsCount = [15, 16]
+    elements = []
+    elementsCount.forEach(el => {
+        elements.push(...document.querySelectorAll(".frame-mid"+el))
+    })
+
+    elements.forEach(el => {
+        var els = el.querySelectorAll(".work-input")
+        if(el.querySelector(".forma-participation").value != '' && el.querySelector(".criteria-concrete").value != '' && els[0].value != '' && els[1].value != '' && els[2].value != '' && els[3].value != '' && els[4].value != ''){
+            sport["list"].push({
+                "criteria": el.querySelector(".forma-participation").value,   // критерий
+                "criteria-concrete": el.querySelector(".criteria-concrete").value,   // название
+                "name": els[0].value,   // вид
+                "date": els[1].value,    // название
+                "place": els[2].value,  // дата
+                "copy-protocol": els[3].value,  // место
+                "copy-calendar": els[4].value  // ссылка
+            })
+        }
+    })
 
 
-    json = {
+    console.log(sport)
+
+
+
+
+
+
+
+
+
+    var json = {
+        "information": information,
         "studies":studies,
         "science":science,
         "activities":activities,
@@ -136,6 +200,8 @@ function createJson(){
     }
     return json
 }
+
+
 
 /*
 
