@@ -1,19 +1,24 @@
+
+const checkboxs = document.getElementsByClassName("custom-checkbox")
+const buttons = document.getElementsByClassName("perehod")
+
+for(let i = 0; i < checkboxs.length; i++) {
+    checkboxs[i].addEventListener('change', function() {
+        if (this.checked) {
+          buttons[i].disabled = false;  // Разблокируем кнопку
+          buttons[i].classList.add('hover:bg-red-200');
+          buttons[i].classList.remove('text-black/50');
+        } else {
+          buttons[i].disabled = true;   // Блокируем кнопку
+          buttons[i].classList.remove('hover:bg-red-200');
+          buttons[i].classList.add('text-black/50');
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Получаем даты
-    HttpRequestPostJson('getPeriod', function (response) {
-    if (response) {
-        document.getElementById("start-date").textContent = response.date_start;
-        document.getElementById("end-date").textContent = response.date_end;
-    } else {
-        console.error("Период не найден");
-    }
-    }, {});
-
-
     setActiveFrame(0); // Устанавливаем активную кнопку
-
-
 
     // Блокируем кнопку отправки, пока чекбокс не нажат
     const submitButton = document.getElementById("mark-all-outdated");
@@ -27,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Устанавливаем активную кнопку
 function setActiveFrame(e) {
-    var els = document.getElementsByClassName("perehod")
+    var els = document.getElementsByClassName("perehod-")
 
     for (let i = 0; i < els.length; i++) {
       els[i].classList.remove("active")
@@ -51,31 +56,6 @@ function setActiveFrame(e) {
 
 // Функция обновления формы в зависимости от выбранного раздела
 function fillFrames() {
-    const formFrame = document.getElementById("form-frame");
-    formFrame.innerHTML = ""; // Очищаем старые поля
-
-    // Поля для формы достижений
-    const formFields = [
-        "Выберите достижение",
-        "Выберите вариант 2",
-        "Выберите вариант 3",
-        "Выберите вариант 4",
-        "Выберите вариант 5"
-    ];
-
-    formFields.forEach(label => {
-        const select = document.createElement("select");
-        select.innerHTML = `
-            <option value="" disabled selected>${label}</option>
-            <option value="Учеба">Учеба</option>
-            <option value="Наука">Наука</option>
-            <option value="Общественная деятельность">Общественная деятельность</option>
-            <option value="Культура и творчество">Культура и творчество</option>
-            <option value="Спорт">Спорт</option>
-        `;
-        formFrame.appendChild(select);
-    });
-
 
     document.querySelectorAll(".project-works").forEach(section => {
         for (let i = 1; i <= 3; i++) {

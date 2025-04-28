@@ -2,8 +2,8 @@ function formatDateToCustom(date) {
     const parsedDate = new Date(date);
 
     // Форматируем время
-    const hours = String(parsedDate.getHours()).padStart(2, '0');
-    const minutes = String(parsedDate.getMinutes()).padStart(2, '0');
+    const hours = String(parsedDate.getUTCHours()).padStart(2, '0');
+    const minutes = String(parsedDate.getUTCMinutes()).padStart(2, '0');
 
     // Форматируем дату
     const day = String(parsedDate.getDate()).padStart(2, '0');
@@ -17,8 +17,8 @@ function formatDateToCustom(date) {
 
 function setPeriod() {
     // Получаем значения из полей ввода
-    const startDate = document.getElementById("start-date").value;
-    const endDate = document.getElementById("end-date").value;
+    const startDate = document.getElementById("start-date-input").value;
+    const endDate = document.getElementById("end-date-input").value;
     const sessionId = sessionStorage.getItem("sessionId");
 
     // Проверяем, что даты заполнены
@@ -48,6 +48,7 @@ function setPeriod() {
     HttpRequestPostJson('setPeriod', function (response) {
         if (response && response.answer === true) {
             createMessage("Даты успешно сохранены!", "sucess");
+            window.history.back()
         } else {
             console.error("Ошибка при сохранении периода:", response);
             createMessage("Не удалось сохранить даты. Попробуйте снова.", "error");

@@ -1,20 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     loadUserData();
-    loadPeriod()
     document.querySelector(".back-button").addEventListener("click", () => {
         window.history.back();
     });
 });
-function loadPeriod() {
-    HttpRequestPostJson("getPeriod", (response) => {
-        if (response) {
-            document.getElementById("start-date").textContent = response.date_start || "Не задано";
-            document.getElementById("end-date").textContent = response.date_end || "Не задано";
-        } else {
-            console.error("Ошибка получения периода");
-        }
-    }, {});
-}
+
 // Функция загрузки данных пользователя
 function loadUserData() {
     const sessionId = sessionStorage.getItem("sessionId");
@@ -55,10 +45,15 @@ function fillUserFields(userData) {
     };
 
     Object.entries(fieldMapping).forEach(([label, key]) => {
-        const value = userData[key] || "Не указано";
+        var key_ = userData[key]
+        if(label == "ID" || label == "Сессия") {key_ = userData[key][0]+userData[key][1]+userData[key][2]+"..."+userData[key][userData[key].length-3]+userData[key][userData[key].length-2]+userData[key][userData[key].length-1]}
+        const value = key_ || "Не указано";
         const row = document.createElement("div");
         row.classList.add("field-row");
-        row.innerHTML = `<div>${label}</div><div>${value}</div>`;
+        row.classList.add("flex");
+        row.classList.add("flex-row");
+        row.classList.add("justify-between");
+        row.innerHTML = `<div class="font-bold">${label}</div><div>${value}</div>`;
         container.appendChild(row);
     });
 }

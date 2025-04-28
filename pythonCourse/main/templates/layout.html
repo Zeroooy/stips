@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+  <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>{{ title }} - My Django Application</title>
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  {% csrf_token %}
+  <script>var csrftoken = '{{ csrf_token }}'</script>
+  <script src="{% static 'main/js/site.js' %}"></script>
+  <script>
+    HttpRequestPostJson('getPeriod', function (response) {
+        if (response) {
+            document.getElementById("start-date").textContent = response.date_start;
+            document.getElementById("end-date").textContent = response.date_end;
+        } else {
+            console.error("Период не найден");
+        }
+    }, {});
+  </script>
+
+  </head>
+  <body class="flex flex-col space-y-3">
+      <nav class="bg-black/80 shadow-md px-12 flex justify-between align-center text-center items-center">
+          <div class="text-white text-xl">Система распределения<br>повышенных стипендий</div>
+          <div class="text-white date-container rounded-xl m-3 flex flex-col" id="period-container">
+            <span class="text-nowrap date-value px-2 m-1 text-xs">Период подачи заявлений</span>
+            <span class="text-nowrap date-value px-1 text-sm" id="start-date">Не задано</span>
+            <span class="text-nowrap date-value px-1 text-sm" id="end-date">Не задано</span>
+          </div>
+      </nav>
+      <div id="conditional-div" class="flex w-full hidden">
+          <button class="transition hover:scale-110 hover:bg-red-100 ml-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="history.back()">Назад</button>
+      </div>
+      <script>
+          const currentPath = window.location.pathname;
+          if (currentPath !== '/login' && currentPath !== '/') {
+            document.getElementById('conditional-div').classList.remove('hidden');
+          }
+      </script>
+      <section class="py-11 px-6 max-w-4xl mx-auto text-center flex justify-between items-center flex-col">
+          {% block content %}{% endblock %}
+      </section>
+
+      <footer class="bg-black/80 px-12 h-20 flex justify-between items-center">
+        <div class="text-white">© 1996-2025<br>Все права защищены</div>
+
+        <ul class="flex space-x-6">
+          <a href="https://www.chsu.ru/">
+              <img class='w-23 h-10 md:w-31 md:h-14 lg:w-43 lg:h-20' src="{% static 'main/img/unnamed.png' %}">
+          </a>
+        </ul>
+      </footer>
+  </body>
+</html>

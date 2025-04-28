@@ -1,38 +1,23 @@
+{% extends "layout.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Список пользователей</title>
-    <link rel="stylesheet" href="{% static 'main/css/menu.css' %}">
-</head>
-<body>
-    <div class="top-controls">
-        <button class="back-button"  onclick="window.location.href='adminpanel'">Назад</button>
+{% block content %}
 
-        <div class="formButton">
-            <button class="perehod" data-status="Student">Студенты</button>
-            <button class="perehod" data-status="Administrator">Администраторы</button>
-            <button class="perehod" data-status="Jury">Жюри</button>
-            <button class="perehod" data-status="Inspector">Инспекторы</button>
-        </div>
-
-        <div class="date-container" id="period-container">
-            <span class="date-label">Дата начала:</span>
-            <span class="date-value" id="start-date">Не задано</span>
-            <span class="date-label">Дата конца:</span>
-            <span class="date-value" id="end-date">Не задано</span>
-            <button class="set-date-button" onclick="window.location.href='adminpaneldata'">Задать дату</button>
-        </div>
+<div class="flex items-center justify-space-between mb-5">
+    <div class="border-2 border-red-500 rounded-xl flex flex-row m-5">
+        <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="All">Все</button>
+        <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="Student">Студенты</button>
+        <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="Administrator">Администраторы</button>
+        <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="Jury">Жюри</button>
+        <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="Inspector">Инспекторы</button>
     </div>
 
-    <div class="frame">
-        <!-- Таблица пользователей рендерится здесь -->
-    </div>
+</div>
 
-    <script>var csrftoken = '{{ csrf_token }}';</script>
-    <script src="{% static 'main/js/adminpanel_users.js' %}"></script>
-    <script src="{% static 'main/js/site.js' %}"></script>
-    <script src="{% static 'main/js/roleControl.js' %}"></script>
-</body>
-</html>
+<div class="frame border-2 rounded-xl border-red-500 flex flex-col min-w-200">
+    <!-- Таблица пользователей рендерится здесь -->
+</div>
+
+<script src="{% static 'main/js/adminpanel_users.js' %}"></script>
+<script src="{% static 'main/js/roleControl.js' %}"></script>
+
+{% endblock %}

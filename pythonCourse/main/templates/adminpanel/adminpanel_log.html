@@ -1,33 +1,14 @@
+{% extends "layout.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>История действий</title>
-    <link rel="stylesheet" href="{% static 'main/css/antiknopka.css' %}">
-</head>
-<body>
+{% block content %}
 
-    <div class="top-controls">
-        <button class="back-button" onclick="window.location.href='adminpanel'">Назад</button>
+<button class="font-bold transition hover:scale-110 hover:bg-red-100 border-2 px-3 p-1 m-2 rounded-xl border-red-500" id="clear-logs-btn">Очистить историю</button>
+<div class="min-w-120 frame border-2 px-3 p-1 m-2 rounded-xl border-red-500">
+    <h2 class="px-3 p-1 m-2 font-bold text-xl">История действий</h2>
+    <div class="px-3 p-1 m-2" id="logs-container"></div>
+</div>
 
-        <div class="date-container" id="period-container">
-            <span class="date-label">Дата начала:</span>
-            <span class="date-value" id="start-date"></span>
-            <span class="date-label">Дата конца:</span>
-            <span class="date-value" id="end-date"></span>
-        </div>
-    </div>
-<button id="clear-logs-btn">Очистить историю</button>
-    <div class="frame">
-        <h2>История действий</h2>
-        <div id="logs-container"></div>
-
-    </div>
-
-<script>var csrftoken = '{{ csrf_token }}'</script>
-<script src="{% static 'main/js/site.js' %}"></script>
 <script src="{% static 'main/js/adminpanel_log.js' %}"></script>
 <script src="{% static 'main/js/roleControl.js' %}"></script>
-</body>
-</html>
+
+{% endblock %}

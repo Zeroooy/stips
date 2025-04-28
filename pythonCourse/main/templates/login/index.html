@@ -1,28 +1,20 @@
+{% extends "layout.html" %}
 {% load static %}
+{% block content %}
+<div class="flex justify-center items-center w-100 p-4 my-47">
+    <div class="bg-white border-red-500 border-2 rounded-lg flex flex-col items-center text-center p-4 w-300">
+        <h2 class="m-2">Авторизация</h2>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Авторизация</title>
-    <link rel="stylesheet" href="{% static 'main/css/registr.css' %}">
-</head>
-<body>
-<div class="login-container">
-    <div class="login-box">
-        <h2>Авторизация</h2>
+        <input class="p-1 pr-3 pl-3 m-2 rounded-md border border-black/20" type="text" name="username" placeholder="Имя пользователя" id="login-input" required>
+        <input class="p-1 pr-3 pl-3 m-2 rounded-md border border-black/20" type="password" name="password" placeholder="Пароль" id="password-input" required>
+        <button class="w-40 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" type="submit" onclick="login()">Войти</button>
 
-            {% csrf_token %}
-            <input type="text" name="username" placeholder="Имя пользователя" id="login-input" required>
-            <input type="password" name="password" placeholder="Пароль" id="password-input" required>
-            <button type="submit" onclick="login()">Войти</button>
-             <p id="error-message" style="color: red; display: none;"></p>
+        <p id="error-message" class="text-red-500 hidden"></p>
     </div>
 </div>
 
-<script>if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) window.location.href = '/m.login'</script>
 <script>var csrftoken = '{{ csrf_token }}'</script>
 <script src="{% static 'main/js/site.js' %}"></script>
 <script src="{% static 'main/js/login.js' %}"></script>
-</body>
-</html>
+
+{% endblock %}

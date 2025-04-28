@@ -1,16 +1,4 @@
 var statementsData = []; // Массив для хранения всех заявлений
-function getPeriod() {
-    HttpRequestPostJson('getPeriod', function (response) {
-        if (response) {
-            a = response
-
-            document.getElementById("start-date").textContent = a.date_start
-            document.getElementById("end-date").textContent = a.date_end
-        } else {
-            console.error("Период не найден")
-        }
-    },{})
-}
 
 function getMyStatements() {
     const sessionId = sessionStorage.getItem('sessionId');
@@ -123,7 +111,6 @@ document.querySelectorAll('.perehod').forEach(button => {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    getPeriod()
     getMyStatements()
 })
 

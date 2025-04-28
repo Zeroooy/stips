@@ -1,14 +1,3 @@
-function getPeriod() {
-    HttpRequestPostJson('getPeriod', function (response) {
-        if (response) {
-            a = response;
-            document.getElementById("start-date").textContent = a.date_start;
-            document.getElementById("end-date").textContent = a.date_end;
-        } else {
-            console.error("Период не найден");
-        }
-    }, {});
-}
 
 var logsData = []; // Хранение логов
 
@@ -40,11 +29,12 @@ function displayLogs() {
     logsData.forEach(log => {
         const logEntry = document.createElement("div");
         logEntry.classList.add("log-entry");
+        logEntry.classList.add("mb-5");
 
         logEntry.innerHTML = `
-            <p><strong>Пользователь:</strong> ${log.user}</p>
-            <p><strong>Событие:</strong> ${log.event}</p>
-            <p><strong>Дата:</strong> ${new Date(log.date).toLocaleString()}</p>
+            <p class="flex my-2 justify-between"><strong>Пользователь:</strong> ${log.user}</p>
+            <p class="flex my-2 justify-between"><strong>Событие:</strong> ${log.event}</p>
+            <p class="flex my-2 justify-between"><strong>Дата:</strong> ${new Date(log.date).toLocaleString()}</p>
             <hr>
         `;
 
@@ -64,18 +54,18 @@ function clearLogs() {
     const json = { session: sessionId };
 
     HttpRequestPostJson('resetLog', function (response) {
-        if (response === true) {
-            logsData = [];
+        if (response.answer === true) {
             document.getElementById("logs-container").innerHTML = '<p>История действий успешно очищена.</p>';
+            getLogs();
         } else {
             console.error("Ошибка при очистке истории действий");
         }
     }, json);
+
 }
 
 // При загрузке страницы загружаем логи
 document.addEventListener("DOMContentLoaded", function () {
-    getPeriod();
     getLogs();
     document.getElementById("clear-logs-btn").addEventListener("click", clearLogs);
 });

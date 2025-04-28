@@ -1,57 +1,31 @@
+{% extends "layout.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Смена пользователя</title>
-    <link rel="stylesheet" href="{% static 'main/css/antiknopka.css' %}">
-</head>
-<body>
+{% block content %}
 
-    <div class="top-controls">
-        <button class="back-button"  onclick="window.location.href='adminpanel'">Назад</button>
-
-
-        <div class="date-container" id="period-container">
-            <span class="date-label">Дата начала:</span>
-            <span class="date-value" id="start-date">Не задано</span>
-            <span class="date-label">Дата конца:</span>
-            <span class="date-value" id="end-date">Не задано</span>
-            <button class="set-date-button" onclick="window.location.href='adminpaneldata'">Задать дату</button>
-        </div>
+<!-- Блок с информацией о пользователе -->
+<div class="frame-admin min-w-150 grid grid-cols-1 gap-4 rounded-xl border-2 p-5 border-red-500">
+    <div class="field-row flex flex-row justify-between">
     </div>
+</div>
 
-    <!-- Блок с информацией о пользователе -->
-    <div class="frame-admin">
-        {% for field_name, field_value in user_fields.items %}
-        <div class="field-row">
-            <div>{{ field_name }}</div>
-            <div>{{ field_value|default:"Не указано" }}</div>
-        </div>
-        {% endfor %}
-    </div>
-
-    <!-- Кнопки для изменения ролей пользователя -->
-    <div class="role-selection">
-        <label for="role-select">Выберите роль:</label>
-        <select id="role-select">
-            <option value="0">Студент</option>
-            <option value="1">Администратор</option>
-            <option value="2">Жюри</option>
-            <option value="3">Инспектор учеба</option>
-            <option value="4">Инспектор наука</option>
-            <option value="5">Инспектор общественная деятельность</option>
-            <option value="6">Инспектор культура и творчество</option>
-            <option value="7">Инспектор спорта</option>
-        </select>
-        <button id="change-role-button">Подтвердить</button>
-    </div>
+<!-- Кнопки для изменения ролей пользователя -->
+<div class="role-selection m-5 rounded-xl border-2 border-red-500 mb-27">
+    <label class="px-3 p-1 m-2 font-bold" for="role-select">Выберите роль:</label>
+    <select class="border-2 px-3 p-1 m-2 rounded-xl border-red-500" id="role-select">
+        <option value="0">Студент</option>
+        <option value="1">Администратор</option>
+        <option value="2">Жюри</option>
+        <option value="3">Инспектор (Учеба)</option>
+        <option value="4">Инспектор (Наука)</option>
+        <option value="5">Инспектор (Деятельность)</option>
+        <option value="6">Инспектор (Культура)</option>
+        <option value="7">Инспектор (Спорт)</option>
+    </select>
+    <button class="text-white font-bold px-4 p-1 m-2 bg-red-500 rounded-xl" id="change-role-button">Подтвердить</button>
+</div>
 
 
-    <!-- Подключение JavaScript -->
-    <script>var csrftoken = '{{ csrf_token }}';</script>
-    <script src="{% static 'main/js/adminpanel_user.js' %}"></script>
-    <script src="{% static 'main/js/site.js' %}"></script>
-    <script src="{% static 'main/js/roleControl.js' %}"></script>
-</body>
-</html>
+<script src="{% static 'main/js/adminpanel_user.js' %}"></script>
+<script src="{% static 'main/js/roleControl.js' %}"></script>
+
+{% endblock %}

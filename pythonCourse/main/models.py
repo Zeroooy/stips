@@ -193,7 +193,7 @@ class User(models.Model):
     @staticmethod
     def get_users_info():
         users_info = {}
-        for i in range(7):
+        for i in range(8):
             users_info[i] = []
             for s in User.objects.filter(role__id = i):
                 users_info[i].append(s.get_data())

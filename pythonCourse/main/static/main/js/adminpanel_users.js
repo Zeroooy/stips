@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initializePage() {
-    loadPeriod();
     loadUsers();
 
     document.querySelectorAll(".perehod").forEach((button) => {
@@ -18,17 +17,6 @@ function initializePage() {
     });
 }
 
-// Загрузка периода
-function loadPeriod() {
-    HttpRequestPostJson("getPeriod", (response) => {
-        if (response) {
-            document.getElementById("start-date").textContent = response.date_start || "Не задано";
-            document.getElementById("end-date").textContent = response.date_end || "Не задано";
-        } else {
-            console.error("Ошибка получения периода");
-        }
-    }, {});
-}
 
 // Загрузка пользователей
 function loadUsers() {
@@ -57,19 +45,28 @@ function renderUserTable(usersData) {
     container.innerHTML = ""; // Очистка контейнера
 
     // Создание заголовка таблицы
-    const headerRow = createTableRow(["ID", "SESSION_ID", "ФИО", "Роль"], "field-row header");
+    const headerRow = createTableRow(["ID", "ФИО", "Роль"], "py-2 rounded-t-xl bg-black/10 field-row header grid gap-2 mb-5 grid-cols-3 font-bold");
     container.appendChild(headerRow);
 
     // Заполнение таблицы пользователями
     Object.values(usersData).flat().forEach((user, index) => {
+        var role = ""
+        if(user.role === "Student"){ role = "Студент"
+        }else if(user.role === "Administrator"){ role = "Администратор"
+        }else if(user.role === "Jury"){ role = "Жюри"
+        }else if(user.role === "Inspector studies"){ role = "Инспектор (Учеба)"
+        }else if(user.role === "Inspector science"){ role = "Инспектор (Наука)"
+        }else if(user.role === "Inspector activities"){ role = "Инспектор (Деятельность)"
+        }else if(user.role === "Inspector culture"){ role = "Инспектор (Культура)"
+        }else if(user.role === "Inspector sport"){ role = "Инспектор (Спорт)"
+        }
         const userRow = createTableRow(
             [
-                index + 1,
-                user["user-id"],
+                user["user-id"][0]+user["user-id"][1]+user["user-id"][2]+"..."+user["user-id"][user["user-id"].length-3]+user["user-id"][user["user-id"].length-2]+user["user-id"][user["user-id"].length-1],
                 `${user.surname} ${user.name} ${user.middlename}`,
-                user.role,
+                role,
             ],
-            "clickable-statement"
+            "clickable-statement grid gap-2 py-2 grid-cols-3 border-b-1 border-black/20 hover:bg-red-50"
         );
 
         userRow.setAttribute("data-role", user.role);
@@ -110,6 +107,9 @@ function filterUsersByRole(role) {
         if (role === "Inspector") {
             const inspectorSubroles = ["Inspector studies", "Inspector science", "Inspector activities", "Inspector culture"];
             row.style.display = inspectorSubroles.includes(rowRole) || rowRole === role ? "grid" : "none";
+        }
+        if (role === "All") {
+            row.style.display = "grid";
         }
     });
 }
