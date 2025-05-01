@@ -14,15 +14,10 @@
 
 <div class="frame min-w-150 grid grid-cols-1 gap-4 rounded-xl border-2 p-5 border-red-500">
     <!-- Заголовки полей -->
-    <div class="field-row flex flex-row justify-between font-bold">
-        <div>ФИО</div>
-        <div>Статус</div>
-        <div>Баллы</div>
-        <div>Дата</div>
-    </div>
-
-    <!-- Мини-формочки заявлений -->
-    <div class="form-container" id="statements-container">
+    <div class="flex flex-col justify-between gap-5" id="statements-container">
+        <div class="clickable-statement flex-row gap-12 flex justify-between font-bold ">
+            <div class="w-1/4">ФИО</div><div class="w-1/4">Статус</div><div class="w-1/4">Баллы</div><div class="w-1/4">Дата</div>
+        </div>
     </div>
 </div>
 

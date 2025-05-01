@@ -177,7 +177,7 @@ class User(models.Model):
         if statements.exists():
             return statements
         else:
-            return None
+            return []
 
 
 

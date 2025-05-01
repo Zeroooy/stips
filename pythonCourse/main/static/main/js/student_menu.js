@@ -18,7 +18,6 @@ function getMyStatements() {
             statementsData = response.answer; // Сохраняем все данные заявлений
 
             const container = document.getElementById("statements-container");
-            container.innerHTML = ''; // Очищаем контейнер
 
             // Отображаем все заявления
             statementsData.forEach(statement => {
@@ -38,23 +37,32 @@ function createStatementFields(statement, container) {
 
     // Создаем обертку-ссылку для всего заявления
     const clickableArea = document.createElement("a");
+    clickableArea.classList.add("items-center");
     clickableArea.href = "studentstatment"; // Замените на реальный URL
     clickableArea.classList.add("clickable-statement");
+    clickableArea.classList.add("field-row");
+    clickableArea.classList.add("gap-12");
+    clickableArea.classList.add("flex");
+    clickableArea.classList.add("justify-between");
 
     // Поле с именем пользователя
     const userDiv = document.createElement("div");
+    userDiv.classList.add("w-1/4");
     userDiv.textContent = statement.user || '';
 
     // Поле со статусом
     const statusDiv = document.createElement("div");
+    statusDiv.classList.add("w-1/4");
     statusDiv.textContent = getStatusText(statement.status);
 
     // Поле с баллами
     const pointsDiv = document.createElement("div");
+    pointsDiv.classList.add("w-1/4");
     pointsDiv.textContent = statement.points || '0';
 
     // Поле с датой
     const dateDiv = document.createElement("div");
+    dateDiv.classList.add("w-1/4");
     dateDiv.textContent = statement.date || '';
 
     // Добавляем все поля в обертку-ссылку
@@ -65,6 +73,10 @@ function createStatementFields(statement, container) {
 
     // Добавляем ссылку в форму
     form.appendChild(clickableArea);
+    form.classList.add("rounded-xl");
+    form.classList.add("p-3");
+    form.classList.add("hover:bg-red-100");
+    form.classList.add("flex");
 
     // Добавляем форму в контейнер
     container.appendChild(form);

@@ -1,6 +1,6 @@
 import json
 import copy
-from multiprocessing.managers import State
+#from multiprocessing.managers import State
 
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -77,7 +77,8 @@ def get_role(request):
 def upload_statement(request):
     try:
         data = request.POST
-        json_data = json.loads(data.get("json"))
+        json_data_ = data.get("json")
+        json_data = json.loads(json_data_)
         user = User.get_by_session(data.get("session"))
         if user is not None and user.is_student() and json_data.get("studies") is not None and json_data.get("science") is not None and json_data.get("activities") is not None and json_data.get("culture") is not None and json_data.get("sport") is not None and (json_data.get("studies") != {} or json_data.get("science") != {} or json_data.get("activities") != {} or json_data.get("culture") != {} or json_data.get("sport") != {}):
             if Statement.upload(user, json_data, request.FILES):

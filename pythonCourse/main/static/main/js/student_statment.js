@@ -57,19 +57,7 @@ function setActiveFrame(e) {
 // Функция обновления формы в зависимости от выбранного раздела
 function fillFrames() {
 
-    document.querySelectorAll(".project-works").forEach(section => {
-        for (let i = 1; i <= 3; i++) {
-            let clonedFields = section.cloneNode(true); // Клонируем блок формы
-            section.parentNode.appendChild(clonedFields); // Добавляем в конец родителя
-        }
-    });
-
-    document.querySelectorAll(".wins-works").forEach(section => {
-        for (let i = 1; i <= 3; i++) {
-            let clonedFields = section.cloneNode(true); // Клонируем блок формы
-            section.parentNode.appendChild(clonedFields); // Добавляем в конец родителя
-        }
-    });
+    createDuplicate([0, 1], 3)
 
     createDuplicate([2,3,4,5,6, 10, 18], 9)
 
@@ -141,9 +129,17 @@ function createListeners(selector, selector2, messages){
 function createDuplicate(elements, count){
     elements.forEach(el => {
         document.querySelectorAll(".frame-mid"+el).forEach(section => {
+            var clonedFieldsPred = section
             for (let i = 1; i <= count; i++) {
                 let clonedFields = section.cloneNode(true); // Клонируем блок формы
-                section.after(clonedFields); // Добавляем в конец родителя
+                if(clonedFieldsPred != null){
+                    clonedFields.classList.add('hidden');
+                    clonedFieldsPred.addEventListener("change", function (){
+                        clonedFields.classList.remove('hidden');
+                    })
+                }
+                section.parentNode.append(clonedFields); // Добавляем в конец родителя
+                clonedFieldsPred = clonedFields
             }
         });
     })
