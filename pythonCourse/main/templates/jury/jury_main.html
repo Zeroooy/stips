@@ -1,24 +1,18 @@
+{% extends "layout.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Меню жюри</title>
-    <link rel="stylesheet" href="{% static 'main/css/menu_admin.css' %}">
-</head>
-<body>
-<div class="container">
-        <h1>Добро пожаловать в панель управления</h1>
-        <div class="card-container">
-            <div class="card">
-                <h2>ПРОСМОТРЕТЬ СПИСОК ЗАЯВЛЕНИЙ</h2>
-                <p>Просмотр списка заявлений со статусом "Отклонённое" и "Конфликтное", "Одобренное"</p>
-                <button class="card-button" onclick="window.location.href='jurymenu'">Перейти</button>
-            </div>
+{% block content %}
+
+<div class="flex flex-col w-300 m-11">
+    <div class="flex flex-wrap justify-center">
+        <div class="transition hover:scale-105 bg-white border-red-500 border-2 rounded-lg flex flex-col items-center p-4 w-80 m-5">
+            <h2 class="font-bold pb-2">ПРОСМОТРЕТЬ СПИСОК ЗАЯВЛЕНИЙ</h2>
+            <p class="text-left h-20">Просмотр списка заявлений со статусом "Отклонённое" и "Конфликтное", "Одобренное"</p>
+            <button class="w-40 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="window.location.href='jurymenu'">Перейти</button>
         </div>
+    </div>
 </div>
-<script>var csrftoken = '{{ csrf_token }}'</script>
-<script src="{% static 'main/js/site.js' %}"></script>
+
+
 <script src="{% static 'main/js/roleControl.js' %}"></script>
-</body>
-</html>
+
+{% endblock %}

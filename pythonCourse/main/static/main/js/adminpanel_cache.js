@@ -107,7 +107,7 @@ function markAllStatementsOutdated() {
     const json = { session: sessionId };
 
     // Отправляем запрос на сервер для устаревания всех заявлений
-    HttpRequestPostJson('cache', function (response) {
+    HttpRequestPostJson('setOld', function (response) {
         if (response && response.answer === true) {
             alert("Все заявления успешно помечены как устаревшие.");
             getMyStatements(); // Обновляем список заявлений

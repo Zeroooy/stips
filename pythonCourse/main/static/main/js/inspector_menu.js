@@ -118,8 +118,46 @@ document.querySelectorAll('.perehod').forEach(button => {
     });
 });
 
+function getWordAll(){
+    const sessionId = sessionStorage.getItem('sessionId');
 
+    if (!sessionId) {
+        console.error("ID сессии отсутствует");
+        return;
+    }
 
+    const json = { session: sessionId };
+
+    // Отправляем запрос на сервер для устаревания всех заявлений
+    HttpRequestPostJson('getWordAll', function (response) {
+        if (response && response.answer === true) {
+            alert("Успешное скачивание списка заявлений");
+            getMyStatements(); // Обновляем список заявлений
+        } else {
+            console.error("Не удалось скачать список.");
+        }
+    }, json);
+}
+function getWordSuccess(){
+    const sessionId = sessionStorage.getItem('sessionId');
+
+    if (!sessionId) {
+        console.error("ID сессии отсутствует");
+        return;
+    }
+
+    const json = { session: sessionId };
+
+    // Отправляем запрос на сервер для устаревания всех заявлений
+    HttpRequestPostJson('getWordSuccess', function (response) {
+        if (response && response.answer === true) {
+            alert("Успешное скачивание списка одобренных заявлений");
+            getMyStatements(); // Обновляем список заявлений
+        } else {
+            console.error("Не удалось скачать список одобренных заявлений.");
+        }
+    }, json);
+}
 document.addEventListener("DOMContentLoaded", function () {
     getPeriod()
     getMyStatements()
