@@ -148,4 +148,88 @@ function createDuplicate(elements, count){
 
 
 
+const statementId = new URLSearchParams(window.location.search).get("statementId");
+if(statementId != null){
+    const json = {
+        session: sessionStorage.getItem('sessionId'),
+        id: statementId
+    };
 
+    HttpRequestPostJson('getMyStatement', function (response) {
+        if (response) {
+            statementsJson = response["statement-json"]; // Сохраняем все данные заявлений
+            document.getElementById("input-field-fio").value = statementsJson["information"]["fio"];
+            document.getElementById("input-field-phone").value = statementsJson["information"]["phone"];
+            document.getElementById("input-field-inst").value = statementsJson["information"]["inst"];
+            document.getElementById("input-field-mail").value = statementsJson["information"]["mail"];
+            document.getElementById("input-field-group").value = statementsJson["information"]["group"];
+
+            if(statementsJson["information"]["agree"] == "on"){
+                document.getElementById("agree-checkbox").checked = true;
+            }
+
+            statementsJson["information"]["achievements"].forEach(section => {
+                if(section == "Учеба"){
+                    document.getElementsByClassName("custom-checkbox")[0].checked = true;
+                    buttons[0].disabled = false;  // Разблокируем кнопку
+                    buttons[0].classList.add('hover:bg-red-200');
+                    buttons[0].classList.remove('text-black/50');
+                }
+                if(section == "Наука"){
+                    document.getElementsByClassName("custom-checkbox")[1].checked = true;
+                    buttons[1].disabled = false;  // Разблокируем кнопку
+                    buttons[1].classList.add('hover:bg-red-200');
+                    buttons[1].classList.remove('text-black/50');
+                }
+                if(section == "Общественная деятельность"){
+                    document.getElementsByClassName("custom-checkbox")[2].checked = true;
+                    buttons[2].disabled = false;  // Разблокируем кнопку
+                    buttons[2].classList.add('hover:bg-red-200');
+                    buttons[2].classList.remove('text-black/50');
+                }
+                if(section == "Культура и творчество"){
+                    document.getElementsByClassName("custom-checkbox")[3].checked = true;
+                    buttons[3].disabled = false;  // Разблокируем кнопку
+                    buttons[3].classList.add('hover:bg-red-200');
+                    buttons[3].classList.remove('text-black/50');
+                }
+                if(section == "Спорт"){
+                    document.getElementsByClassName("custom-checkbox")[4].checked = true;
+                    buttons[4].disabled = false;  // Разблокируем кнопку
+                    buttons[4].classList.add('hover:bg-red-200');
+                    buttons[4].classList.remove('text-black/50');
+                }
+            })
+
+            interInfo(statementsJson["activities"]["list"])
+            interInfo(statementsJson["culture"]["list"])
+            interInfo(statementsJson["science"]["list"])
+            interInfo(statementsJson["studies"]["list"])
+            interInfo(statementsJson["sport"]["list"])
+
+
+        } else {
+            console.error("Нет данных или ошибка запроса");
+        }
+    }, json);
+}
+
+
+function interInfo(block){
+    for (let key in block) {
+        var frames = document.getElementsByClassName("frame-mid"+key)
+        count = 0
+        if (block.hasOwnProperty(key)) {
+            let elements = frames[count].querySelectorAll(".el")
+
+            for (let key2 in block[key]) {
+                var count_ = 0
+                for (let key3 in block[key][key2]) {
+                    elements[count_].value = block[key][key2][key3]
+                    count_++
+                }
+            }
+            count++
+        }
+    }
+}

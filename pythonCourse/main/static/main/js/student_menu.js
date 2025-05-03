@@ -38,7 +38,7 @@ function createStatementFields(statement, container) {
     // Создаем обертку-ссылку для всего заявления
     const clickableArea = document.createElement("a");
     clickableArea.classList.add("items-center");
-    clickableArea.href = "studentstatment"; // Замените на реальный URL
+    clickableArea.href = "studentstatment?statementId=" + statement["statement-id"]; // Замените на реальный URL
     clickableArea.classList.add("clickable-statement");
     clickableArea.classList.add("field-row");
     clickableArea.classList.add("gap-12");
@@ -95,11 +95,17 @@ function getStatusText(status) {
 // Функция для фильтрации заявлений по статусу
 function filterStatementsByStatus(status) {
     const container = document.getElementById("statements-container");
-    container.innerHTML = ''; // Очищаем контейнер
+    container.innerHTML = `<div class="clickable-statement flex-row gap-12 flex justify-between font-bold ">
+            <div class="w-1/4">ФИО</div><div class="w-1/4">Статус</div><div class="w-1/4">Баллы</div><div class="w-1/4">Дата</div>
+        </div>`; // Очищаем контейнер
 
     // Фильтруем заявления по статусу
-    const filteredStatements = statementsData.filter(statement => statement.status === status);
-
+    var filteredStatements = ""
+    if(status == "all"){
+        filteredStatements = statementsData;
+    }else{
+        filteredStatements = statementsData.filter(statement => statement.status === status);
+    }
     // Отображаем только отфильтрованные заявления
     filteredStatements.forEach(statement => {
         createStatementFields(statement, container);

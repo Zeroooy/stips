@@ -5,6 +5,7 @@ function createJson(){
         "fio": document.getElementById("input-field-fio").value,
         "inst": document.getElementById("input-field-inst").value,
         "phone": document.getElementById("input-field-phone").value,
+        "mail": document.getElementById("input-field-mail").value,
         "group": document.getElementById("input-field-group").value,
         "agree": document.getElementById("agree-checkbox").value
     }

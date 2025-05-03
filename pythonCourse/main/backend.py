@@ -126,7 +126,7 @@ def get_my_statement(request):
         data = json.loads(request.body)
         user = User.get_by_session(data.get("session"))
         if user is not None and user.is_student():
-            statement = Statement.get_by_user(user)
+            statement = Statement.get_by_id(data.get("id"))
 
 
             response = {"statement-data": statement.get_data(),
