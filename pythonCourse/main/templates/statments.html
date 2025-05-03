@@ -6,6 +6,7 @@
 
 <div>
     <div class="border-2 border-red-500 rounded-xl flex flex-row m-5">
+        <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="all">Все</button>
         <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="deny">Отклонённое</button>
         <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="confirm">Одобренное</button>
         <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="conflict">Конфликтное</button>
@@ -17,20 +18,15 @@
 </div>
 
 <div class="frame min-w-150 grid grid-cols-1 gap-4 rounded-xl border-2 p-5 border-red-500">
-        <!-- Заголовки полей -->
-        <div class="field-row field-row flex flex-row justify-between font-bold">
-            <div>ФИО</div>
-            <div>Статус</div>
-            <div>Баллы</div>
-            <div>Дата</div>
+    <!-- Заголовки полей -->
+    <div class="flex flex-col justify-between gap-5" id="statements-container">
+        <div class="clickable-statement flex-row gap-12 flex justify-between font-bold ">
+            <div class="w-1/4">ФИО</div><div class="w-1/4">Статус</div><div class="w-1/4">Баллы</div><div class="w-1/4">Дата</div>
         </div>
-
-        <!-- Мини-формочки заявлений -->
-        <div class="form-container border-2 px-3 p-1 m-2 rounded-xl border-red-500" id="statements-container">
-        </div>
+    </div>
 </div>
 
-<script src="{% static 'main/js/admin_statments.js' %}"></script>
+<script src="{% static 'main/js/statments.js' %}"></script>
 <script src="{% static 'main/js/roleControl.js' %}"></script>
 
 {% endblock %}

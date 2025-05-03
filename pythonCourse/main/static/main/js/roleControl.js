@@ -39,6 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
             "Inspector sport"
         ],
         "/inspectorstatment": [
+            "Administrator",
+            "Jury",
             "Inspector studies",
             "Inspector science",
             "Inspector activities",

@@ -458,11 +458,10 @@ class Statement(models.Model):
 
     @staticmethod
     def get_statements_by_statuses(statuses):
-        statements_info = {}
+        statements_info = []
         for i in statuses:
-            statements_info[i] = []
             for s in Statement.objects.filter(status__name = i, old_status = False):
-                statements_info[i].append(s.get_data())
+                statements_info.append(s.get_data())
 
         return statements_info
 

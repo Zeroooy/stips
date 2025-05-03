@@ -4,93 +4,56 @@ from django.shortcuts import render
 # Авторизация
 class LoginPageView(View):
     def get(self, request):
-        return render(request, 'login/index.html',{'url': StudentMainView.url,'url2': InspectorMainView.url,'url3': JuryMainView.url,'url4': AdminPanelView.url})
+        return render(request, 'login.html')
     url = 'login'
 
-# Студент
-class StudentStatementView(View):
+
+
+# Заявление
+class StatementView(View):
     def get(self, request):
-        return render(request, 'student/student_statment.html')
+        return render(request, 'statment.html')
+    url = 'statment'
 
-    url = 'studentstatment'
-
-class StudentMenuView(View):
+# Заявления
+class StatementsView(View):
     def get(self, request):
-        return render(request, 'student/student_menu.html',{'url': StudentStatementView.url})
+        return render(request, 'statments.html')
+    url = 'statments'
 
-    url = 'studentmenu'
-
-class StudentMainView(View):
+# Меню
+class MenuView(View):
     def get(self, request):
-        return render(request, 'student/student_main.html',{'url': StudentMenuView.url,'url2': StudentStatementView.url})
+        return render(request, 'menu.html')
+    url = 'menu'
 
-    url = 'studentmain'
-# Инспектор
-class InspectorStatementView(View):
+
+# Пользователи
+class UsersView(View):
     def get(self, request):
-        return render(request, 'inspector/inspector_statment.html')
-    url = 'inspectorstatment'
+        return render(request, 'users.html',{'url': UsersView.url})
+    url = 'users'
 
-class InspectorMenuView(View):
+# Пользователь
+class UserView(View):
     def get(self, request):
-        return render(request, 'inspector/inspector_menu.html',{'url': InspectorStatementView.url})
+        return render(request, 'user.html')
+    url = 'user'
 
-    url = 'inspectormenu'
-class InspectorMainView(View):
+# Даты
+class DateView(View):
     def get(self, request):
-        return render(request, 'inspector/inspector_main.html',{'url': InspectorMenuView.url})
+        return render(request, 'date.html')
+    url = 'date'
 
-    url = 'inspectormain'
-# Жюри
-class JuryStatementView(View):
+# Кеш
+class CacheView(View):
     def get(self, request):
-        return render(request, 'jury/jury_statment.html')
+        return render(request, 'cache.html',{'url': CacheView.url})
+    url = 'cache'
 
-    url = 'jurystatment'
-
-class JuryMenuView(View):
+# История
+class LogView(View):
     def get(self, request):
-        return render(request, 'jury/jury_menu.html',{'url': JuryStatementView.url})
-
-    url = 'jurymenu'
-class JuryMainView(View):
-    def get(self, request):
-        return render(request, 'jury/jury_main.html',{'url': JuryMenuView.url})
-
-    url = 'jurymain'
-# Админпанель
-class AdminPanelUsersView(View):
-    def get(self, request):
-        return render(request, 'adminpanel/adminpanel_users.html',{'url': AdminPanelUserView.url})
-
-    url = 'adminpanelusers'
-class AdminPanelUserView(View):
-    def get(self, request):
-        return render(request, 'adminpanel/adminpanel_user.html')
-
-    url = 'adminpaneluser'
-class AdminPanelManageView(View):
-    def get(self, request):
-        return render(request, 'adminpanel/adminpanel_data.html')
-
-    url = 'adminpaneldata'
-class AdminPanelStatementsView(View):
-    def get(self, request):
-        return render(request, 'adminpanel/adminpanel_statments.html')
-
-    url = 'adminpanelstatments'
-class AdminPanelCacheView(View):
-    def get(self, request):
-        return render(request, 'adminpanel/adminpanel_cache.html',{'url': AdminPanelCacheView.url})
-
-    url = 'adminpanelcache'
-class AdminPanelView(View):
-    def get(self, request):
-        return render(request, 'adminpanel/adminpanel.html',{'url': AdminPanelCacheView.url,'url2': AdminPanelStatementsView.url,'url3': AdminPanelManageView.url,'url4': AdminPanelUsersView.url,'url5': AdminPanelUsersView.url,'url6': AdminPanelLogView.url})
-
-    url = 'adminpanel'
-
-class AdminPanelLogView(View):
-    def get(self, request):
-        return render(request, 'adminpanel/adminpanel_log.html',{'url': AdminPanelLogView.url})
-    url = 'adminpanellog'
+        return render(request, 'log.html',{'url': LogView.url})
+    url = 'log'

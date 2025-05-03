@@ -65,6 +65,58 @@ def get_role(request):
     return JsonResponse(response)
 
 
+# Просмотреть заявление
+@csrf_exempt
+def get_statement(request):
+    try:
+        data = json.loads(request.body)
+        user = User.get_by_session(data.get("session"))
+        if user is not None and user.is_student():
+            statement = Statement.get_by_id(data.get("statement-id"))
+
+            response = {"statement-data": statement.get_data(),
+                        "statement-json": statement.get_json_data()
+                        }
+        elif user is not None:
+            statement = Statement.get_by_id(data.get("statement-id"))
+
+            response = {"statement-data": statement.get_data(),
+                        "statement-json": statement.get_json_data()
+                        }
+        else:
+            response = {"answer": False}
+    except:
+        return HttpResponse("bad request")
+
+    return JsonResponse(response)
+
+
+@csrf_exempt
+def get_statements(request):
+    try:
+        data = json.loads(request.body)
+        user = User.get_by_session(data.get("session"))
+        if user is not None and user.is_student():
+            statements = user.get_statements()
+            statements_info = []
+            for s in statements:
+                statements_info.append(s.get_data())
+            response = {"statements": statements_info}
+
+        elif user is not None and user.is_inspector():
+            response = {"statements": Statement.get_statements_by_statuses(["process", "error", "verified"])}
+        elif user is not None and user.is_jury():
+            response = {"statements": Statement.get_statements_by_statuses(["conflict", "confirm", "deny"])}
+        elif user is not None and user.is_admin():
+            response = {"statements": Statement.get_statements_by_statuses(["process", "error", "verified", "deny", "confirm", "conflict"])}
+        else:
+            response = {"answer": False}
+    except:
+        return HttpResponse("bad request")
+
+    return JsonResponse(response)
+
+
 ########################################
 #              СТУДЕНТ
 ########################################
@@ -97,69 +149,11 @@ def upload_statement(request):
     return JsonResponse(response)
 
 
-# Получение списка заявлений
-@csrf_exempt
-def get_my_statements(request):
-    try:
-        data = json.loads(request.body)
-        user = User.get_by_session(data.get("session"))
-        if user is not None and user.is_student():
-            statements = user.get_statements()
-            statements_info = []
-            for s in statements:
-                statements_info.append(s.get_data())
-
-            response = {"answer": statements_info}
-        else:
-            response = {"answer": False}
-    except:
-        return HttpResponse("bad request")
-
-    return JsonResponse(response)
-
-
-
-# Получение списка заявлений
-@csrf_exempt
-def get_my_statement(request):
-    try:
-        data = json.loads(request.body)
-        user = User.get_by_session(data.get("session"))
-        if user is not None and user.is_student():
-            statement = Statement.get_by_id(data.get("id"))
-
-
-            response = {"statement-data": statement.get_data(),
-                        "statement-json": statement.get_json_data()
-                        }
-        else:
-            response = {"answer": False}
-    except:
-        return HttpResponse("bad request")
-
-    return JsonResponse(response)
-
 
 ########################################
 #              ИНСПЕКТОР
 ########################################
 
-
-# Просмотреть список заявлений
-@csrf_exempt
-def get_list_statements_inspector(request):
-    try:
-        data = json.loads(request.body)
-        user = User.get_by_session(data.get("session"))
-        if user is not None and user.is_inspector():
-
-            response = {"statements": Statement.get_statements_by_statuses(["process", "error", "verified"])}
-        else:
-            response = {"answer": False}
-    except:
-        return HttpResponse("bad request")
-
-    return JsonResponse(response)
 
 
 # Просмотреть часть заявления
@@ -209,22 +203,6 @@ def rate_statement_inspector(request):
 #                 ЖЮРИ
 ########################################
 
-
-# Просмотреть список заявлений
-@csrf_exempt
-def get_list_statements_jury(request):
-    try:
-        data = json.loads(request.body)
-        user = User.get_by_session(data.get("session"))
-        if user is not None and user.is_jury():
-
-            response = {"statements": Statement.get_statements_by_statuses(["conflict", "confirm", "deny"])}
-        else:
-            response = {"answer": False}
-    except:
-        return HttpResponse("bad request")
-
-    return JsonResponse(response)
 
 
 
@@ -332,44 +310,6 @@ def get_word_all(request):
 ########################################
 #                АДМИН
 ########################################
-
-
-# Получение заявления
-@csrf_exempt
-def get_statement_admin(request):
-    try:
-        data = json.loads(request.body)
-        user = User.get_by_session(data.get("session"))
-        if user is not None and user.is_admin():
-
-            statement = Statement.get_by_id(data.get("statement-id"))
-
-            response = {"statement-data": statement.get_data(),
-                        "statement-json": statement.get_json_data()
-                        }
-        else:
-            response = {"answer": False}
-    except:
-        return HttpResponse("bad request")
-
-    return JsonResponse(response)
-
-
-# Получение заявлений
-@csrf_exempt
-def get_list_statements_admin(request):
-    try:
-        data = json.loads(request.body)
-        user = User.get_by_session(data.get("session"))
-        if user is not None and user.is_admin():
-            response = {"statements": Statement.get_statements_by_statuses(["process", "error", "verified", "deny", "confirm", "conflict"])}
-        else:
-            response = {"answer": False}
-    except:
-        return HttpResponse("bad request")
-
-    return JsonResponse(response)
-
 
 # Просмотреть пользователя
 @csrf_exempt

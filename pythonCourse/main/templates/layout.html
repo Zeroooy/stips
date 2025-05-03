@@ -10,6 +10,7 @@
   {% csrf_token %}
   <script>var csrftoken = '{{ csrf_token }}'</script>
   <script src="{% static 'main/js/site.js' %}"></script>
+  <script src="{% static 'main/js/roleControl.js' %}"></script>
   <script>
     HttpRequestPostJson('getPeriod', function (response) {
         if (response) {

@@ -143,3 +143,31 @@ function giveEls(element, parent){
     }
     parent.push(el)
 }
+
+
+const json = {
+    session: sessionStorage.getItem('sessionId')
+};
+
+HttpRequestPostJson('getRole', function (response) {
+    var blocks = document.querySelectorAll(".button-block")
+    if (response.answer == "Administrator") {
+        blocks[0].remove()
+        blocks[1].remove()
+        blocks[2].classList.remove("hidden")
+    }else if (response.answer == "Student") {
+        blocks[0].classList.remove("hidden")
+        blocks[1].remove()
+        blocks[2].remove()
+    }else if (response.answer == "Jury") {
+        blocks[0].remove()
+        blocks[1].classList.remove("hidden")
+        blocks[2].remove()
+    }else if (response.answer == "Inspector studies" || response.answer == "Inspector science" || response.answer == "Inspector culture" || response.answer == "Inspector activities" || response.answer == "Inspector sport") {
+        blocks[0].remove()
+        blocks[1].classList.remove("hidden")
+        blocks[2].remove()
+    } else {
+        console.error("Нет данных или ошибка запроса");
+    }
+}, json);

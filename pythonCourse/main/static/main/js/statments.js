@@ -13,21 +13,34 @@ function getMyStatements() {
         session: sessionId
     };
 
-    HttpRequestPostJson('getMyStatements', function (response) {
-        if (response && Array.isArray(response.answer)) {
-            statementsData = response.answer; // Сохраняем все данные заявлений
+    HttpRequestPostJson('getRole', function (response) {
+        const json = {
+            session: sessionId
+        };
 
-            const container = document.getElementById("statements-container");
+        HttpRequestPostJson("getStatements", function (response) {
+            if (response && response.statements) {
+                statementsData = []; // Очищаем массив перед обновлением
 
-            // Отображаем все заявления
-            statementsData.forEach(statement => {
-                createStatementFields(statement, container);
-            });
+                const container = document.getElementById("statements-container");
 
-        } else {
-            console.error("Нет данных или ошибка запроса");
-        }
+                // Перебираем все категории заявлений (conflict, confirm, deny)
+                if (Array.isArray(response.statements)) {
+                    statementsData = [...response.statements]; // Сохраняем все заявления
+
+                    const container = document.getElementById("statements-container");
+
+                    // Показываем все заявления
+                    response.statements.forEach(statement => {
+                        createStatementFields(statement, container);
+                    });
+                }
+            } else {
+                console.error("Нет данных или ошибка запроса");
+            }
+        }, json);
     }, json);
+
 }
 
 // Функция для создания полей заявления
@@ -38,7 +51,7 @@ function createStatementFields(statement, container) {
     // Создаем обертку-ссылку для всего заявления
     const clickableArea = document.createElement("a");
     clickableArea.classList.add("items-center");
-    clickableArea.href = "studentstatment?statementId=" + statement["statement-id"]; // Замените на реальный URL
+    clickableArea.href = "statment?statementId=" + statement["statement-id"]; // Замените на реальный URL
     clickableArea.classList.add("clickable-statement");
     clickableArea.classList.add("field-row");
     clickableArea.classList.add("gap-12");
@@ -88,6 +101,8 @@ function getStatusText(status) {
     if (status === "process") return "На проверке";
     if (status === "error") return "Ошибочно";
     if (status === "verified") return "Проверено";
+    if (status === "deny") return "Отклонено";
+    if (status === "confirm") return "Одобрено";
     if (status === "conflict") return "Конфликт";
     return "Неизвестный статус";
 }

@@ -152,10 +152,10 @@ const statementId = new URLSearchParams(window.location.search).get("statementId
 if(statementId != null){
     const json = {
         session: sessionStorage.getItem('sessionId'),
-        id: statementId
+        "statement-id": statementId
     };
 
-    HttpRequestPostJson('getMyStatement', function (response) {
+    HttpRequestPostJson('getStatement', function (response) {
         if (response) {
             statementsJson = response["statement-json"]; // Сохраняем все данные заявлений
             document.getElementById("input-field-fio").value = statementsJson["information"]["fio"];

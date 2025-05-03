@@ -1089,8 +1089,19 @@
 </div>
 
 
+<div class="button-block hidden">
+    <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="createJson()" id="mark-all-outdated">Отправить заявление</button>
+</div>
+<div class="button-block hidden">
+    <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="points" placeholder="Оценка">
+    <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="comment" placeholder="Комментарий">
+    <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="createJson()">Оценить</button>
+</div>
+<div class="button-block hidden">
+    <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="points_all" placeholder="Баллы заявления">
+    <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="createJson()">Изменить баллы</button>
+</div>
 
-<button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="createJson()" id="mark-all-outdated">Отправить заявление</button>
 
 <script src="{% static 'main/js/student_statment.js' %}"></script>
 <script src="{% static 'main/js/statement.js' %}"></script>
