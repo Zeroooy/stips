@@ -189,3 +189,35 @@ function rateStatment(){
         }
     }, json)
 }
+
+
+
+
+
+
+
+
+document.querySelectorAll(".checkboxs").forEach(el => {
+    el.addEventListener('change', function() {
+        var blocks = []
+        for(let i = 0; i < 51; i++){
+            var frameMid = document.getElementsByClassName("frame-mid"+i)
+            frameMid.forEach(el2 => {
+                if(el2.querySelector(".checkboxs").checked == "on"){
+                    blocks.append(i)
+                }
+            })
+        }
+        const json = {
+            session: sessionStorage.getItem('sessionId'),
+            blocks: blocks_,
+        };
+
+        HttpRequestPostJson('autoPoints', function (response) {
+            if(response.answer == true){
+                window.location.href='menu'
+            }
+        }, json)
+    })
+})
+

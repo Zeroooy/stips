@@ -474,6 +474,27 @@ def reset_log(request):
     return JsonResponse(response)
 
 
+# Авто распределение баллов
+@csrf_exempt
+def auto_points(request):
+    try:
+        data = json.loads(request.body)
+        user = User.get_by_session(data.get("session"))
+        if user is not None and user.is_inspector():
+            points = 0
+            blocks = data.get("blocks")
+            points_to_blocks = [0, 1, 2, 3, 4, 5, 6, 7]
+            for i in blocks:
+                points += points_to_blocks[i]
+            response = {"answer": points}
+        else:
+            response = {"answer": False}
+    except:
+        return HttpResponse("bad request")
+
+    return JsonResponse(response)
+
+
 
 
 from docx import Document
