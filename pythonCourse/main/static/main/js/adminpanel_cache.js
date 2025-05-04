@@ -97,6 +97,9 @@ document.querySelectorAll('.perehod').forEach(button => {
 });
 
 function markAllStatementsOutdated() {
+
+
+
     const sessionId = sessionStorage.getItem('sessionId');
 
     if (!sessionId) {
@@ -116,7 +119,6 @@ function markAllStatementsOutdated() {
         }
     }, json);
 }
-
 
 
 document.addEventListener("DOMContentLoaded", function () {
