@@ -171,3 +171,21 @@ HttpRequestPostJson('getRole', function (response) {
         console.error("Нет данных или ошибка запроса");
     }
 }, json);
+
+
+
+function rateStatment(){
+    const statementId = new URLSearchParams(window.location.search).get("statementId");
+    const json = {
+        session: sessionStorage.getItem('sessionId'),
+        "statement-id": statementId,
+        mark: document.getElementById("points").value,
+        comment: document.getElementById("comment").value,
+    };
+
+    HttpRequestPostJson('rateStatement', function (response) {
+        if(response.answer == true){
+            window.location.href='menu'
+        }
+    }, json)
+}
