@@ -78,11 +78,16 @@ function createStatementFields(statement, container) {
     dateDiv.classList.add("w-1/4");
     dateDiv.textContent = statement.date || '';
 
+    const oldDiv = document.createElement("div");
+    oldDiv.classList.add("w-1/4");
+    oldDiv.textContent = statement['old-status'] ? 'Да' : 'Нет';
+
     // Добавляем все поля в обертку-ссылку
     clickableArea.appendChild(userDiv);
     clickableArea.appendChild(statusDiv);
     clickableArea.appendChild(pointsDiv);
     clickableArea.appendChild(dateDiv);
+    clickableArea.appendChild(oldDiv);
 
     // Добавляем ссылку в форму
     form.appendChild(clickableArea);
@@ -111,7 +116,7 @@ function getStatusText(status) {
 function filterStatementsByStatus(status) {
     const container = document.getElementById("statements-container");
     container.innerHTML = `<div class="clickable-statement flex-row gap-12 flex justify-between font-bold ">
-            <div class="w-1/4">ФИО</div><div class="w-1/4">Статус</div><div class="w-1/4">Баллы</div><div class="w-1/4">Дата</div>
+            <div class="w-1/4">ФИО</div><div class="w-1/4">Статус</div><div class="w-1/4">Баллы</div><div class="w-1/4">Дата</div><div class="w-1/4">Устаревшее</div>
         </div>`; // Очищаем контейнер
 
     // Фильтруем заявления по статусу

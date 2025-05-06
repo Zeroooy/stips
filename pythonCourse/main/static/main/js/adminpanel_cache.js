@@ -10,16 +10,23 @@ function getMyStatements() {
 
     const json = { session: sessionId };
 
-    HttpRequestPostJson('getListCache', function (response) {
+    HttpRequestPostJson('getStatementsOld', function (response) {
         if (response && response.statements) {
-            statementsData = response.statements; // Сохраняем данные
-            const container = document.getElementById("statements-container");
-            container.innerHTML = ''; // Очищаем контейнер
+            statementsData = []; // Очищаем массив перед обновлением
 
-            // Отображаем каждое заявление
-            response.statements.forEach(statement => {
-                createStatementFields(statement, container);
-            });
+            const container = document.getElementById("statements-container");
+
+            // Перебираем все категории заявлений (conflict, confirm, deny)
+            if (Array.isArray(response.statements)) {
+                statementsData = [...response.statements]; // Сохраняем все заявления
+
+                const container = document.getElementById("statements-container");
+
+                // Показываем все заявления
+                response.statements.forEach(statement => {
+                    createStatementFields(statement, container);
+                });
+            }
         } else {
             console.error("Нет данных или ошибка запроса");
         }
@@ -31,36 +38,52 @@ function createStatementFields(statement, container) {
     const form = document.createElement("div");
     form.classList.add("statement-form");
 
+    // Создаем обертку-ссылку для всего заявления
     const clickableArea = document.createElement("a");
-    clickableArea.href = "inspectorstatment";
+    clickableArea.classList.add("items-center");
+    clickableArea.href = "statment?statementId=" + statement["statement-id"]; // Замените на реальный URL
     clickableArea.classList.add("clickable-statement");
+    clickableArea.classList.add("field-row");
+    clickableArea.classList.add("gap-12");
+    clickableArea.classList.add("flex");
+    clickableArea.classList.add("justify-between");
 
-    // Создаем поля
+    // Поле с именем пользователя
     const userDiv = document.createElement("div");
+    userDiv.classList.add("w-1/4");
     userDiv.textContent = statement.user || '';
 
+    // Поле со статусом
     const statusDiv = document.createElement("div");
+    statusDiv.classList.add("w-1/4");
     statusDiv.textContent = getStatusText(statement.status);
 
+    // Поле с баллами
     const pointsDiv = document.createElement("div");
+    pointsDiv.classList.add("w-1/4");
     pointsDiv.textContent = statement.points || '0';
 
+    // Поле с датой
     const dateDiv = document.createElement("div");
+    dateDiv.classList.add("w-1/4");
     dateDiv.textContent = statement.date || '';
 
-    const idDiv = document.createElement("div");
-    idDiv.textContent = statement["statement-id"] || '';
+    // Добавляем все поля в обертку-ссылку
+    clickableArea.appendChild(userDiv);
+    clickableArea.appendChild(statusDiv);
+    clickableArea.appendChild(pointsDiv);
+    clickableArea.appendChild(dateDiv);
 
-    const cacheStatusDiv = document.createElement("div");
-    cacheStatusDiv.textContent = statement["cache-status"] ? 'Да' : 'Нет';
-
-    // Добавляем поля в обертку
-    clickableArea.append(userDiv, statusDiv, pointsDiv, dateDiv, idDiv, cacheStatusDiv);
-
+    // Добавляем ссылку в форму
     form.appendChild(clickableArea);
+    form.classList.add("rounded-xl");
+    form.classList.add("p-3");
+    form.classList.add("hover:bg-red-100");
+    form.classList.add("flex");
+
+    // Добавляем форму в контейнер
     container.appendChild(form);
 }
-
 
 
 // Функция для получения текста статуса
@@ -77,11 +100,17 @@ function getStatusText(status) {
 // Функция для фильтрации заявлений по статусу
 function filterStatementsByStatus(status) {
     const container = document.getElementById("statements-container");
-    container.innerHTML = ''; // Очищаем контейнер
+    container.innerHTML = `<div class="clickable-statement flex-row gap-12 flex justify-between font-bold ">
+            <div class="w-1/4">ФИО</div><div class="w-1/4">Статус</div><div class="w-1/4">Баллы</div><div class="w-1/4">Дата</div>
+        </div>`; // Очищаем контейнер
 
     // Фильтруем заявления по статусу
-    const filteredStatements = statementsData.filter(statement => statement.status === status);
-
+    var filteredStatements = ""
+    if(status == "all"){
+        filteredStatements = statementsData;
+    }else{
+        filteredStatements = statementsData.filter(statement => statement.status === status);
+    }
     // Отображаем только отфильтрованные заявления
     filteredStatements.forEach(statement => {
         createStatementFields(statement, container);
@@ -97,8 +126,6 @@ document.querySelectorAll('.perehod').forEach(button => {
 });
 
 function markAllStatementsOutdated() {
-
-
 
     const sessionId = sessionStorage.getItem('sessionId');
 

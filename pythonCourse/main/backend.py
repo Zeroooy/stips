@@ -1,6 +1,5 @@
 import json
 import copy
-#from multiprocessing.managers import State
 
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -8,7 +7,7 @@ from django.views.decorators.http import require_POST
 from django.core.files.storage import FileSystemStorage
 
 from .models import User, Statement, Period, Log
-
+from io import BytesIO
 
 
 
@@ -271,18 +270,20 @@ def get_word_success(request):
     try:
         data = json.loads(request.body)
         user = User.get_by_session(data.get("session"))
-        if user is not None and (user.is_jury() or user.is_admin()):
-            temp = []
-            for s in Statement.objects.filter(status__name="confirm", old_status=False):
-                temp.append(s.user)
-            Log.add(user, "Выгрузка списка человек получивших стипендию", "Выполнил: "+str(user), {})
-            response = {"answer": create_word_with_sucess(temp)}
-        else:
-            response = {"answer": False}
-    except:
-        return HttpResponse("bad request")
 
-    return JsonResponse(response)
+        if user is not None and (user.is_jury() or user.is_admin()):
+            temp = [s.user for s in Statement.objects.filter(status__name="confirm", old_status=False)]
+            Log.add(user, "Выгрузка списка человек получивших стипендию", f"Выполнил: {user}", {})
+
+            buffer, filename = create_word_doc(temp, "Отчет_со_списком_получивших_стипендию")
+
+            response = HttpResponse(buffer.getvalue(), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+        else:
+            return JsonResponse({"answer": False})
+    except Exception as e:
+        return HttpResponse(f"bad request: {e}")
 
 
 # Выгрузить список человек подавших заявления
@@ -296,7 +297,11 @@ def get_word_all(request):
             for s in Statement.objects.filter(old_status=False):
                 temp.append(s.user)
             Log.add(user, "Выгрузка списка человек получивших стипендию", "Выполнил: "+str(user), {})
-            response = {"answer": create_word_with_sucess(temp)}
+
+            buffer, filename = create_word_doc(temp, "Отчет_со_списком_подавших_заявления")
+            response = HttpResponse(buffer.getvalue(), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
         else:
             response = {"answer": False}
     except:
@@ -556,26 +561,23 @@ from datetime import datetime
 
 # Функция файла docx
 
-def create_word_with_list(items, title):
+def create_word_doc(items, title):
     doc = Document()
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     filename = f"{title}_{timestamp}.docx"
-    i = 1
-    for item in items:
-        para = doc.add_paragraph(str(i) + ". " + str(item))
+
+    for i, item in enumerate(items, 1):
+        para = doc.add_paragraph(f"{i}. {str(item)}")
         run = para.runs[0]
         run.font.name = "Times New Roman"
         run.font.size = Pt(14)
-        i+=1
-    doc.save("files/" + filename)
-    return filename
 
-def create_word_with_sucess(items):
-    return create_word_with_list("Отчет_со_списком_получивших_стипендию", items)
+    buffer = BytesIO()
+    doc.save(buffer)
+    buffer.seek(0)
+    return buffer, filename
 
 
-def create_word_with_all(items):
-    return create_word_with_list("Отчет_со_списком_подавших_заявления", items)
 
 
 

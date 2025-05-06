@@ -105,7 +105,7 @@ function filterUsersByRole(role) {
 
         // Если выбран "Инспектор", добавляем специфические подроли
         if (role === "Inspector") {
-            const inspectorSubroles = ["Inspector studies", "Inspector science", "Inspector activities", "Inspector culture"];
+            const inspectorSubroles = ["Inspector studies", "Inspector science", "Inspector activities", "Inspector culture", "Inspector sport"];
             row.style.display = inspectorSubroles.includes(rowRole) || rowRole === role ? "grid" : "none";
         }
         if (role === "All") {

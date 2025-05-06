@@ -271,19 +271,19 @@ class Statement(models.Model):
     json = models.JSONField("Json", default=list, blank=True)
     urls = models.JSONField("Json", default=list, blank=True)
 
-    mark_studies = models.IntegerField("Оценка учеба", default=False, blank=True)
+    mark_studies = models.IntegerField("Оценка учеба", default=-1, blank=True)
     comment_studies = models.TextField("Комментарий учеба", blank=True)
 
-    mark_science = models.IntegerField("Оценка наука", default=False, blank=True)
+    mark_science = models.IntegerField("Оценка наука", default=-1, blank=True)
     comment_science = models.TextField("Комментарий наука", blank=True)
 
-    mark_activities = models.IntegerField("Оценка мероприятия", default=False, blank=True)
+    mark_activities = models.IntegerField("Оценка мероприятия", default=-1, blank=True)
     comment_activities = models.TextField("Комментарий мероприятия", blank=True)
 
-    mark_culture = models.IntegerField("Оценка культура", default=False, blank=True)      # СДЕЛАТЬ МИГРАТЕ
+    mark_culture = models.IntegerField("Оценка культура", default=-1, blank=True)      # СДЕЛАТЬ МИГРАТЕ
     comment_culture = models.TextField("Комментарий культура", blank=True)
 
-    mark_sport = models.IntegerField("Оценка спорт", default=False, blank=True)
+    mark_sport = models.IntegerField("Оценка спорт", default=-1, blank=True)
     comment_sport = models.TextField("Комментарий спорт", blank=True)
 
     date = models.DateTimeField("Дата", default=datetime.now(), blank=True)
@@ -355,7 +355,7 @@ class Statement(models.Model):
 
 
     def check_all_marks(self):
-        if self.mark_studies and self.mark_science and self.mark_activities and self.mark_culture and self.mark_sport and self.status == 0:
+        if self.mark_studies != -1 and self.mark_science != -1 and self.mark_activities != -1 and self.mark_culture != -1 and self.mark_sport != -1 and self.status == 0:
             self.status = 2
 
     def set_status(self, id_):
@@ -396,10 +396,32 @@ class Statement(models.Model):
                 json_change = Statement.replace_at_values_with_links(json, files)
                 statement_temp.json = json_change[0]
                 statement_temp.urls = json_change[1]
+                achievements = statement_temp.json['information']['achievements']
+                if not ('Учеба' in achievements):
+                    statement_temp.set_mark_studies(0, 'Автоматическое выставление')
+                if not ('Наука' in achievements):
+                    statement_temp.set_mark_science(0, 'Автоматическое выставление')
+                if not ('Общественная деятельность' in achievements):
+                    statement_temp.set_mark_activities(0, 'Автоматическое выставление')
+                if not ('Культура и творчество' in achievements):
+                    statement_temp.set_mark_culture(0, 'Автоматическое выставление')
+                if not ('Спорт' in achievements):
+                    statement_temp.set_mark_sport(0, 'Автоматическое выставление')
                 statement_temp.date = datetime.now()
             else:
                 json_change = Statement.replace_at_values_with_links(json, files)
                 statement_temp = Statement.objects.create(id=Statement.generate_id(), user=user, json=json_change[0], date=date, urls = json_change[1])
+                achievements = statement_temp.json['information']['achievements']
+                if not ('Учеба' in achievements):
+                    statement_temp.set_mark_studies(0, 'Автоматическое выставление')
+                if not ('Наука' in achievements):
+                    statement_temp.set_mark_science(0, 'Автоматическое выставление')
+                if not ('Общественная деятельность' in achievements):
+                    statement_temp.set_mark_activities(0, 'Автоматическое выставление')
+                if not ('Культура и творчество' in achievements):
+                    statement_temp.set_mark_culture(0, 'Автоматическое выставление')
+                if not ('Спорт' in achievements):
+                    statement_temp.set_mark_sport(0, 'Автоматическое выставление')
                 # statement_temp = Statement.objects.create(id=Statement.generate_id(), user=user, json=json_change[0], date=date, urls = json_change[1])
 
             statement_temp.save()
