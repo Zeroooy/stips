@@ -63,6 +63,7 @@ urlpatterns = [
 
     # ИНСПЕКТОР
     path('api/rateStatement', backend.rate_statement_inspector),
+    path('api/autoPoints', backend.auto_points),
 
 
     # ЖЮРИ

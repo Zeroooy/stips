@@ -96,8 +96,6 @@
        <div class="frame">
             <div class="text-center font-bold text-lg p-2 el"><p> (Б) получение студентом в течение предшествующего года награды (приза) за результаты проектной деятельности и (или) опытно-конструкторской работы</p></div>
            <div class="relative grid grid-flow-col grid-rows-2 gap-5 my-2 border-2 border-black/20 mx-3 p-2 my-5 frame-mid0">
-
-                 <input type="checkbox" class="absolute top-2 left-2 scale-90 cursor-pointer" onchange="toggleFrameBorder(this)">
                  <select class="w-full border-2 border-red-500 px-3 rounded-sm el">
                     <option value="" disabled selected>Выберите...</option>
                     <option value="Международный, всероссийский">Международный, всероссийский</option>
@@ -1117,7 +1115,7 @@
 <div class="button-block hidden">
     <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="points" placeholder="Оценка">
     <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="comment" placeholder="Комментарий">
-    <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="createJson()">Оценить</button>
+    <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="rateStatment()">Оценить</button>
 </div>
 <div class="button-block hidden">
     <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="points_all" placeholder="Баллы заявления">
@@ -1125,7 +1123,6 @@
 </div>
 
 <script src="{% static 'main/js/showNotification.js' %}"></script>
-<script src="{% static 'main/js/student_statment.js' %}"></script>
 <script src="{% static 'main/js/statement.js' %}"></script>
 <script src="{% static 'main/js/roleControl.js' %}"></script>
 
