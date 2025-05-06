@@ -125,6 +125,21 @@ function fillFrames() {
             "Победа в региональных конкурсах информационного сопровождения": "Копия документа, подтверждающего участие (сертификат/диплом)",
             "Победа во всероссийских конкурсах информационного сопровождения": "Копия документа, подтверждающего участие (сертификат/диплом)",
         })
+
+        if(!checkStud){
+            for (let i = 0; i < 51; i++) {
+                var framesMid = document.querySelectorAll(".frame-mid" + i);
+                framesMid.forEach(el => {
+                    // Создаем элемент input
+                    var checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.classList.add("top-1", "right-1", "scale-90", "cursor-pointer", "checkboxs");
+
+                    // Добавляем чекбокс в элемент
+                    el.appendChild(checkbox);
+                });
+            }
+        }
     }, {
         session: sessionStorage.getItem('sessionId')
     })
@@ -160,8 +175,8 @@ function createDuplicate(elements, count, checkStud){
                     }
                 }
                 section.parentNode.append(clonedFields); // Добавляем в конец родителя
-                if(checkStud){
-                        clonedFieldsPred.querySelectorAll(".el").forEach(el_ => el_.disabled = true);
+                if(!checkStud){
+                    clonedFieldsPred.querySelectorAll(".el").forEach(el_ => el_.disabled = true);
                 }
                 clonedFieldsPred = clonedFields
             }
@@ -451,24 +466,6 @@ function rateStatment(){
         }
     }, json)
 }
-
-
-
-
-for (let i = 0; i < 51; i++) {
-    var framesMid = document.querySelectorAll(".frame-mid" + i);
-    framesMid.forEach(el => {
-        // Создаем элемент input
-        var checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.classList.add("top-1", "right-1", "scale-90", "cursor-pointer", "checkboxs");
-
-        // Добавляем чекбокс в элемент
-        el.appendChild(checkbox);
-    });
-}
-
-
 
 
 document.querySelectorAll(".checkboxs").forEach(el => {
