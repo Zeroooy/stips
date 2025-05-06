@@ -474,8 +474,8 @@ document.querySelectorAll(".checkboxs").forEach(el => {
         for(let i = 0; i < 51; i++){
             var frameMid = document.querySelectorAll(".frame-mid"+i)
             frameMid.forEach(el2 => {
-                if(el2.querySelector(".checkboxs").checked == "on"){
-                    blocks_.append([i, 0) // меняй
+                if(el2.querySelector(".checkboxs").checked == true){
+                    blocks_.push([i, 0]) // меняй
                     //blocks_.append([i, el2.querySelector(".el-var").selectedIndex]) // меняй
                 }
             })
@@ -486,9 +486,7 @@ document.querySelectorAll(".checkboxs").forEach(el => {
         };
 
         HttpRequestPostJson('autoPoints', function (response) {
-            if(response.answer == true){
-                window.location.href='menu'
-            }
+            document.querySelector("#points").value = response.answer
         }, json)
     })
 })
