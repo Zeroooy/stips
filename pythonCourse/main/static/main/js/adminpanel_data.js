@@ -47,41 +47,11 @@ function setPeriod() {
     // Выполняем запрос на сервер
     HttpRequestPostJson('setPeriod', function (response) {
         if (response && response.answer === true) {
-            createMessage("Даты успешно сохранены!", "sucess");
-            window.history.back()
+            showNotification("Даты успешно изменены");
+
         } else {
             console.error("Ошибка при сохранении периода:", response);
-            createMessage("Не удалось сохранить даты. Попробуйте снова.", "error");
+            showNotification("Ошибка изменения даты");
         }
     }, json);
-}
-function createMessage(text, type) {
-    const message = document.createElement("div");
-    message.className = "message-container";
-
-    // Определяем стиль в зависимости от типа сообщения
-    if (type === "sucess") {
-        message.classList.add("message-success");
-    } else if (type === "error") {
-        message.classList.add("message-error");
-    }
-
-    // Устанавливаем текст сообщения
-    message.innerHTML = `
-        <div class="message-content">${text}</div>
-    `;
-
-    // Добавляем сообщение в тело страницы
-    document.body.appendChild(message);
-
-    // Анимация появления
-    setTimeout(() => {
-        message.classList.add("show");
-    }, 50);
-
-    // Удаление сообщения через 4 секунды
-    setTimeout(() => {
-        message.classList.remove("show");
-        setTimeout(() => message.remove(), 500);
-    }, 4000);
 }

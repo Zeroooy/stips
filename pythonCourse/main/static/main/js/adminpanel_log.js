@@ -55,6 +55,7 @@ function clearLogs() {
 
     HttpRequestPostJson('resetLog', function (response) {
         if (response.answer === true) {
+            showNotification("История действий успешно очищена.");
             document.getElementById("logs-container").innerHTML = '<p>История действий успешно очищена.</p>';
             getLogs();
         } else {

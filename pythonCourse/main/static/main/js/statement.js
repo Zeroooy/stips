@@ -160,8 +160,9 @@ function createDuplicate(elements, count, checkStud){
                     }
                 }
                 section.parentNode.append(clonedFields); // Добавляем в конец родителя
-                clonedFieldsPred.querySelectorAll(".el").forEach(el_ => el_.disabled = true);
-
+                if(checkStud){
+                        clonedFieldsPred.querySelectorAll(".el").forEach(el_ => el_.disabled = true);
+                }
                 clonedFieldsPred = clonedFields
             }
         });
@@ -385,7 +386,9 @@ function createJson(){
 
     HttpRequestPostFormData('uploadStatement', function (response) {
         if (response.answer) {
+            showNotification("Заявление успешно отправлено");
         } else {
+            showNotification("Ошибка отправки заявления");
             console.error("Нет данных или ошибка запроса");
         }
     }, formData);
@@ -475,8 +478,8 @@ document.querySelectorAll(".checkboxs").forEach(el => {
             var frameMid = document.querySelectorAll(".frame-mid"+i)
             frameMid.forEach(el2 => {
                 if(el2.querySelector(".checkboxs").checked == true){
-                    blocks_.push([i, 0]) // меняй
-                    //blocks_.append([i, el2.querySelector(".el-var").selectedIndex]) // меняй
+                    //blocks_.push([i, 0]) // меняй
+                    blocks_.append([i, el2.querySelector(".el-var").selectedIndex]) // меняй
                 }
             })
         }

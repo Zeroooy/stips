@@ -73,7 +73,7 @@ function renderUserTable(usersData) {
 
         // Изменяем логику перехода на adminpaneluser
         userRow.addEventListener("click", () => {
-            window.location.href = `adminpaneluser?userId=${user["user-id"]}`;
+            window.location.href = `user?userId=${user["user-id"]}`;
         });
 
         container.appendChild(userRow);

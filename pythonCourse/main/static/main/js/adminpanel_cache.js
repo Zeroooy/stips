@@ -112,7 +112,7 @@ function markAllStatementsOutdated() {
     // Отправляем запрос на сервер для устаревания всех заявлений
     HttpRequestPostJson('setOld', function (response) {
         if (response && response.answer === true) {
-            alert("Все заявления успешно помечены как устаревшие.");
+            showNotification("Заявления сделаны устаревшими.");
             getMyStatements(); // Обновляем список заявлений
         } else {
             console.error("Не удалось пометить заявления как устаревшие.");

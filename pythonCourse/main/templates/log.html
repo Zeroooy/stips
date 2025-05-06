@@ -2,32 +2,13 @@
 {% load static %}
 {% block content %}
 
-<button onclick="openModal(clearLogs, 'Вы точно хотите очистить историю действий?')" class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 border-2 border-red-500 rounded-xl font-bold">Очистить историю</button>
+<button onclick="showConfirmation(() => { clearLogs(); });" class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 border-2 border-red-500 rounded-xl font-bold">Очистить историю</button>
 <div class="min-w-120 frame border-2 px-3 p-1 m-2 rounded-xl border-red-500">
     <h2 class="px-3 p-1 m-2 font-bold text-xl">История действий</h2>
     <div class="px-3 p-1 m-2" id="logs-container"></div>
 </div>
 
-  <!-- Модальное окно -->
-  <div id="modalBackdrop" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50 flex">
-    <div class="bg-white p-6 rounded-xl shadow-xl w-96 text-center">
-      <h2 class="text-xl font-bold mb-4">Подтвердите действие</h2>
-      <p id="modalMessage" class="mb-6">Вы точно уверены, что хотите выполнить это действие?</p>
-      <div class="flex justify-center gap-4">
-        <button
-          class="px-4 py-2  hover:scale-110 rounded-lg bg-red-500 hover:bg-red-400 block text-white font-bold"
-          onclick="confirmAction()"
-        >Да</button>
-        <button
-          class="px-4 py-2 hover:scale-110 hover:bg-red-100 border-2 border-red-500 rounded-xl font-bold"
-          onclick="closeModal()"
-        >Нет</button>
-      </div>
-    </div>
-  </div>
-  <!-- Уведомление -->
-  <div id="notification"></div>
-<script src="{% static 'main/js/showNotification.js' %}"></script>
+
 <script src="{% static 'main/js/adminpanel_log.js' %}"></script>
 <script src="{% static 'main/js/roleControl.js' %}"></script>
 

@@ -57,9 +57,6 @@ function fillUserFields(userData) {
         container.appendChild(row);
     });
 }
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("change-role-button").addEventListener("click", changeUserRole);
-});
 
 function changeUserRole() {
     const sessionId = sessionStorage.getItem("sessionId");
@@ -67,7 +64,7 @@ function changeUserRole() {
     const newRole = document.getElementById("role-select").value;
 
     if (!sessionId || !userId) {
-        alert("Ошибка: отсутствует sessionId или userId");
+
         return;
     }
 
@@ -79,10 +76,9 @@ function changeUserRole() {
 
     HttpRequestPostJson("changeRole", (response) => {
         if (response.answer === true) {
-            alert("Роль успешно изменена!");
-            location.reload();
+            showNotification("Роль успешно изменена");
         } else {
-            alert("Ошибка изменения роли");
+            showNotification("Ошибка изменения роли");
         }
     }, requestData);
 }
