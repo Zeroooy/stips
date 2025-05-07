@@ -41,9 +41,9 @@
         </div>
 
         <div class="button-block hidden transition hover:scale-105 bg-white border-red-500 border-2 rounded-lg flex flex-col items-center text-center p-4 w-80 m-5">
-            <h2 class="font-bold pb-2">ФАЙЛЫ ДЛЯ ВЫКАЧКИ</h2>
+            <h2 class="font-bold pb-2">СКАЧАТЬ ОТЧЕТЫ ПО ЗАЯВЛЕНИЯМ</h2>
             <button class="w-50 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="downloadFile('getWordAll')">Скачать .docx успешных заявлений</button>
-            <button class="w-50 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="downloadFile('getWordSuccess')">Скачать .docx заявлений</button>
+            <button class="w-50 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="downloadFile('getWordSuccess')">Скачать .docx всех заявлений</button>
             <script>
                 function downloadFile(url){
                     const json = { "session": sessionStorage.getItem("sessionId")};
