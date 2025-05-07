@@ -494,6 +494,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("input-field-mail").value = statementsJson["information"]["mail"];
                 document.getElementById("input-field-group").value = statementsJson["information"]["group"];
 
+                document.getElementById("onlyFive").value = statementsJson["studies"]["onlyFive"];
+
                 if(statementsJson["information"]["agree"] == "on"){
                     document.getElementById("agree-checkbox").checked = true;
                 }
