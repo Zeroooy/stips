@@ -240,7 +240,7 @@ function interInfo(block){
                         if (link && link.tagName === 'A') {
                             const fileUrl = block[key][key2][key3]; // ссылка на файл
                             if (fileUrl) {
-                                const fullUrl = '/files/' + decodeURIComponent(fileUrl);  // декодируем путь и добавляем префикс
+                                const fullUrl = decodeURIComponent(fileUrl);  // декодируем путь и добавляем префикс
                                 link.href = fullUrl;
                                 link.classList.remove('hidden'); // если скрыта
                             } else {
