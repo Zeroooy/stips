@@ -105,7 +105,7 @@ def get_statements(request):
         elif user is not None and user.is_inspector():
             response = {"statements": Statement.get_statements_by_statuses(["process", "error", "verified"])}
         elif user is not None and user.is_jury():
-            response = {"statements": Statement.get_statements_by_statuses(["conflict", "confirm", "deny"])}
+            response = {"statements": Statement.get_statements_by_statuses(["conflict", "confirm", "deny", "verified"])}
         elif user is not None and user.is_admin():
             response = {"statements": Statement.get_statements_by_statuses(["process", "error", "verified", "deny", "confirm", "conflict"])}
         else:
@@ -132,11 +132,14 @@ def upload_statement(request):
         json_data = json.loads(json_data_)
         user = User.get_by_session(data.get("session"))
         if user is not None and user.is_student() and json_data.get("studies") is not None and json_data.get("science") is not None and json_data.get("activities") is not None and json_data.get("culture") is not None and json_data.get("sport") is not None and (json_data.get("studies") != {} or json_data.get("science") != {} or json_data.get("activities") != {} or json_data.get("culture") != {} or json_data.get("sport") != {}):
-            if Statement.upload(user, json_data, request.FILES):
-                Log.add(user, "Загрузка заявления", "", copy.deepcopy(Statement.get_by_user(user).get_json_data()))
-                response = {"answer": True}
+            if len(request.FILES) == 0:
+                response = {"answer": "no files"}
             else:
-                response = {"answer": "Too late"}
+                if Statement.upload(user, json_data, request.FILES):
+                    Log.add(user, "Загрузка заявления", "", copy.deepcopy(Statement.get_by_user(user).get_json_data()))
+                    response = {"answer": True}
+                else:
+                    response = {"answer": "Too late"}
         else:
             response = {"answer": False}
     except:
@@ -234,7 +237,7 @@ def confirm_statement_jury(request):
         user = User.get_by_session(data.get("session"))
         if user is not None and user.is_jury():
             statement = Statement.get_by_id(data.get("statement-id"))
-            statement.set_status_up()
+            statement.set_status(4)
             Log.add(user, "Одобрение заявления", "", copy.deepcopy(statement.get_json_data()))
             response = {"answer": True}
         else:
@@ -253,7 +256,7 @@ def deny_statement_jury(request):
         user = User.get_by_session(data.get("session"))
         if user is not None and user.is_jury():
             statement = Statement.get_by_id(data.get("statement-id"))
-            statement.set_status_down()
+            statement.set_status(5)
             Log.add(user, "Отклонение заявления", "", copy.deepcopy(statement.get_json_data()))
             response = {"answer": True}
         else:
@@ -362,8 +365,8 @@ def change_status(request):
         data = json.loads(request.body)
         user = User.get_by_session(data.get("session"))
         if user is not None and user.is_admin():
-            statement = Statement.get_by_id(data.get("statment-id"))
-            statement.change_status("status")
+            statement = Statement.get_by_id(data.get("statement-id"))
+            statement.set_status(data.get("status"))
             Log.add(user, "Изменение статуса заявления", "У заявления " + str(data.get("statment-id")) + " статус изменен на " + str(data.get("status")), {})
             response = {"answer": True}
         else:
@@ -543,7 +546,8 @@ def auto_points(request):
                 [35] # frame-mid50 (В.1) Выполнение нормативов и требований ВФСК ГТО в официальном центре тестирования, получение золотого знака отличия
             ]
             for i in blocks:
-                points += points_to_blocks[i[0]][i[1]]
+                if i[0] != -1 and i[1] != -1:
+                    points += points_to_blocks[i[0]][i[1]]
             response = {"answer": points}
         else:
             response = {"answer": False}

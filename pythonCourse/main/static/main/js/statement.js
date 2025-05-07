@@ -16,20 +16,6 @@ for(let i = 0; i < checkboxs.length; i++) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    setActiveFrame(0); // Устанавливаем активную кнопку
-
-    // Блокируем кнопку отправки, пока чекбокс не нажат
-    const submitButton = document.getElementById("mark-all-outdated");
-    document.getElementById("agree-checkbox").addEventListener("change", function () {
-        submitButton.disabled = !this.checked;
-    });
-
-
-    fillFrames()
-});
-
 // Устанавливаем активную кнопку
 function setActiveFrame(e) {
     var els = document.getElementsByClassName("perehod-")
@@ -139,6 +125,29 @@ function fillFrames() {
                     el.appendChild(checkbox);
                 });
             }
+
+            document.querySelectorAll(".checkboxs").forEach(el => {
+                el.addEventListener('change', function() {
+                    var blocks_ = []
+                    blocks_.push([0, document.querySelector("#onlyFive").selectedIndex-1])
+                    for(let i = 0; i < 51; i++){
+                        var frameMid = document.querySelectorAll(".frame-mid"+i)
+                        frameMid.forEach(el2 => {
+                            if(el2.querySelector(".checkboxs").checked == true){
+                                blocks_.push([i+1, el2.querySelector(".el-var").selectedIndex-1])
+                            }
+                        })
+                    }
+                    const json = {
+                        session: sessionStorage.getItem('sessionId'),
+                        blocks: blocks_,
+                    };
+
+                    HttpRequestPostJson('autoPoints', function (response) {
+                        document.querySelector("#points").value = response.answer
+                    }, json)
+                })
+            })
         }
     }, {
         session: sessionStorage.getItem('sessionId')
@@ -181,9 +190,9 @@ function createDuplicate(elements, count, checkStud){
                         if (el_.type === 'file') {
                             el_.parentElement.classList.remove('border-2');
                             if(el_.nextElementSibling.href == ""){
-                                el_.nextElementSibling.remove()
+                                el_.nextElementSibling.classList.add('hidden')
                             };
-                            el_.remove()
+                            el_.classList.add('hidden')
                         }else{
                             el_.disabled = true;
                         }
@@ -198,89 +207,39 @@ function createDuplicate(elements, count, checkStud){
 
 
 
-const statementId = new URLSearchParams(window.location.search).get("statementId");
-if(statementId != null){
-    const json = {
-        session: sessionStorage.getItem('sessionId'),
-        "statement-id": statementId
-    };
-
-    HttpRequestPostJson('getStatement', function (response) {
-        if (response) {
-            statementsJson = response["statement-json"]; // Сохраняем все данные заявлений
-            document.getElementById("input-field-fio").value = statementsJson["information"]["fio"];
-            document.getElementById("input-field-phone").value = statementsJson["information"]["phone"];
-            document.getElementById("input-field-inst").value = statementsJson["information"]["inst"];
-            document.getElementById("input-field-mail").value = statementsJson["information"]["mail"];
-            document.getElementById("input-field-group").value = statementsJson["information"]["group"];
-
-            if(statementsJson["information"]["agree"] == "on"){
-                document.getElementById("agree-checkbox").checked = true;
-            }
-
-            statementsJson["information"]["achievements"].forEach(section => {
-                if(section == "Учеба"){
-                    document.getElementsByClassName("custom-checkbox")[0].checked = true;
-                    buttons[0].disabled = false;  // Разблокируем кнопку
-                    buttons[0].classList.add('hover:bg-red-200');
-                    buttons[0].classList.remove('text-black/50');
-                }
-                if(section == "Наука"){
-                    document.getElementsByClassName("custom-checkbox")[1].checked = true;
-                    buttons[1].disabled = false;  // Разблокируем кнопку
-                    buttons[1].classList.add('hover:bg-red-200');
-                    buttons[1].classList.remove('text-black/50');
-                }
-                if(section == "Общественная деятельность"){
-                    document.getElementsByClassName("custom-checkbox")[2].checked = true;
-                    buttons[2].disabled = false;  // Разблокируем кнопку
-                    buttons[2].classList.add('hover:bg-red-200');
-                    buttons[2].classList.remove('text-black/50');
-                }
-                if(section == "Культура и творчество"){
-                    document.getElementsByClassName("custom-checkbox")[3].checked = true;
-                    buttons[3].disabled = false;  // Разблокируем кнопку
-                    buttons[3].classList.add('hover:bg-red-200');
-                    buttons[3].classList.remove('text-black/50');
-                }
-                if(section == "Спорт"){
-                    document.getElementsByClassName("custom-checkbox")[4].checked = true;
-                    buttons[4].disabled = false;  // Разблокируем кнопку
-                    buttons[4].classList.add('hover:bg-red-200');
-                    buttons[4].classList.remove('text-black/50');
-                }
-            })
-
-            interInfo(statementsJson["activities"]["list"])
-            interInfo(statementsJson["culture"]["list"])
-            interInfo(statementsJson["science"]["list"])
-            interInfo(statementsJson["studies"]["list"])
-            interInfo(statementsJson["sport"]["list"])
 
 
-        } else {
-            console.error("Нет данных или ошибка запроса");
-        }
-    }, json);
-}
+
+
+
+
+
+
+
+
+
 
 
 function interInfo(block){
-    for (let key in block) {
+    for (let key in block) { // проходим по блокам
         var frames = document.getElementsByClassName("frame-mid"+key)
-        let count = 0
-        if (block.hasOwnProperty(key)) {
-            let elements = frames[count].querySelectorAll(".el")
+        var count = 0
 
-            for (let key2 in block[key]) {
+        if (block.hasOwnProperty(key)) {
+
+            for (let key2 in block[key]) { // проходим по частям в блоке
+
+                let elements = frames[count].querySelectorAll(".el")
                 var count_ = 0
+                frames[count].classList.remove('hidden');
+
                 for (let key3 in block[key][key2]) {
                     if (elements[count_].type === 'file') {
                         const link = elements[count_].nextElementSibling; // соседний <a>
+
                         if (link && link.tagName === 'A') {
                             const fileUrl = block[key][key2][key3]; // ссылка на файл
                             if (fileUrl) {
-                                // Преобразуем относительный URL в абсолютный
                                 const fullUrl = '/files/' + decodeURIComponent(fileUrl);  // декодируем путь и добавляем префикс
                                 link.href = fullUrl;
                                 link.classList.remove('hidden'); // если скрыта
@@ -293,8 +252,9 @@ function interInfo(block){
                     }
                     count_++
                 }
+
+                count++
             }
-            count++
         }
     }
 }
@@ -341,8 +301,6 @@ function createJson(){
     if(information["group"] == ''){ return }
     if(information["agree-checkbox"] == 'off'){ return }
 
-    console.log(information)
-
 
 
     // УЧЕБА
@@ -358,9 +316,6 @@ function createJson(){
             fn = giveEls(el_, studies["list"][""+el], formData, fn)
         })
     })
-
-
-    console.log(studies)
 
     // НАУКА
 
@@ -378,9 +333,6 @@ function createJson(){
 
 
 
-    console.log(science)
-
-
     // АКТИВНОСТЬ
 
     var activities = {
@@ -394,8 +346,6 @@ function createJson(){
             fn = giveEls(el_, activities["list"][""+el], formData, fn)
         })
     })
-
-    console.log(activities)
 
     // КУЛЬТУРА
 
@@ -411,8 +361,6 @@ function createJson(){
         })
     })
 
-    console.log(culture)
-
     // СПОРТ
 
     var sport = {
@@ -426,8 +374,6 @@ function createJson(){
             fn = giveEls(el_, sport["list"][""+el])
         })
     })
-
-    console.log(sport)
 
     var json_ = {
         "information": information,
@@ -444,7 +390,11 @@ function createJson(){
     formData.append("json", JSON.stringify(json_));
 
     HttpRequestPostFormData('uploadStatement', function (response) {
-        if (response.answer) {
+        if (response.answer == "Too late") {
+            showNotificationBad("Закончен сбор заявлений, вы не успели:(");
+        }else if (response.answer == "no files") {
+            showNotificationBad("Вы не прикрепили файлы!");
+        }else if (response.answer) {
             showNotification("Заявление успешно отправлено");
         } else {
             showNotification("Ошибка отправки заявления");
@@ -492,34 +442,6 @@ function giveEls(element, parent, formData, fn){
 
 
 
-const json = {
-    session: sessionStorage.getItem('sessionId')
-};
-
-HttpRequestPostJson('getRole', function (response) {
-    var blocks = document.querySelectorAll(".button-block")
-    if (response.answer == "Administrator") {
-        blocks[0].remove()
-        blocks[1].remove()
-        blocks[2].classList.remove("hidden")
-    }else if (response.answer == "Student") {
-        blocks[0].classList.remove("hidden")
-        blocks[1].remove()
-        blocks[2].remove()
-    }else if (response.answer == "Jury") {
-        blocks[0].remove()
-        blocks[1].classList.remove("hidden")
-        blocks[2].remove()
-    }else if (response.answer == "Inspector studies" || response.answer == "Inspector science" || response.answer == "Inspector culture" || response.answer == "Inspector activities" || response.answer == "Inspector sport") {
-        blocks[0].remove()
-        blocks[1].classList.remove("hidden")
-        blocks[2].remove()
-    } else {
-        console.error("Нет данных или ошибка запроса");
-    }
-}, json);
-
-
 
 function rateStatment(){
     const statementId = new URLSearchParams(window.location.search).get("statementId");
@@ -538,25 +460,129 @@ function rateStatment(){
 }
 
 
-document.querySelectorAll(".checkboxs").forEach(el => {
-    el.addEventListener('change', function() {
-        var blocks_ = []
-        for(let i = 0; i < 51; i++){
-            var frameMid = document.querySelectorAll(".frame-mid"+i)
-            frameMid.forEach(el2 => {
-                if(el2.querySelector(".checkboxs").checked == true){
-                    blocks_.append([i, el2.querySelector(".el-var").selectedIndex])
-                }
-            })
-        }
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    setActiveFrame(0); // Устанавливаем активную кнопку
+
+    // Блокируем кнопку отправки, пока чекбокс не нажат
+    const submitButton = document.getElementById("mark-all-outdated");
+    document.getElementById("agree-checkbox").addEventListener("change", function () {
+        submitButton.disabled = !this.checked;
+    });
+
+    fillFrames()
+
+
+
+
+    const statementId = new URLSearchParams(window.location.search).get("statementId");
+    if(statementId != null){
         const json = {
             session: sessionStorage.getItem('sessionId'),
-            blocks: blocks_,
+            "statement-id": statementId
         };
 
-        HttpRequestPostJson('autoPoints', function (response) {
-            document.querySelector("#points").value = response.answer
-        }, json)
-    })
+        HttpRequestPostJson('getStatement', function (response) {
+            if (response) {
+                statementsJson = response["statement-json"]; // Сохраняем все данные заявлений
+                document.getElementById("input-field-fio").value = statementsJson["information"]["fio"];
+                document.getElementById("input-field-phone").value = statementsJson["information"]["phone"];
+                document.getElementById("input-field-inst").value = statementsJson["information"]["inst"];
+                document.getElementById("input-field-mail").value = statementsJson["information"]["mail"];
+                document.getElementById("input-field-group").value = statementsJson["information"]["group"];
+
+                if(statementsJson["information"]["agree"] == "on"){
+                    document.getElementById("agree-checkbox").checked = true;
+                }
+
+                statementsJson["information"]["achievements"].forEach(section => {
+                    if(section == "Учеба"){
+                        document.getElementsByClassName("custom-checkbox")[0].checked = true;
+                        buttons[0].disabled = false;  // Разблокируем кнопку
+                        buttons[0].classList.add('hover:bg-red-200');
+                        buttons[0].classList.remove('text-black/50');
+                    }
+                    if(section == "Наука"){
+                        document.getElementsByClassName("custom-checkbox")[1].checked = true;
+                        buttons[1].disabled = false;  // Разблокируем кнопку
+                        buttons[1].classList.add('hover:bg-red-200');
+                        buttons[1].classList.remove('text-black/50');
+                    }
+                    if(section == "Общественная деятельность"){
+                        document.getElementsByClassName("custom-checkbox")[2].checked = true;
+                        buttons[2].disabled = false;  // Разблокируем кнопку
+                        buttons[2].classList.add('hover:bg-red-200');
+                        buttons[2].classList.remove('text-black/50');
+                    }
+                    if(section == "Культура и творчество"){
+                        document.getElementsByClassName("custom-checkbox")[3].checked = true;
+                        buttons[3].disabled = false;  // Разблокируем кнопку
+                        buttons[3].classList.add('hover:bg-red-200');
+                        buttons[3].classList.remove('text-black/50');
+                    }
+                    if(section == "Спорт"){
+                        document.getElementsByClassName("custom-checkbox")[4].checked = true;
+                        buttons[4].disabled = false;  // Разблокируем кнопку
+                        buttons[4].classList.add('hover:bg-red-200');
+                        buttons[4].classList.remove('text-black/50');
+                    }
+                })
+
+                interInfo(statementsJson["activities"]["list"])
+                interInfo(statementsJson["culture"]["list"])
+                interInfo(statementsJson["science"]["list"])
+                interInfo(statementsJson["studies"]["list"])
+                interInfo(statementsJson["sport"]["list"])
+
+
+            } else {
+                console.error("Нет данных или ошибка запроса");
+            }
+        }, json);
+    }
+
+
+
+
+    const json = {
+        session: sessionStorage.getItem('sessionId')
+    };
+
+    HttpRequestPostJson('getRole', function (response) {
+        var blocks = document.querySelectorAll(".button-block")
+        if (response.answer == "Administrator") {
+            blocks[0].remove()
+            blocks[1].remove()
+            blocks[2].remove()
+            blocks[3].classList.remove("hidden")
+        }else if (response.answer == "Student") {
+            blocks[0].classList.remove("hidden")
+            blocks[1].remove()
+            blocks[2].remove()
+            blocks[3].remove()
+        }else if (response.answer == "Jury") {
+            blocks[0].remove()
+            blocks[1].remove()
+            blocks[2].classList.remove("hidden")
+            blocks[3].remove()
+        }else if (response.answer == "Inspector studies" || response.answer == "Inspector science" || response.answer == "Inspector culture" || response.answer == "Inspector activities" || response.answer == "Inspector sport") {
+            blocks[0].remove()
+            blocks[1].classList.remove("hidden")
+            blocks[2].remove()
+            blocks[3].remove()
+        } else {
+            console.error("Нет данных или ошибка запроса");
+        }
+    }, json);
+
+
+
+
+
 })
+
+
 

@@ -307,74 +307,38 @@ class Statement(models.Model):
 
 
     def mark(self, user, value, comment):
+        value = int(value)
         if user.role.id == 3:
-            self.set_mark_studies(value, comment)
-        elif user.role.id == 4:
-            self.set_mark_science(value, comment)
-        elif user.role.id == 5:
-            self.set_mark_activities(value, comment)
-        elif user.role.id == 6:
-            self.set_mark_culture(value, comment)
-        elif user.role.id == 7:
-            self.set_mark_sport(value, comment)
-
-    def set_mark_studies(self, value, comment):
-        self.mark_studies = value
-        if not value:
+            self.mark_studies = value
             self.comment_studies = comment
-        else:
-            self.check_all_marks()
-
-    def set_mark_science(self, value, comment):
-        self.mark_science = value
-        if not value:
+        elif user.role.id == 4:
+            self.mark_science = value
             self.comment_science = comment
-        else:
-            self.check_all_marks()
-
-    def set_mark_activities(self, value, comment):
-        self.mark_activities = value
-        if not value:
+        elif user.role.id == 5:
+            self.mark_activities = value
             self.comment_activities = comment
-        else:
-            self.check_all_marks()
-
-    def set_mark_culture(self, value, comment):
-        self.mark_culture = value
-        if not value:
+        elif user.role.id == 6:
+            self.mark_culture = value
             self.comment_culture = comment
-        else:
-            self.check_all_marks()
-
-    def set_mark_sport(self, value, comment):
-        self.mark_sport = value
-        if not value:
+        elif user.role.id == 7:
+            self.mark_sport = value
             self.comment_sport = comment
-        else:
-            self.check_all_marks()
+        self.points = self.mark_studies + self.mark_science + self.mark_activities + self.mark_culture + self.mark_sport
+        self.save()
 
 
     def check_all_marks(self):
         if self.mark_studies != -1 and self.mark_science != -1 and self.mark_activities != -1 and self.mark_culture != -1 and self.mark_sport != -1 and self.status == 0:
             self.status = 2
+            self.save()
 
     def set_status(self, id_):
-        self.status.id = Status.objects.get(id=id_)
-
-    def set_status_up(self):
-        if self.status.id == 1:
-            self.status = Status.objects.get(id=0)
-        elif self.status.id == 0:
-            self.status = Status.objects.get(id=2)
-
-    def set_status_down(self):
-        if self.status.id == 0:
-            self.status = Status.objects.get(id = 1)
-        elif self.status.id == 2:
-            self.status = Status.objects.get(id = 0)
+        new_status = int(id_)
+        self.status = Status.objects.filter(id=new_status).last()
+        self.save()
 
     def remove_files(self):
-        if self.urls is not [] or self.urls is not None:
+        if len(self.urls) != 0 and self.urls is not None:
             for file in self.urls:
                 fs = FileSystemStorage(location="files")
                 if fs.exists(file):
@@ -391,38 +355,48 @@ class Statement(models.Model):
         date = datetime.now(timezone.utc)
         if Period.is_require(date):
             statement_temp = Statement.get_by_user(user)
+
             if statement_temp is not None and statement_temp.old_status is not True:
-                statement_temp.remove_files()
                 json_change = Statement.replace_at_values_with_links(json, files)
+                statement_temp.remove_files()
                 statement_temp.json = json_change[0]
                 statement_temp.urls = json_change[1]
                 achievements = statement_temp.json['information']['achievements']
                 if not ('Учеба' in achievements):
-                    statement_temp.set_mark_studies(0, 'Автоматическое выставление')
+                    statement_temp.mark_studies = 0
+                    statement_temp.comment_studies = 'Автоматическое выставление'
                 if not ('Наука' in achievements):
-                    statement_temp.set_mark_science(0, 'Автоматическое выставление')
+                    statement_temp.mark_science = 0
+                    statement_temp.comment_science = 'Автоматическое выставление'
                 if not ('Общественная деятельность' in achievements):
-                    statement_temp.set_mark_activities(0, 'Автоматическое выставление')
+                    statement_temp.mark_activities = 0
+                    statement_temp.comment_activities = 'Автоматическое выставление'
                 if not ('Культура и творчество' in achievements):
-                    statement_temp.set_mark_culture(0, 'Автоматическое выставление')
+                    statement_temp.mark_culture = 0
+                    statement_temp.comment_culture = 'Автоматическое выставление'
                 if not ('Спорт' in achievements):
-                    statement_temp.set_mark_sport(0, 'Автоматическое выставление')
+                    statement_temp.mark_sport = 0
+                    statement_temp.comment_sport = 'Автоматическое выставление'
                 statement_temp.date = datetime.now()
             else:
                 json_change = Statement.replace_at_values_with_links(json, files)
                 statement_temp = Statement.objects.create(id=Statement.generate_id(), user=user, json=json_change[0], date=date, urls = json_change[1])
                 achievements = statement_temp.json['information']['achievements']
                 if not ('Учеба' in achievements):
-                    statement_temp.set_mark_studies(0, 'Автоматическое выставление')
+                    statement_temp.mark_studies = 0
+                    statement_temp.comment_studies = 'Автоматическое выставление'
                 if not ('Наука' in achievements):
-                    statement_temp.set_mark_science(0, 'Автоматическое выставление')
+                    statement_temp.mark_science = 0
+                    statement_temp.comment_science = 'Автоматическое выставление'
                 if not ('Общественная деятельность' in achievements):
-                    statement_temp.set_mark_activities(0, 'Автоматическое выставление')
+                    statement_temp.mark_activities = 0
+                    statement_temp.comment_activities = 'Автоматическое выставление'
                 if not ('Культура и творчество' in achievements):
-                    statement_temp.set_mark_culture(0, 'Автоматическое выставление')
+                    statement_temp.mark_culture = 0
+                    statement_temp.comment_culture = 'Автоматическое выставление'
                 if not ('Спорт' in achievements):
-                    statement_temp.set_mark_sport(0, 'Автоматическое выставление')
-                # statement_temp = Statement.objects.create(id=Statement.generate_id(), user=user, json=json_change[0], date=date, urls = json_change[1])
+                    statement_temp.mark_sport = 0
+                    statement_temp.comment_sport = 'Автоматическое выставление'
 
             statement_temp.save()
 

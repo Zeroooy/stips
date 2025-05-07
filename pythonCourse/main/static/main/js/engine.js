@@ -266,7 +266,9 @@ function showConfirmation(onConfirm) {
   document.body.appendChild(backdrop);
 }
 
-function showNotification(message) {
+function showNotificationBad(message) {Notification(message, false)}
+function showNotification(message) {Notification(message, true)}
+function Notification(message, type) {
   // Удалим старое уведомление, если есть
   const old = document.getElementById("custom-notify");
   if (old) old.remove();
@@ -275,8 +277,8 @@ function showNotification(message) {
   const note = document.createElement("div");
   note.id = "custom-notify";
   note.textContent = message;
-  note.className = "fixed top-25 right-5 bg-green-500 text-white px-4 py-2 rounded-xl shadow-lg z-50";
-
+  if(type) note.className = "fixed top-25 right-5 bg-green-500 text-white px-4 py-2 rounded-xl shadow-lg z-50";
+  else note.className = "fixed top-25 right-5 bg-red-400 text-white px-4 py-2 rounded-xl shadow-lg z-50";
   document.body.appendChild(note);
 
   // Удалить через 3 секунды

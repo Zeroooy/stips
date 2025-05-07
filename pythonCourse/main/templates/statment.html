@@ -1251,9 +1251,52 @@
     <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="comment" placeholder="Комментарий">
     <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="rateStatment()">Оценить</button>
 </div>
+
 <div class="button-block hidden">
-    <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="points_all" placeholder="Баллы заявления">
-    <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="createJson()">Изменить баллы</button>
+    <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="ratingStatement('confirmStatement')">Одобрить</button>
+    <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="ratingStatement('denyStatement')">Отклонить</button>
+    <script>
+        function ratingStatement(url){
+            const json = {
+                session: sessionStorage.getItem('sessionId'),
+                "statement-id": statementId
+            };
+
+            HttpRequestPostJson(url, function (response) {
+                if(response.answer == true){
+                    window.location.href='menu'
+                }
+            }, json)
+        }
+    </script>
+</div>
+
+<div class="button-block hidden">
+    <select class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="status">
+        <option value="" disabled selected>Статус</option>
+        <option value="0">На проверке</option>
+        <option value="1">Ошибочное</option>
+        <option value="2">Проверенное</option>
+        <option value="3">Конфликтное</option>
+        <option value="4">Одобренное</option>
+        <option value="5">Отклоненное</option>
+    </select>
+    <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="changeStatus()">Изменить статус</button>
+    <script>
+        function changeStatus(){
+            const json = {
+                session: sessionStorage.getItem('sessionId'),
+                "statement-id": statementId,
+                status: Number(document.getElementById("status").value)
+            };
+
+            HttpRequestPostJson('changeStatus', function (response) {
+                if(response.answer == true){
+                    window.location.href='menu'
+                }
+            }, json)
+        }
+    </script>
 </div>
 
 
