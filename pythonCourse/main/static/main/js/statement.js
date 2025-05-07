@@ -176,7 +176,18 @@ function createDuplicate(elements, count, checkStud){
                 }
                 section.parentNode.append(clonedFields); // Добавляем в конец родителя
                 if(!checkStud){
-                    clonedFieldsPred.querySelectorAll(".el").forEach(el_ => el_.disabled = true);
+
+                    clonedFieldsPred.querySelectorAll(".el").forEach(el_ => {
+                        if (el_.type === 'file') {
+                            el_.parentElement.classList.remove('border-2');
+                            if(el_.nextElementSibling.href == ""){
+                                el_.nextElementSibling.remove()
+                            };
+                            el_.remove()
+                        }else{
+                            el_.disabled = true;
+                        }
+                    })
                 }
                 clonedFieldsPred = clonedFields
             }
@@ -257,14 +268,29 @@ if(statementId != null){
 function interInfo(block){
     for (let key in block) {
         var frames = document.getElementsByClassName("frame-mid"+key)
-        count = 0
+        let count = 0
         if (block.hasOwnProperty(key)) {
             let elements = frames[count].querySelectorAll(".el")
 
             for (let key2 in block[key]) {
                 var count_ = 0
                 for (let key3 in block[key][key2]) {
-                    elements[count_].value = block[key][key2][key3]
+                    if (elements[count_].type === 'file') {
+                        const link = elements[count_].nextElementSibling; // соседний <a>
+                        if (link && link.tagName === 'A') {
+                            const fileUrl = block[key][key2][key3]; // ссылка на файл
+                            if (fileUrl) {
+                                // Преобразуем относительный URL в абсолютный
+                                const fullUrl = '/files/' + decodeURIComponent(fileUrl);  // декодируем путь и добавляем префикс
+                                link.href = fullUrl;
+                                link.classList.remove('hidden'); // если скрыта
+                            } else {
+                                link.classList.add('hidden'); // скрыть, если нет ссылки
+                            }
+                        }
+                    } else {
+                        elements[count_].value = block[key][key2][key3]
+                    }
                     count_++
                 }
             }
@@ -273,7 +299,25 @@ function interInfo(block){
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function createJson(){
+    const formData = new FormData();
+    var fn = 0
     // ИНФОРМАЦИЯ
     var information = {
         "achievements": [],
@@ -311,7 +355,7 @@ function createJson(){
     a.forEach(el => {
         studies["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
-            giveEls(el_, studies["list"][""+el])
+            fn = giveEls(el_, studies["list"][""+el], formData, fn)
         })
     })
 
@@ -328,7 +372,7 @@ function createJson(){
     a.forEach(el => {
         science["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
-            giveEls(el_, science["list"][""+el])
+            fn = giveEls(el_, science["list"][""+el], formData, fn)
         })
     })
 
@@ -347,7 +391,7 @@ function createJson(){
     a.forEach(el => {
         activities["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
-            giveEls(el_, activities["list"][""+el])
+            fn = giveEls(el_, activities["list"][""+el], formData, fn)
         })
     })
 
@@ -363,7 +407,7 @@ function createJson(){
     a.forEach(el => {
         culture["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
-            giveEls(el_, culture["list"][""+el])
+            fn = giveEls(el_, culture["list"][""+el], formData, fn)
         })
     })
 
@@ -379,7 +423,7 @@ function createJson(){
     a.forEach(el => {
         sport["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
-            giveEls(el_, sport["list"][""+el])
+            fn = giveEls(el_, sport["list"][""+el])
         })
     })
 
@@ -395,7 +439,7 @@ function createJson(){
     }
 
 
-    const formData = new FormData();
+
     formData.append("session", sessionStorage.getItem('sessionId'));
     formData.append("json", JSON.stringify(json_));
 
@@ -411,15 +455,41 @@ function createJson(){
 
 
 
-function giveEls(element, parent){
+function giveEls(element, parent, formData, fn){
     var el = {}
     var mass = element.querySelectorAll(".el")
     for(let i = 0; i < mass.length; i++){
-        if(mass[i].value == "") return
-        el[""+(i+1)] = mass[i].value
+        if (mass[i] && mass[i].type === 'file') {
+            if (mass[i].files[0]) {
+                el[""+(i+1)] = "@" + fn
+                formData.append("file", mass[i].files[0])
+                fn++
+            }else{
+                return fn
+            }
+        }else{
+            if(mass[i].value == "") return fn
+            el[""+(i+1)] = mass[i].value
+        }
     }
     parent.push(el)
+    return fn
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 const json = {
@@ -475,8 +545,7 @@ document.querySelectorAll(".checkboxs").forEach(el => {
             var frameMid = document.querySelectorAll(".frame-mid"+i)
             frameMid.forEach(el2 => {
                 if(el2.querySelector(".checkboxs").checked == true){
-                    //blocks_.push([i, 0]) // меняй
-                    blocks_.append([i, el2.querySelector(".el-var").selectedIndex]) // меняй
+                    blocks_.append([i, el2.querySelector(".el-var").selectedIndex])
                 }
             })
         }

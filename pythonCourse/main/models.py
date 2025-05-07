@@ -555,7 +555,7 @@ class Statement(models.Model):
             return item
 
         # Создаем копию данных и передаем её для обработки
-        values = replace_values(data, files.getlist("files[]"))
+        values = replace_values(data, files.getlist("file"))
         return [values, urls]
 
 
