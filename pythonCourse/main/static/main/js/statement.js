@@ -1,20 +1,4 @@
 
-const checkboxs = document.getElementsByClassName("custom-checkbox")
-const buttons = document.getElementsByClassName("perehod")
-
-for(let i = 0; i < checkboxs.length; i++) {
-    checkboxs[i].addEventListener('change', function() {
-        if (this.checked) {
-          buttons[i].disabled = false;  // Разблокируем кнопку
-          buttons[i].classList.add('hover:bg-red-200');
-          buttons[i].classList.remove('text-black/50');
-        } else {
-          buttons[i].disabled = true;   // Блокируем кнопку
-          buttons[i].classList.remove('hover:bg-red-200');
-          buttons[i].classList.add('text-black/50');
-        }
-    });
-}
 
 // Устанавливаем активную кнопку
 function setActiveFrame(e) {
@@ -465,6 +449,17 @@ function rateStatment(){
 
 document.addEventListener("DOMContentLoaded", () => {
 
+
+    const checkboxs = document.getElementsByClassName("custom-checkbox")
+    const buttons = document.getElementsByClassName("perehod")
+
+    for(let i = 0; i < checkboxs.length; i++) {
+        checkboxs[i].addEventListener('change', function() {
+            if (this.checked) enableButton(buttons[i])
+            else disableButton(buttons[i])
+        });
+    }
+
     setActiveFrame(0); // Устанавливаем активную кнопку
 
     // Блокируем кнопку отправки, пока чекбокс не нажат
@@ -540,51 +535,82 @@ document.addEventListener("DOMContentLoaded", () => {
                 interInfo(statementsJson["sport"]["list"])
 
 
+
+
+
+
+                const json = {
+                    session: sessionStorage.getItem('sessionId')
+                };
+
+                HttpRequestPostJson('getRole', function (response) {
+                    var blocks = document.querySelectorAll(".button-block")
+                    if (response.answer == "Administrator") {
+                        blocks[0].remove()
+                        blocks[1].remove()
+                        blocks[2].remove()
+                        blocks[3].classList.remove("hidden")
+                    }else if (response.answer == "Student") {
+                        blocks[0].classList.remove("hidden")
+                        blocks[1].remove()
+                        blocks[2].remove()
+                        blocks[3].remove()
+                    }else if (response.answer == "Jury") {
+                        blocks[0].remove()
+                        blocks[1].remove()
+                        blocks[2].classList.remove("hidden")
+                        blocks[3].remove()
+                    }else if (response.answer == "Inspector studies" || response.answer == "Inspector science" || response.answer == "Inspector culture" || response.answer == "Inspector activities" || response.answer == "Inspector sport") {
+                        var temp = document.querySelectorAll('.perehod')
+                        disableButton(temp[0])
+                        disableButton(temp[1])
+                        disableButton(temp[2])
+                        disableButton(temp[3])
+                        disableButton(temp[4])
+                        if (response.answer == "Inspector studies") enableButton(temp[0])
+                        else if (response.answer == "Inspector science") enableButton(temp[1])
+                        else if (response.answer == "Inspector culture") enableButton(temp[2])
+                        else if (response.answer == "Inspector activities") enableButton(temp[3])
+                        else if (response.answer == "Inspector sport") enableButton(temp[4])
+                        blocks[0].remove()
+                        blocks[1].classList.remove("hidden")
+                        blocks[2].remove()
+                        blocks[3].remove()
+                    } else {
+                        console.error("Нет данных или ошибка запроса");
+                    }
+                }, json);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             } else {
                 console.error("Нет данных или ошибка запроса");
             }
         }, json);
     }
 
-
-
-
-    const json = {
-        session: sessionStorage.getItem('sessionId')
-    };
-
-    HttpRequestPostJson('getRole', function (response) {
-        var blocks = document.querySelectorAll(".button-block")
-        if (response.answer == "Administrator") {
-            blocks[0].remove()
-            blocks[1].remove()
-            blocks[2].remove()
-            blocks[3].classList.remove("hidden")
-        }else if (response.answer == "Student") {
-            blocks[0].classList.remove("hidden")
-            blocks[1].remove()
-            blocks[2].remove()
-            blocks[3].remove()
-        }else if (response.answer == "Jury") {
-            blocks[0].remove()
-            blocks[1].remove()
-            blocks[2].classList.remove("hidden")
-            blocks[3].remove()
-        }else if (response.answer == "Inspector studies" || response.answer == "Inspector science" || response.answer == "Inspector culture" || response.answer == "Inspector activities" || response.answer == "Inspector sport") {
-            blocks[0].remove()
-            blocks[1].classList.remove("hidden")
-            blocks[2].remove()
-            blocks[3].remove()
-        } else {
-            console.error("Нет данных или ошибка запроса");
-        }
-    }, json);
-
-
-
-
-
 })
 
+function disableButton(button){
+    button.disabled = true
+    button.classList.remove('hover:bg-red-200');
+    button.classList.add('text-black/50');
+}
 
+function enableButton(button){
+    button.disabled = false;  // Разблокируем кнопку
+    button.classList.add('hover:bg-red-200');
+    button.classList.remove('text-black/50');
+}
 
