@@ -614,3 +614,52 @@ function enableButton(button){
     button.classList.remove('text-black/50');
 }
 
+function changeStatus() {
+    const sessionId = sessionStorage.getItem("sessionId");
+    const statementId = new URLSearchParams(window.location.search).get("statementId");
+    const newStatus = document.getElementById("status").value;
+
+    if (!sessionId || !statementId) {
+
+        return;
+    }
+
+    const requestData = {
+        "session": sessionId,
+        "statement-id": statementId,
+        "status": parseInt(newStatus)
+    };
+
+    HttpRequestPostJson("changeStatus", (response) => {
+        if (response.answer === true) {
+            showNotification("Статус успешно изменен");
+        } else {
+            showNotification("Ошибка изменения статуса");
+        }
+    }, requestData);
+}
+
+function ratingStatement(url) {
+    const sessionId = sessionStorage.getItem("sessionId");
+    const statementId = new URLSearchParams(window.location.search).get("statementId");
+
+
+    if (!sessionId || !statementId) {
+
+        return;
+    }
+
+    const requestData = {
+        "session": sessionId,
+        "statement-id": statementId,
+    };
+
+    HttpRequestPostJson(url, (response) => {
+        if (response.answer === true) {
+            showNotification("Заявление успешно обработано");
+        } else {
+            showNotification("Ошибка обработки заявления");
+        }
+    }, requestData);
+}
+

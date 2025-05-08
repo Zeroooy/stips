@@ -1255,20 +1255,6 @@
 <div class="button-block hidden">
     <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="ratingStatement('confirmStatement')">Одобрить</button>
     <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="ratingStatement('denyStatement')">Отклонить</button>
-    <script>
-        function ratingStatement(url){
-            const json = {
-                session: sessionStorage.getItem('sessionId'),
-                "statement-id": statementId
-            };
-
-            HttpRequestPostJson(url, function (response) {
-                if(response.answer == true){
-                    window.location.href='menu'
-                }
-            }, json)
-        }
-    </script>
 </div>
 
 <div class="button-block hidden">
@@ -1282,21 +1268,7 @@
         <option value="5">Отклоненное</option>
     </select>
     <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="changeStatus()">Изменить статус</button>
-    <script>
-        function changeStatus(){
-            const json = {
-                session: sessionStorage.getItem('sessionId'),
-                "statement-id": statementId,
-                status: Number(document.getElementById("status").value)
-            };
 
-            HttpRequestPostJson('changeStatus', function (response) {
-                if(response.answer == true){
-                    window.location.href='menu'
-                }
-            }, json)
-        }
-    </script>
 </div>
 
 
