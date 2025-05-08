@@ -535,72 +535,64 @@ document.addEventListener("DOMContentLoaded", () => {
                 interInfo(statementsJson["sport"]["list"])
 
 
-
-
-
-
-                const json = {
-                    session: sessionStorage.getItem('sessionId')
-                };
-
-                HttpRequestPostJson('getRole', function (response) {
-                    var blocks = document.querySelectorAll(".button-block")
-                    if (response.answer == "Administrator") {
-                        blocks[0].remove()
-                        blocks[1].remove()
-                        blocks[2].remove()
-                        blocks[3].classList.remove("hidden")
-                    }else if (response.answer == "Student") {
-                        blocks[0].classList.remove("hidden")
-                        blocks[1].remove()
-                        blocks[2].remove()
-                        blocks[3].remove()
-                    }else if (response.answer == "Jury") {
-                        blocks[0].remove()
-                        blocks[1].remove()
-                        blocks[2].classList.remove("hidden")
-                        blocks[3].remove()
-                    }else if (response.answer == "Inspector studies" || response.answer == "Inspector science" || response.answer == "Inspector culture" || response.answer == "Inspector activities" || response.answer == "Inspector sport") {
-                        var temp = document.querySelectorAll('.perehod')
-                        disableButton(temp[0])
-                        disableButton(temp[1])
-                        disableButton(temp[2])
-                        disableButton(temp[3])
-                        disableButton(temp[4])
-                        if (response.answer == "Inspector studies") enableButton(temp[0])
-                        else if (response.answer == "Inspector science") enableButton(temp[1])
-                        else if (response.answer == "Inspector culture") enableButton(temp[2])
-                        else if (response.answer == "Inspector activities") enableButton(temp[3])
-                        else if (response.answer == "Inspector sport") enableButton(temp[4])
-                        blocks[0].remove()
-                        blocks[1].classList.remove("hidden")
-                        blocks[2].remove()
-                        blocks[3].remove()
-                    } else {
-                        console.error("Нет данных или ошибка запроса");
-                    }
-                }, json);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             } else {
                 console.error("Нет данных или ошибка запроса");
             }
+
+
+            loading()
+
         }, json);
+
+
+    }else{
+        loading()
     }
 
 })
+
+function loading(){
+    const json = {
+        session: sessionStorage.getItem('sessionId')
+    };
+    HttpRequestPostJson('getRole', function (response) {
+        var blocks = document.querySelectorAll(".button-block")
+        if (response.answer == "Administrator") {
+            blocks[0].remove()
+            blocks[1].remove()
+            blocks[2].remove()
+            blocks[3].classList.remove("hidden")
+        }else if (response.answer == "Student") {
+            blocks[0].classList.remove("hidden")
+            blocks[1].remove()
+            blocks[2].remove()
+            blocks[3].remove()
+        }else if (response.answer == "Jury") {
+            blocks[0].remove()
+            blocks[1].remove()
+            blocks[2].classList.remove("hidden")
+            blocks[3].remove()
+        }else if (response.answer == "Inspector studies" || response.answer == "Inspector science" || response.answer == "Inspector culture" || response.answer == "Inspector activities" || response.answer == "Inspector sport") {
+            var temp = document.querySelectorAll('.perehod')
+            disableButton(temp[0])
+            disableButton(temp[1])
+            disableButton(temp[2])
+            disableButton(temp[3])
+            disableButton(temp[4])
+            if (response.answer == "Inspector studies") enableButton(temp[0])
+            else if (response.answer == "Inspector science") enableButton(temp[1])
+            else if (response.answer == "Inspector culture") enableButton(temp[2])
+            else if (response.answer == "Inspector activities") enableButton(temp[3])
+            else if (response.answer == "Inspector sport") enableButton(temp[4])
+            blocks[0].remove()
+            blocks[1].classList.remove("hidden")
+            blocks[2].remove()
+            blocks[3].remove()
+        } else {
+            console.error("Нет данных или ошибка запроса");
+        }
+    }, json);
+}
 
 function disableButton(button){
     button.disabled = true
