@@ -438,7 +438,7 @@ function rateStatment(){
 
     HttpRequestPostJson('rateStatement', function (response) {
         if(response.answer == true){
-            window.location.href='menu'
+            window.location.href='statments'
         }
     }, json)
 }
