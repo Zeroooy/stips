@@ -74,6 +74,7 @@ def get_statement(request):
             statement = Statement.get_by_id(data.get("statement-id"))
 
             response = {"statement-data": statement.get_data(),
+                        "statement-comments": statement.get_comments(),
                         "statement-json": statement.get_json_data()
                         }
         elif user is not None:

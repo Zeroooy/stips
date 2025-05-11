@@ -108,28 +108,24 @@ function fillFrames() {
                     // Добавляем чекбокс в элемент
                     el.appendChild(checkbox);
                 });
+                if(i > 45){
+                    document.querySelector(".frame-mid"+i).querySelectorAll(".el").forEach(el_ => {
+                        if (el_.type === 'file') {
+                            el_.parentElement.classList.remove('border-2');
+                            if(el_.nextElementSibling.href == ""){
+                                el_.nextElementSibling.classList.add('hidden')
+                            };
+                            el_.classList.add('hidden')
+                        }else{
+                            el_.disabled = true;
+                        }
+                    })
+                }
             }
 
             document.querySelectorAll(".checkboxs").forEach(el => {
                 el.addEventListener('change', function() {
-                    var blocks_ = []
-                    blocks_.push([0, document.querySelector("#onlyFive").selectedIndex-1])
-                    for(let i = 0; i < 51; i++){
-                        var frameMid = document.querySelectorAll(".frame-mid"+i)
-                        frameMid.forEach(el2 => {
-                            if(el2.querySelector(".checkboxs").checked == true){
-                                blocks_.push([i+1, el2.querySelector(".el-var").selectedIndex-1])
-                            }
-                        })
-                    }
-                    const json = {
-                        session: sessionStorage.getItem('sessionId'),
-                        blocks: blocks_,
-                    };
-
-                    HttpRequestPostJson('autoPoints', function (response) {
-                        document.querySelector("#points").value = response.answer
-                    }, json)
+                    autoPointsCode(response.answer)
                 })
             })
         }
@@ -355,7 +351,7 @@ function createJson(){
     a.forEach(el => {
         sport["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
-            fn = giveEls(el_, sport["list"][""+el])
+            fn = giveEls(el_, sport["list"][""+el], formData, fn)
         })
     })
 
@@ -435,6 +431,9 @@ function rateStatment(){
         mark: document.getElementById("points").value,
         comment: document.getElementById("comment").value,
     };
+    if(document.querySelector("#checkbox-error").checked == true){
+        json.mark = -1
+    }
 
     HttpRequestPostJson('rateStatement', function (response) {
         if(response.answer == true){
@@ -490,6 +489,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("input-field-group").value = statementsJson["information"]["group"];
 
                 document.getElementById("onlyFive").value = statementsJson["studies"]["onlyFive"];
+
+                if(response["statement-comments"]){
+                    var ine = 0
+                    var els_com = document.querySelectorAll(".comment-block-input")
+                    response["statement-comments"].forEach(comment => {
+                        els_com[ine].value = comment
+                        ine++
+                    })
+                    document.querySelectorAll(".comment-block").forEach(comment => {
+                        comment.classList.remove("hidden")
+                    })
+                }else{
+                    document.querySelectorAll(".comment-block").forEach(comment => {
+                        comment.remove()
+                    })
+                }
 
                 if(statementsJson["information"]["agree"] == "on"){
                     document.getElementById("agree-checkbox").checked = true;
@@ -552,6 +567,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function loading(){
+
     const json = {
         session: sessionStorage.getItem('sessionId')
     };
@@ -579,6 +595,7 @@ function loading(){
             disableButton(temp[2])
             disableButton(temp[3])
             disableButton(temp[4])
+            autoPointsCode(response.answer)
             if (response.answer == "Inspector studies") enableButton(temp[0])
             else if (response.answer == "Inspector science") enableButton(temp[1])
             else if (response.answer == "Inspector culture") enableButton(temp[2])
@@ -655,3 +672,36 @@ function ratingStatement(url) {
     }, requestData);
 }
 
+
+
+
+function autoPointsCode(role){
+    var blocks_ = []
+    var a = 0
+    var b = 51
+
+    if(role == "Inspector studies") blocks_.push([0, document.querySelector("#onlyFive").selectedIndex-1])
+    else if(role == "Inspector studies"){a=0; b=3}
+    else if(role == "Inspector science"){a=2; b=6}
+    else if(role == "Inspector culture"){a=6; b=18}
+    else if(role == "Inspector activities"){a=18; b=23}
+    else if(role == "Inspector sport"){a=23; b=50}
+
+    for(let i = a; i < b; i++){
+        var frameMid = document.querySelectorAll(".frame-mid"+i)
+        frameMid.forEach(el2 => {
+            if(el2.querySelector(".checkboxs").checked == true){
+                blocks_.push([i+1, el2.querySelector(".el-var").selectedIndex-1])
+            }
+        })
+    }
+
+    const json = {
+        session: sessionStorage.getItem('sessionId'),
+        blocks: blocks_,
+    };
+
+    HttpRequestPostJson('autoPoints', function (response) {
+        document.querySelector("#points").value = response.answer
+    }, json)
+}

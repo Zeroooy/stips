@@ -296,7 +296,7 @@ class Statement(models.Model):
     def get_data(self):
         return {"user" : str(self.user),
                 "status" : self.status.name,
-                "points": self.points,
+                "points": str(self.mark_studies) + " : " + str(self.mark_science) +" : " + str(self.mark_activities) +" : " + str(self.mark_culture) +" : " + str(self.mark_sport) +" | " + str(self.points),
                 "date": self.date.strftime("%H:%M %d.%m.%Y"),
                 "statement-id": self.id,
                 "old-status": self.old_status
@@ -305,6 +305,8 @@ class Statement(models.Model):
     def get_json_data(self):
         return self.json
 
+    def get_comments(self):
+        return [self.comment_studies, self.comment_science, self.comment_activities, self.comment_culture, self.comment_sport ]
 
     def mark(self, user, value, comment):
         value = int(value)
@@ -324,12 +326,12 @@ class Statement(models.Model):
             self.mark_sport = value
             self.comment_sport = comment
         self.points = self.mark_studies + self.mark_science + self.mark_activities + self.mark_culture + self.mark_sport
-        self.save()
 
-
-    def check_all_marks(self):
-        if self.mark_studies != -1 and self.mark_science != -1 and self.mark_activities != -1 and self.mark_culture != -1 and self.mark_sport != -1 and self.status == 0:
-            self.status = 2
+        if self.mark_studies != -1 and self.mark_science != -1 and self.mark_activities != -1 and self.mark_culture != -1 and self.mark_sport != -1 and self.status.id == 0:
+            self.set_status(2)
+        elif (self.mark_studies == -1 or self.mark_science == -1 or self.mark_activities == -1 or self.mark_culture == -1 or self.mark_sport == -1) and self.status.id == 0:
+            self.set_status(1)
+        else:
             self.save()
 
     def set_status(self, id_):

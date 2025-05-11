@@ -70,6 +70,26 @@
         </div>
     </div>
 
+    <div class="comment-block frame mb-2 flex flex-row items-center justify-center hidden">
+        <div class="mt-1 w-full">Комментарий эксперта по учебе:</div>
+        <input class="border-2 border-red-500 rounded-sm p-1 px-5 w-full mx-10 comment-block-input" disabled type="text">
+    </div>
+    <div class="comment-block frame mb-2 flex flex-row items-center justify-center hidden">
+        <div class="mt-1 w-full">Комментарий эксперта по науке:</div>
+        <input class="border-2 border-red-500 rounded-sm p-1 px-5 w-full mx-10 comment-block-input" disabled type="text">
+    </div>
+    <div class="comment-block frame mb-2 flex flex-row items-center justify-center hidden">
+        <div class="mt-1 w-full">Комментарий эксперта по активности:</div>
+        <input class="border-2 border-red-500 rounded-sm p-1 px-5 w-full mx-10 comment-block-input" disabled type="text">
+    </div>
+    <div class="comment-block frame mb-2 flex flex-row items-center justify-center hidden">
+        <div class="mt-1 w-full">Комментарий эксперта по культуре:</div>
+        <input class="border-2 border-red-500 rounded-sm p-1 px-5 w-full mx-10 comment-block-input" disabled type="text">
+    </div>
+    <div class="comment-block frame mb-2 flex flex-row items-center justify-center hidden">
+        <div class="mt-1 w-full">Комментарий эксперта по спорту:</div>
+        <input class="border-2 border-red-500 rounded-sm p-1 px-5 w-full mx-10 comment-block-input" disabled type="text">
+    </div>
 </div>
 
 
@@ -1246,10 +1266,16 @@
     <button onclick="showConfirmation(() => {createJson()});" id="mark-all-outdated" class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold">Отправить заявление</button>
 </div>
 
-<div class="button-block hidden">
-    <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="points" placeholder="Оценка">
-    <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="comment" placeholder="Комментарий">
-    <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="rateStatment()">Оценить</button>
+<div class="button-block hidden flex flex-col">
+    <div class="flex flex-row justify-center items-center">
+        <div class="text-center font-bold text-lg p-2 el">Присутствует ошибка: </div>
+        <input id="checkbox-error" type="checkbox" class="w-7 h-7 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold">
+    </div>
+    <div>
+        <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="points" placeholder="Оценка">
+        <input class="mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" id="comment" placeholder="Комментарий">
+        <button class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 left-2 top-2 border-2 border-red-500 rounded-xl font-bold" onclick="rateStatment()">Оценить</button>
+    </div>
 </div>
 
 <div class="button-block hidden">
