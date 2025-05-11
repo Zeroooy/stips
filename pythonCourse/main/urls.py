@@ -74,6 +74,8 @@ urlpatterns = [
     path('api/getWordSuccess', backend.get_word_success),
     path('api/getWordAll', backend.get_word_all),
 
+    path('api/tryStatements', backend.try_statements),
+
     # АДМИН
     path('api/setPeriod', backend.set_period),
 

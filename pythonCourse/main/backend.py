@@ -202,12 +202,31 @@ def rate_statement_inspector(request):
 
 
 
+
+
 ########################################
 #                 ЖЮРИ
 ########################################
 
 
 
+
+# Просмотреть часть заявления
+@csrf_exempt
+def try_statements(request):
+    try:
+        data = json.loads(request.body)
+        user = User.get_by_session(data.get("session"))
+        if user is not None and user.is_inspector():
+            Statement.system_checkout(int(data.get("count")))
+            Log.add(user, "Распределение заявлений, выбрано:" + str(data.get("count")), "", {})
+            response = {"answer": True}
+        else:
+            response = {"answer": False}
+    except:
+        return HttpResponse("bad request")
+
+    return JsonResponse(response)
 
 # Просмотреть заявление
 @csrf_exempt

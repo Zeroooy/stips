@@ -76,6 +76,30 @@
             </script>
         </div>
 
+        <div class="button-block hidden transition hover:scale-105 bg-white border-red-500 border-2 rounded-lg flex flex-col items-center text-center p-4 w-80 m-5">
+            <h2 class="font-bold pb-2">ВЫПОЛНИТЬ АВТОМАТИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ</h2>
+            <input class="w-50 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" id="count-place" placeholder="Количество мест">
+            <button class="w-50 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="tryStatements()">Выполнить</button>
+            <script>
+                function tryStatement(){
+                    showConfirmation(() => {
+                        const json = {
+                            session: sessionStorage.getItem('sessionId'),
+                            count: document.querySelector("#count-place")
+                        };
+                        showNotification("Подождите..");
+                        HttpRequestPostJson('tryStatements', function (response) {
+                            if (response.answer === true) {
+                                showNotification("Успешно!");
+                            } else {
+                                showNotification("Ошибка!");
+                            }
+                        }, json);
+                    });
+                }
+            </script>
+        </div>
+
     </div>
     <script>
         const json = {
@@ -92,6 +116,7 @@
                 blocks[4].classList.remove("hidden")
                 blocks[5].classList.remove("hidden")
                 blocks[6].classList.remove("hidden")
+                blocks[7].classList.remove("hidden")
             }else if (response.answer == "Student") {
                 blocks[0].classList.remove("hidden")
                 blocks[0].querySelector(".font-bold").innerHTML = "МОИ ЗАЯВЛЕНИЯ"
@@ -102,6 +127,7 @@
                 blocks[4].remove()
                 blocks[5].remove()
                 blocks[6].remove()
+                blocks[7].remove()
             }else if (response.answer == "Jury") {
                 blocks[0].classList.remove("hidden")
                 blocks[1].remove()
@@ -110,6 +136,7 @@
                 blocks[4].remove()
                 blocks[5].remove()
                 blocks[6].classList.remove("hidden")
+                blocks[7].classList.remove("hidden")
             }else if (response.answer == "Inspector studies" || response.answer == "Inspector science" || response.answer == "Inspector culture" || response.answer == "Inspector activities" || response.answer == "Inspector sport") {
                 blocks[0].classList.remove("hidden")
                 blocks[1].remove()
@@ -118,6 +145,7 @@
                 blocks[4].remove()
                 blocks[5].remove()
                 blocks[6].remove()
+                blocks[7].remove()
             } else {
                 console.error("Нет данных или ошибка запроса");
             }
