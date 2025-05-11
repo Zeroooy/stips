@@ -431,8 +431,9 @@ function rateStatment(){
         mark: document.getElementById("points").value,
         comment: document.getElementById("comment").value,
     };
+
     if(document.querySelector("#checkbox-error").checked == true){
-        json.mark = -1
+        json.mark = -2
     }
 
     HttpRequestPostJson('rateStatement', function (response) {
