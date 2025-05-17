@@ -399,7 +399,7 @@ class Statement(models.Model):
                 if not ('Спорт' in achievements):
                     statement_temp.mark_sport = 0
                     statement_temp.comment_sport = 'Автоматическое выставление'
-            statment_temp.set_status(0)
+            statement_temp.set_status(0)
             statement_temp.save()
 
             return True

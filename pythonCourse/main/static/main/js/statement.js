@@ -104,23 +104,26 @@ function fillFrames() {
             for (let i = 0; i < 51; i++) {
                 var framesMid = document.querySelectorAll(".frame-mid" + i);
                 framesMid.forEach(el => {
-                    // Создаем элемент input
+                    // Убедимся, что родитель имеет relative позиционирование
+                    el.classList.add('relative');
+
+                    // Создаем чекбокс
                     var checkbox = document.createElement("input");
                     checkbox.type = "checkbox";
-                    checkbox.classList.add("top-1", "right-1", "scale-90", "cursor-pointer", "checkboxs");
+                    checkbox.classList.add("absolute", "bottom-2", "right-2", "scale-150", "cursor-pointer", "checkboxs");
 
-                    // Добавляем чекбокс в элемент
                     el.appendChild(checkbox);
                 });
-                if(i > 45){
-                    document.querySelector(".frame-mid"+i).querySelectorAll(".el").forEach(el_ => {
+
+                if (i > 45) {
+                    document.querySelector(".frame-mid" + i).querySelectorAll(".el").forEach(el_ => {
                         if (el_.type === 'file') {
                             el_.parentElement.classList.remove('border-2');
-                            if(el_.nextElementSibling.href == ""){
+                            if (el_.nextElementSibling.href == "") {
                                 el_.nextElementSibling.classList.add('hidden')
                             };
                             el_.classList.add('hidden')
-                        }else{
+                        } else {
                             el_.disabled = true;
                         }
                     })
@@ -323,7 +326,7 @@ function createJson(){
         "list": {}
     }
 
-    a = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+    a = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     a.forEach(el => {
         activities["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
@@ -603,8 +606,8 @@ function loading(){
             autoPointsCode(response.answer)
             if (response.answer == "Inspector studies") enableButton(temp[0])
             else if (response.answer == "Inspector science") enableButton(temp[1])
-            else if (response.answer == "Inspector culture") enableButton(temp[2])
-            else if (response.answer == "Inspector activities") enableButton(temp[3])
+            else if (response.answer == "Inspector culture") enableButton(temp[3])
+            else if (response.answer == "Inspector activities") enableButton(temp[2])
             else if (response.answer == "Inspector sport") enableButton(temp[4])
             blocks[0].remove()
             blocks[1].classList.remove("hidden")
@@ -683,20 +686,22 @@ function ratingStatement(url) {
 function autoPointsCode(role){
     var blocks_ = []
     var a = 0
-    var b = 51
+    var b = 50
 
     if(role == "Inspector studies") blocks_.push([0, document.querySelector("#onlyFive").selectedIndex-1])
-    else if(role == "Inspector studies"){a=0; b=3}
+    else if(role == "Inspector studies"){a=0; b=1}
     else if(role == "Inspector science"){a=2; b=6}
-    else if(role == "Inspector culture"){a=6; b=18}
-    else if(role == "Inspector activities"){a=18; b=23}
-    else if(role == "Inspector sport"){a=23; b=50}
+    else if(role == "Inspector activities"){a=7; b=18}
+    else if(role == "Inspector culture"){a=19; b=23}
+    else if(role == "Inspector sport"){a=24; b=50}
 
-    for(let i = a; i < b; i++){
+    for(let i = a; i <= b; i++){
         var frameMid = document.querySelectorAll(".frame-mid"+i)
         frameMid.forEach(el2 => {
             if(el2.querySelector(".checkboxs").checked == true){
-                blocks_.push([i+1, el2.querySelector(".el-var").selectedIndex-1])
+                if(el2.querySelector(".el-var") > 0){
+                    blocks_.push([i+1, el2.querySelector(".el-var").selectedIndex-1])
+                }else blocks_.push([i+1 ,0])
             }
         })
     }
