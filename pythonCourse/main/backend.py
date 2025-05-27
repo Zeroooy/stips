@@ -217,7 +217,7 @@ def try_statements(request):
     try:
         data = json.loads(request.body)
         user = User.get_by_session(data.get("session"))
-        if user is not None and (user.is_inspector() or user.is_admin()):
+        if user is not None and (user.is_jury() or user.is_admin()):
             Statement.system_checkout(int(data.get("count")))
             Log.add(user, "Распределение заявлений, выбрано:" + str(data.get("count")), "", {})
             response = {"answer": True}
