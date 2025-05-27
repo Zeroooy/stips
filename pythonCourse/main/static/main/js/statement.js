@@ -81,7 +81,35 @@ function fillFrames() {
         createDuplicate([24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45], 5, checkStud)
 
         // Связываем значения выпадающего списка с нужными записями
+        document.querySelectorAll(".file-uploader").forEach(container => {
+            const input = container.querySelector("input.el");
+            const fileNameSpan = container.querySelector(".file-name");
+            const uploadBtn = container.querySelector(".upload-btn");
+            const deleteBtn = container.querySelector(".delete-btn");
+            const downloadLink = container.querySelector(".download-link");
 
+            uploadBtn.addEventListener("click", () => input.click());
+
+            input.addEventListener("change", () => {
+            const file = input.files[0];
+            if (file) {
+                fileNameSpan.textContent = file.name;
+                const url = URL.createObjectURL(file);
+                downloadLink.href = url;
+                downloadLink.download = file.name;
+                deleteBtn.classList.remove("hidden");
+                downloadLink.classList.remove("hidden");
+            }
+            });
+
+            deleteBtn.addEventListener("click", () => {
+            input.value = "";
+            fileNameSpan.textContent = "Файл не выбран";
+            deleteBtn.classList.add("hidden");
+            downloadLink.classList.add("hidden");
+            downloadLink.removeAttribute("href");
+            });
+        });
 
         // Добавляем обработчик события на изменение выбора
 
@@ -285,6 +313,7 @@ function interInfo(block){
 
 function createJson(){
     const formData = new FormData();
+    old_urls = []
     var fn = 0
     // ИНФОРМАЦИЯ
     var information = {
@@ -321,7 +350,7 @@ function createJson(){
     a.forEach(el => {
         studies["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
-            fn = giveEls(el_, studies["list"][""+el], formData, fn)
+            fn = giveEls(el_, studies["list"][""+el], formData, fn, old_urls)
         })
     })
 
@@ -335,7 +364,7 @@ function createJson(){
     a.forEach(el => {
         science["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
-            fn = giveEls(el_, science["list"][""+el], formData, fn)
+            fn = giveEls(el_, science["list"][""+el], formData, fn, old_urls)
         })
     })
 
@@ -351,7 +380,7 @@ function createJson(){
     a.forEach(el => {
         activities["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
-            fn = giveEls(el_, activities["list"][""+el], formData, fn)
+            fn = giveEls(el_, activities["list"][""+el], formData, fn, old_urls)
         })
     })
 
@@ -365,7 +394,7 @@ function createJson(){
     a.forEach(el => {
         culture["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
-            fn = giveEls(el_, culture["list"][""+el], formData, fn)
+            fn = giveEls(el_, culture["list"][""+el], formData, fn, old_urls)
         })
     })
 
@@ -379,7 +408,7 @@ function createJson(){
     a.forEach(el => {
         sport["list"][""+el] = []
         document.querySelectorAll(".frame-mid"+el).forEach(el_ => {
-            fn = giveEls(el_, sport["list"][""+el], formData, fn)
+            fn = giveEls(el_, sport["list"][""+el], formData, fn, old_urls)
         })
     })
 
@@ -396,6 +425,7 @@ function createJson(){
 
     formData.append("session", sessionStorage.getItem('sessionId'));
     formData.append("json", JSON.stringify(json_));
+    formData.append("old_urls", JSON.stringify(old_urls));
 
     HttpRequestPostFormData('uploadStatement', function (response) {
         if (response.answer == "Too late") {
@@ -413,7 +443,7 @@ function createJson(){
 
 
 
-function giveEls(element, parent, formData, fn){
+function giveEls(element, parent, formData, fn, old_urls){
     var el = {}
     var mass = element.querySelectorAll(".el")
     for(let i = 0; i < mass.length; i++){
@@ -422,6 +452,9 @@ function giveEls(element, parent, formData, fn){
                 el[""+(i+1)] = "@" + fn
                 formData.append("file", mass[i].files[0])
                 fn++
+            }else if(mass[i].closest('div.flex').querySelector('a.download-link').href != ""){
+                el[""+(i+1)] = mass[i].closest('div.flex').querySelector('a.download-link').href
+                old_urls.push(decodeURIComponent(mass[i].closest('div.flex').querySelector('a.download-link').href.replace("http://127.0.0.1:8000/files/", "")))
             }else{
                 return fn
             }

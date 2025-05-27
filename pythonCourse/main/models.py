@@ -356,17 +356,32 @@ class Statement(models.Model):
         super().delete(*args, **kwargs)
 
     @staticmethod
-    def upload(user, json, files):
+    def upload(user, old_urls, json, files):
         date = datetime.now(timezone.utc)
         if Period.is_require(date):
             statement_temp = Statement.get_by_user(user)
 
             if statement_temp is not None and statement_temp.old_status is not True:
                 json_change = Statement.replace_at_values_with_links(json, files)
-                statement_temp.remove_files()
+                for file in statement_temp.urls:
+                    fs = FileSystemStorage(location="files")
+                    if fs.exists(file) and not file in old_urls:
+                        fs.delete(file)
                 statement_temp.json = json_change[0]
                 statement_temp.urls = json_change[1]
                 achievements = statement_temp.json['information']['achievements']
+
+                statement_temp.mark_studies = -1
+                statement_temp.comment_studies = ''
+                statement_temp.mark_science = -1
+                statement_temp.comment_science = ''
+                statement_temp.mark_activities = -1
+                statement_temp.comment_activities = ''
+                statement_temp.mark_culture = -1
+                statement_temp.comment_culture = ''
+                statement_temp.mark_sport = -1
+                statement_temp.comment_sport = ''
+
                 if not ('Учеба' in achievements):
                     statement_temp.mark_studies = 0
                     statement_temp.comment_studies = 'Автоматическое выставление'
@@ -518,6 +533,7 @@ class Statement(models.Model):
     @staticmethod
     def replace_at_values_with_links(data, files):
         urls = []
+
         def replace_values(item, files_):
             nonlocal urls
             if isinstance(item, dict):
@@ -541,17 +557,6 @@ class Statement(models.Model):
         # Создаем копию данных и передаем её для обработки
         values = replace_values(data, files.getlist("file"))
         return [values, urls]
-
-
-
-
-
-
-
-
-
-
-
 
 
 class Period(models.Model):

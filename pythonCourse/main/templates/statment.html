@@ -1398,34 +1398,6 @@
     // Вставляем HTML в каждый блок с классом file-uploader
     document.querySelectorAll(".file-uploader").forEach(container => {
       container.insertAdjacentHTML("beforeend", fileUploaderTemplate);
-
-      const input = container.querySelector("input.el");
-      const fileNameSpan = container.querySelector(".file-name");
-      const uploadBtn = container.querySelector(".upload-btn");
-      const deleteBtn = container.querySelector(".delete-btn");
-      const downloadLink = container.querySelector(".download-link");
-
-      uploadBtn.addEventListener("click", () => input.click());
-
-      input.addEventListener("change", () => {
-        const file = input.files[0];
-        if (file) {
-          fileNameSpan.textContent = file.name;
-          const url = URL.createObjectURL(file);
-          downloadLink.href = url;
-          downloadLink.download = file.name;
-          deleteBtn.classList.remove("hidden");
-          downloadLink.classList.remove("hidden");
-        }
-      });
-
-      deleteBtn.addEventListener("click", () => {
-        input.value = "";
-        fileNameSpan.textContent = "Файл не выбран";
-        deleteBtn.classList.add("hidden");
-        downloadLink.classList.add("hidden");
-        downloadLink.removeAttribute("href");
-      });
     });
   });
 </script>

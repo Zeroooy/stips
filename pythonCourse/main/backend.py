@@ -155,14 +155,11 @@ def upload_statement(request):
         json_data = json.loads(json_data_)
         user = User.get_by_session(data.get("session"))
         if user is not None and user.is_student() and json_data.get("studies") is not None and json_data.get("science") is not None and json_data.get("activities") is not None and json_data.get("culture") is not None and json_data.get("sport") is not None and (json_data.get("studies") != {} or json_data.get("science") != {} or json_data.get("activities") != {} or json_data.get("culture") != {} or json_data.get("sport") != {}):
-            if len(request.FILES) == 0:
-                response = {"answer": "no files"}
+            if Statement.upload(user, json.loads(data.get("old_urls")), json_data, request.FILES):
+                Log.add(user, "Загрузка заявления", "", copy.deepcopy(Statement.get_by_user(user).get_json_data()))
+                response = {"answer": True}
             else:
-                if Statement.upload(user, json_data, request.FILES):
-                    Log.add(user, "Загрузка заявления", "", copy.deepcopy(Statement.get_by_user(user).get_json_data()))
-                    response = {"answer": True}
-                else:
-                    response = {"answer": "Too late"}
+                response = {"answer": "Too late"}
         else:
             response = {"answer": False}
     except:
