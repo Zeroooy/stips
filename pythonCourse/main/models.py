@@ -407,35 +407,40 @@ class Statement(models.Model):
             return False
 
 
+
     @staticmethod
     def system_checkout(counts):
         statements = Statement.objects.filter(status__id=2).order_by('-points')
 
-        part_of_statements = {}
-        prev_points = 0
+        part_of_statements = []
+        prev_points = None
+        temp = -1
 
-        # пробегаем и формируем списки с одинаковыми баллами
+        # Группировка заявлений с одинаковыми баллами
         for i in statements:
-            if prev_points == i.point:
-                part_of_statements[i.point].append(i)
+            if prev_points == i.points:
+                part_of_statements[temp].append(i)
             else:
-                part_of_statements[i.point] = [i]
+                part_of_statements.append([i])
+                temp += 1
+                prev_points = i.points
 
-
-        for i in part_of_statements:
-            if len(i) > counts:
-                for s in i:
-                    s.status = Status.objects.get(id=4)
-                counts -= len(i)
-            elif len(i) < counts and counts > 0:
-                for s in i:
-                    s.status = Status.objects.get(id=3)
-                counts -= len(i)
+        # Сначала обрабатываем группы
+        for group in part_of_statements:
+            if counts >= len(group):
+                # Мест хватает — одобрить всех
+                for s in group:
+                    s.set_status(4)
+                counts -= len(group)
+            elif counts > 0:
+                # Мест не хватает — конфликт
+                for s in group:
+                    s.set_status(3)
+                counts = 0
             else:
-                for s in i:
-                    s.status = Status.objects.get(id=5)
-
-
+                # Мест нет — отклонить
+                for s in group:
+                    s.set_status(5)
 
     @staticmethod
     def get_by_user(user):

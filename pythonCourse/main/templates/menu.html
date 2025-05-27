@@ -85,7 +85,7 @@
                     showConfirmation(() => {
                         const json = {
                             session: sessionStorage.getItem('sessionId'),
-                            count: document.querySelector("#count-place")
+                            count: document.querySelector("#count-place").value
                         };
                         showNotification("Подождите..");
                         HttpRequestPostJson('tryStatements', function (response) {
