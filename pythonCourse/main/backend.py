@@ -122,6 +122,28 @@ def get_statements(request):
 ########################################
 
 
+
+# Просмотреть заявление
+@csrf_exempt
+def get_info(request):
+    try:
+        data = json.loads(request.body)
+        user = User.get_by_session(data.get("session"))
+        if user is not None and user.is_student():
+            response = {"FIO": str(user),
+                        "phone": user.phone,
+                        "email": user.email,
+                        "inst": user.inst,
+                        "group": user.group,
+                        }
+        else:
+            response = {"answer": False}
+    except:
+        return HttpResponse("bad request")
+
+    return JsonResponse(response)
+
+
 # Отправка заявления на проверку
 # @csrf_protect
 @csrf_exempt
@@ -295,7 +317,30 @@ def get_word_success(request):
         user = User.get_by_session(data.get("session"))
 
         if user is not None and (user.is_jury() or user.is_admin()):
-            temp = [s.user for s in Statement.objects.filter(status__name="confirm", old_status=False)]
+            statements = Statement.objects.filter(status__name="confirm", old_status=False)
+            temp = []
+
+            for s in statements:
+                status = "Спорное"
+                if s.status.name == "confirm":
+                    status = "Одобрено"
+                elif s.status.name == "deny":
+                    status = "Отклонено"
+                result = f''' {s.user} — {s.points} баллов ({status})
+        
+        Категории:
+            Учёба: {s.mark_studies} ({s.comment_studies})
+            Наука: {s.mark_science} ({s.comment_science})
+            Мероприятия: {s.mark_activities} ({s.comment_activities})
+            Культура: {s.mark_culture} ({s.comment_culture})
+            Спорт: {s.mark_sport} ({s.comment_sport})
+        Информация для связи:
+            Телефон: {s.user.phone}
+            Институт: {s.user.inst}
+            Группа: {s.user.group}
+            Почта: {s.user.email}'''
+                temp.append(result)
+
             Log.add(user, "Выгрузка списка человек получивших стипендию", f"Выполнил: {user}", {})
 
             buffer, filename = create_word_doc(temp, "Отчет_со_списком_получивших_стипендию")
@@ -316,9 +361,29 @@ def get_word_all(request):
         data = json.loads(request.body)
         user = User.get_by_session(data.get("session"))
         if user is not None and (user.is_jury() or user.is_admin()):
+            statements = Statement.objects.filter(old_status=False)
             temp = []
-            for s in Statement.objects.filter(old_status=False):
-                temp.append(s.user)
+
+            for s in statements:
+                status = "Спорное"
+                if s.status.name == "confirm":
+                    status = "Одобрено"
+                elif s.status.name == "deny":
+                    status = "Отклонено"
+                result = f''' {s.user} — {s.points} баллов ({status})
+
+            Категории:
+                Учёба: {s.mark_studies} ({s.comment_studies})
+                Наука: {s.mark_science} ({s.comment_science})
+                Мероприятия: {s.mark_activities} ({s.comment_activities})
+                Культура: {s.mark_culture} ({s.comment_culture})
+                Спорт: {s.mark_sport} ({s.comment_sport})
+            Информация для связи:
+                Телефон: {s.user.phone}
+                Институт: {s.user.inst}
+                Группа: {s.user.group}
+                Почта: {s.user.email}'''
+                temp.append(result)
             Log.add(user, "Выгрузка списка человек получивших стипендию", "Выполнил: "+str(user), {})
 
             buffer, filename = create_word_doc(temp, "Отчет_со_списком_подавших_заявления")
@@ -581,21 +646,45 @@ def auto_points(request):
 
 
 from docx import Document
-from docx.shared import Pt
+from docx.shared import Pt, Inches
+from docx.oxml import OxmlElement  # 💡 Не забудь этот импорт
+from docx.oxml.ns import qn
 from datetime import datetime
+from io import BytesIO  # 💡 Чтобы возвращать файл как буфер
 
-# Функция файла docx
 
 def create_word_doc(items, title):
+    def add_horizontal_line(doc):
+        paragraph = doc.add_paragraph()
+        p = paragraph._p
+        pPr = p.get_or_add_pPr()
+        pBdr = OxmlElement('w:pBdr')
+        pPr.append(pBdr)
+
+        bottom = OxmlElement('w:bottom')
+        bottom.set(qn('w:val'), 'single')
+        bottom.set(qn('w:sz'), '12')        # потолще линия
+        bottom.set(qn('w:space'), '1')
+        bottom.set(qn('w:color'), 'auto')
+        pBdr.append(bottom)
+
     doc = Document()
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     filename = f"{title}_{timestamp}.docx"
 
     for i, item in enumerate(items, 1):
-        para = doc.add_paragraph(f"{i}. {str(item)}")
-        run = para.runs[0]
-        run.font.name = "Times New Roman"
+        para = doc.add_paragraph(style='Normal')
+        para.paragraph_format.left_indent = Inches(0)
+        para.paragraph_format.first_line_indent = Inches(0)
+        # Добавляем настройку интервалов
+        para.paragraph_format.space_before = Pt(0)  # Интервал перед параграфом
+        para.paragraph_format.space_after = Pt(0)  # Интервал после параграфа
+
+        run = para.add_run(f"{i}) {str(item)}")
+        run.font.name = 'Times New Roman'
         run.font.size = Pt(14)
+
+        add_horizontal_line(doc)
 
     buffer = BytesIO()
     doc.save(buffer)

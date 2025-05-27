@@ -58,6 +58,7 @@ urlpatterns = [
 
     # СТУДЕНТ
     path('api/uploadStatement', backend.upload_statement),
+    path('api/getInfo', backend.get_info),
 
 
 

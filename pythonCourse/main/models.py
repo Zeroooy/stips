@@ -84,6 +84,9 @@ class User(models.Model):
     email = models.TextField("Адрес", blank=True)
     phone = models.TextField("Номер телефона", blank=True)
 
+    inst = models.TextField("Институт", blank=True)
+    group = models.TextField("Группа", blank=True)
+
     def __str__(self):
         return str(self.surname) + " " + str(self.name) + " " + str(self.middlename)
 

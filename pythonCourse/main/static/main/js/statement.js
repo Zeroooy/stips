@@ -40,6 +40,18 @@ function fillFrames() {
                 document.querySelector("#onlyFive").disabled = true
                 document.querySelectorAll(".custom-checkbox").forEach(el_ => el_.disabled = true);
             }
+        }else{
+
+            HttpRequestPostJson("getInfo", function (response) {
+                document.querySelector("#input-field-fio").value = response['FIO']
+                document.querySelector("#input-field-phone").value = response['phone']
+                document.querySelector("#input-field-group").value = response['group']
+                document.querySelector("#input-field-inst").value = response['inst']
+                document.querySelector("#input-field-mail").value = response['email']
+            }, {
+                session: sessionStorage.getItem('sessionId')
+            });
+
         }
 
         createDuplicate([0, 1], 3, checkStud)
@@ -110,7 +122,7 @@ function fillFrames() {
                     // Создаем чекбокс
                     var checkbox = document.createElement("input");
                     checkbox.type = "checkbox";
-                    checkbox.classList.add("absolute", "bottom-2", "right-2", "scale-150", "cursor-pointer", "checkboxs");
+                    checkbox.classList.add("absolute", "top-0", "right-0", "scale-250", "cursor-pointer", "checkboxs");
 
                     el.appendChild(checkbox);
                 });
@@ -132,6 +144,15 @@ function fillFrames() {
 
             document.querySelectorAll(".checkboxs").forEach(el => {
                 el.addEventListener('change', function() {
+                    if(el.checked == true){
+                        el.parentElement.classList.add('border-lime-500');
+                        el.parentElement.classList.remove('border-black/20');
+                        el.parentElement.classList.add('bg-lime-50');
+                    }else{
+                        el.parentElement.classList.add('border-black/20');
+                        el.parentElement.classList.remove('border-lime-500');
+                        el.parentElement.classList.remove('bg-lime-50');
+                    }
                     autoPointsCode(response.answer)
                 })
             })
@@ -175,7 +196,7 @@ function createDuplicate(elements, count, checkStud){
 
                     clonedFieldsPred.querySelectorAll(".el").forEach(el_ => {
                         if (el_.type === 'file') {
-                            el_.parentElement.classList.remove('border-2');
+                            el_.closest('div.flex').querySelector('.upload-btn').classList.add('hidden');
                             if(el_.nextElementSibling.href == ""){
                                 el_.nextElementSibling.classList.add('hidden')
                             };
@@ -222,7 +243,7 @@ function interInfo(block){
 
                 for (let key3 in block[key][key2]) {
                     if (elements[count_].type === 'file') {
-                        const link = elements[count_].nextElementSibling; // соседний <a>
+                        const link = elements[count_].closest('div.flex').querySelector('a.download-link') // соседний <a>
 
                         if (link && link.tagName === 'A') {
                             const fileUrl = block[key][key2][key3]; // ссылка на файл
