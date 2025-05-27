@@ -1,17 +1,14 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block content %}
-
-<div class="flex items-center justify-space-between mb-5">
-    <div class="border-2 border-red-500 rounded-xl flex flex-row m-5">
-        <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="All">Все</button>
-        <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="Student">Студенты</button>
-        <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="Administrator">Администраторы</button>
-        <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="Jury">Жюри</button>
-        <button class="perehod m-2 p-2 active:bg-red-500 active:text-white hover:bg-red-200 rounded-xl font-bold" data-status="Inspector">Инспекторы</button>
-    </div>
-
+<div class="border-2 border-red-500 rounded-xl flex flex-wrap justify-center bg-white p-2">
+      <button class="perehod flex-1 min-w-[200px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="All">Все</button>
+      <button class="perehod flex-1 min-w-[200px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="Student">Студенты</button>
+      <button class="perehod flex-1 min-w-[200px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="Administrator">Администраторы</button>
+      <button class="perehod flex-1 min-w-[200px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="Jury">Жюри</button>
+      <button class="perehod flex-1 min-w-[200px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="Inspector">Инспекторы</button>
 </div>
+
 
 <div class="frame border-2 rounded-xl border-red-500 flex flex-col min-w-200">
     <!-- Таблица пользователей рендерится здесь -->

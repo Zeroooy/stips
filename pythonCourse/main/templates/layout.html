@@ -24,7 +24,7 @@
   </script>
 
   </head>
-  <body class="flex flex-col space-y-3">
+  <body class="min-h-screen flex flex-col space-y-3">
       <nav class="bg-black/80 shadow-md px-12 flex justify-between align-center text-center items-center">
           <div class="text-white text-xl">Система распределения<br>повышенных стипендий</div>
           <div class="text-white date-container rounded-xl m-3 flex flex-col" id="period-container">
@@ -42,8 +42,10 @@
             document.getElementById('conditional-div').classList.remove('hidden');
           }
       </script>
-      <section class="py-11 px-6 max-w-4xl mx-auto text-center flex justify-between items-center flex-col">
-          {% block content %}{% endblock %}
+      <section class="flex-grow py-11 px-6 max-w-4xl mx-auto text-center flex justify-between items-center flex-col">
+          <div class="max-w-4xl mx-auto flex flex-col space-y-4">
+            {% block content %}{% endblock %}
+          </div>
       </section>
 
       <footer class="bg-black/80 px-12 h-20 flex justify-between items-center">

@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<div class="flex flex-col w-300 m-11">
+<div class="flex flex-col m-11">
     <div class="flex flex-wrap justify-center">
         <div class="button-block hidden transition hover:scale-105 bg-white border-red-500 border-2 rounded-lg flex flex-col items-center p-4 w-80 m-5">
             <h2 class="font-bold pb-2">ПРОСМОТРЕТЬ СПИСОК ЗАЯВЛЕНИЙ</h2>
@@ -79,7 +79,7 @@
         <div class="button-block hidden transition hover:scale-105 bg-white border-red-500 border-2 rounded-lg flex flex-col items-center text-center p-4 w-80 m-5">
             <h2 class="font-bold pb-2">ВЫПОЛНИТЬ АВТОМАТИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ</h2>
             <input class="w-50 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" id="count-place" placeholder="Количество мест">
-            <button class="w-50 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="tryStatements()">Выполнить</button>
+            <button class="w-50 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="tryStatement()">Выполнить</button>
             <script>
                 function tryStatement(){
                     showConfirmation(() => {

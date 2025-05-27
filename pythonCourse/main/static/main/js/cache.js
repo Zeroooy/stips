@@ -47,6 +47,10 @@ function createStatementFields(statement, container) {
     clickableArea.classList.add("gap-12");
     clickableArea.classList.add("flex");
     clickableArea.classList.add("justify-between");
+    clickableArea.classList.add("border-b-1");
+    clickableArea.classList.add("border-black/20");
+    clickableArea.classList.add("hover:bg-red-50");
+    clickableArea.classList.add("py-2");
 
     // Поле с именем пользователя
     const userDiv = document.createElement("div");
@@ -76,10 +80,6 @@ function createStatementFields(statement, container) {
 
     // Добавляем ссылку в форму
     form.appendChild(clickableArea);
-    form.classList.add("rounded-xl");
-    form.classList.add("p-3");
-    form.classList.add("hover:bg-red-100");
-    form.classList.add("flex");
 
     // Добавляем форму в контейнер
     container.appendChild(form);

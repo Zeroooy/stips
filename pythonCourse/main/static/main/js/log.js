@@ -42,28 +42,6 @@ function displayLogs() {
     });
 }
 
-// Функция очистки логов через API
-function clearLogs() {
-    const sessionId = sessionStorage.getItem('sessionId');
-
-    if (!sessionId) {
-        console.error("ID сессии отсутствует");
-        return;
-    }
-
-    const json = { session: sessionId };
-
-    HttpRequestPostJson('resetLog', function (response) {
-        if (response.answer === true) {
-            showNotification("История действий успешно очищена.");
-            document.getElementById("logs-container").innerHTML = '<p>История действий успешно очищена.</p>';
-            getLogs();
-        } else {
-            console.error("Ошибка при очистке истории действий");
-        }
-    }, json);
-
-}
 
 // При загрузке страницы загружаем логи
 document.addEventListener("DOMContentLoaded", function () {
