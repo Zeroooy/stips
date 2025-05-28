@@ -79,7 +79,15 @@ function createStatementFields(statement, container) {
     // Поле с баллами
     const pointsDiv = document.createElement("div");
     pointsDiv.classList.add("w-1/4");
-    pointsDiv.textContent = statement.points || '0';
+    const pointsArray = statement.points.split('|')[0].split(':').map(s => parseInt(s.trim()));
+    pointsDiv.innerHTML = `
+        <div title="`+statement.points.split('|')[1]+`" class="flex-row gap-3 flex justify-between rounded-xl border-2 border-black/10 p-2">
+            <div class="w-1/5">`+pointsArray[0]+`</div>
+            <div class="w-1/5">`+pointsArray[1]+`</div>
+            <div class="w-1/5">`+pointsArray[2]+`</div>
+            <div class="w-1/5">`+pointsArray[3]+`</div>
+            <div class="w-1/5">`+pointsArray[4]+`</div>
+        </div>`
 
     // Поле с датой
     const dateDiv = document.createElement("div");
@@ -147,7 +155,7 @@ function filterStatementsByStatus(filters_) {
         } else {
             const pointsArray = statement.points.split('|')[0].split(':').map(s => parseInt(s.trim()));
             const index = parseInt(activityFilter) - 1;
-            activityMatch = pointsArray[index] > 0;
+            activityMatch = pointsArray[index] != 0;
         }
 
         return statusMatch && relevanceMatch && activityMatch;

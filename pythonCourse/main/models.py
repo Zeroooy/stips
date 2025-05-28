@@ -9,7 +9,7 @@ import re
 from heapq import heappush, heappop
 from collections import deque
 # Create your models here.
-
+import heapq
 
 class Status(models.Model):
     name = models.TextField("Статус", default="")
@@ -429,43 +429,93 @@ class Statement(models.Model):
             return False
 
 
-
     @staticmethod
     def system_checkout(counts_):
+        try:
+            fields = ['mark_studies', 'mark_science', 'mark_activities', 'mark_culture', 'mark_sport']
+            limits = list(map(int, counts_))  # макс. размер каждого пула
+            pools = [[] for _ in range(5)]  # кучи: [(score, id, statement), ...]
 
-        fields = ['mark_studies', 'mark_science', 'mark_activities', 'mark_culture', 'mark_sport']
-        limits = list(map(int, counts_))  # макс. размер каждого пула
-        pools = [[] for _ in range(5)]  # кучи: [(score, Statement), ...]
+            # Заявления с наибольшими points
+            statements = Statement.objects.filter(status__id=2, old_status = False).order_by('-points')
 
-        # Заявления с наибольшими points
-        statements = Statement.objects.filter(status__id=2).order_by('-points')
+            def try_insert(statement):
+                if statement.points < 1:
+                    return False
 
-        def try_insert(statement):
-            """Пытается вставить statement в один из пулов, с вытеснением и рекурсией"""
-            marks = [getattr(statement, f) for f in fields]
-            sorted_indices = sorted(range(5), key=lambda i: -marks[i])
+                marks = [getattr(statement, f) for f in fields]
+                sorted_indices = sorted(range(5), key=lambda i: -marks[i])
 
-            for idx in sorted_indices:
-                score = marks[idx]
-                pool = pools[idx]
+                inserted = False
 
-                if len(pool) < limits[idx]:
-                    heappush(pool, (score, statement))
-                    return True
-                elif pool[0][0] < score:
-                    evicted_score, evicted_stmt = heappop(pool)
-                    heappush(pool, (score, statement))
-                    # попытаемся вставить вытесненного
-                    try_insert(evicted_stmt)
-                    return True
-            return False  # никуда не влезло
+                for idx in sorted_indices:
+                    score = marks[idx]
+                    if score <= 0:
+                        continue
+                    pool = pools[idx]
 
-        # Начинаем распределение
-        for s in statements:
-            try_insert(s)
+                    heap_item = (score, -statement.points, statement.id, statement)
 
-        result = [[item[1] for item in pool] for pool in pools]
+                    if len(pool) < limits[idx]:
+                        heapq.heappush(pool, heap_item)
+                        inserted = True
+                        break
+                    else:
+                        weakest_score, _, _, weakest_stmt = pool[0]
+                        if weakest_score < score:
+                            heapq.heappop(pool)
+                            heapq.heappush(pool, heap_item)
+                            try_insert(weakest_stmt)
+                            inserted = True
+                            break
 
+                # 💡 Не вставилось — проверим на полное равенство с "самыми слабыми"
+                if not inserted:
+                    same_everywhere = True
+                    for i in range(5):
+                        score = marks[i]
+                        if score <= 0:
+                            continue  # этот пул нам не подходит
+
+                        pool = pools[i]
+                        if not pool:
+                            same_everywhere = False
+                            break
+
+                        weakest_score, weakest_neg_points, *_ = pool[0]
+                        if weakest_score != score or -weakest_neg_points != statement.points:
+                            same_everywhere = False
+                            break
+
+                    if same_everywhere:
+                        statement.set_status(3)  # Присваиваем статус "невозможно распределить"
+
+                return inserted
+
+            # Начинаем распределение
+            for s in statements:
+                try_insert(s)
+
+            # Результат: только объекты Statement
+            result = [[item[2] for item in pool] for pool in pools]
+
+            for i, r in enumerate(result):
+                for s in r:
+                    s: Statement = Statement.objects.filter(id=s).last()
+                    fields_ = ['comment_studies', 'comment_science', 'comment_activities', 'comment_culture', 'comment_sport']
+                    setattr(s, fields_[i], "Ключевые баллы")
+                    s.set_status(4)
+
+
+            for s in Statement.objects.filter(status__id=2, old_status = False):
+                s.set_status(5)
+            # Вернуть результат, если нужно
+            return result
+
+        except Exception as e:
+            print(f"Ошибка при распределении заявлений: {e}")
+
+        pass
 
 
     @staticmethod

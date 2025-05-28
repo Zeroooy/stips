@@ -81,6 +81,7 @@ def get_statement(request):
             statement = Statement.get_by_id(data.get("statement-id"))
 
             response = {"statement-data": statement.get_data(),
+                        "statement-comments": statement.get_comments(),
                         "statement-json": statement.get_json_data()
                         }
         else:
@@ -323,6 +324,12 @@ def get_word_success(request):
                     status = "Одобрено"
                 elif s.status.name == "deny":
                     status = "Отклонено"
+                elif s.status.name == "error":
+                    status = "Ошибочное"
+                elif s.status.name == "verified":
+                    status = "Проверено"
+                elif s.status.name == "process":
+                    status = "На проверке"
                 result = f''' {s.user} — {s.points} баллов ({status})
         
         Категории:
@@ -367,6 +374,12 @@ def get_word_all(request):
                     status = "Одобрено"
                 elif s.status.name == "deny":
                     status = "Отклонено"
+                elif s.status.name == "error":
+                    status = "Ошибочное"
+                elif s.status.name == "verified":
+                    status = "Проверено"
+                elif s.status.name == "process":
+                    status = "На проверке"
                 result = f''' {s.user} — {s.points} баллов ({status})
 
             Категории:
