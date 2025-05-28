@@ -135,11 +135,7 @@ function fillFrames() {
             "Победа в региональных конкурсах информационного сопровождения": "Копия документа, подтверждающего участие (сертификат/диплом)",
             "Победа во всероссийских конкурсах информационного сопровождения": "Копия документа, подтверждающего участие (сертификат/диплом)",
         })
-        createListeners(".frame-mid15 .selector1", ".frame-mid15 .selector2", {
-            "Участие в региональных конкурсах и форумах общественной направленности": "Копия документа, подтверждающего участие (сертификат/диплом)",
-            "Участие в федеральных конкурсах и форумах общественной направленности, финальный этап (АНО Россия - страна возможностей, Росмолодежь, Твой ход)": "Копия документа подтверждающего участие (сертификат/диплом)",
-            "Победа в федеральных конкурсах общественной направленности": "Копия документа подтверждающего участие (сертификат/диплом)"
-        });
+
         if(!checkStud){
             for (let i = 0; i < 51; i++) {
                 var framesMid = document.querySelectorAll(".frame-mid" + i);
@@ -158,14 +154,15 @@ function fillFrames() {
                 if (i > 45) {
                     document.querySelector(".frame-mid" + i).querySelectorAll(".el").forEach(el_ => {
                         if (el_.type === 'file') {
-                            el_.parentElement.classList.remove('border-2');
-                            if (el_.nextElementSibling.href == "") {
+                            el_.closest('div.flex').querySelector('.upload-btn').classList.add('hidden');
+                            if(el_.nextElementSibling.href == ""){
                                 el_.nextElementSibling.classList.add('hidden')
                             };
                             el_.classList.add('hidden')
-                        } else {
+                        }else{
                             el_.disabled = true;
                         }
+
                     })
                 }
             }
