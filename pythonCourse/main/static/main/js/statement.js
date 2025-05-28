@@ -331,12 +331,13 @@ function createJson(){
         }
     })
 
-    if(information["achievements"].length == 0){ return }
-    if(information["inst"] == ''){ return }
-    if(information["phone"] == ''){ return }
-    if(information["inst"] == ''){ return }
-    if(information["group"] == ''){ return }
-    if(information["agree-checkbox"] == 'off'){ return }
+    if(information["achievements"].length == 0){ showNotificationBad("Вы не прикрепили файлы!");return }
+    if(information["fio"] == ''){ showNotificationBad("Напишите ФИО!");return }
+    if(information["mail"] == ''){ showNotificationBad("Напишите почту для связи!");return }
+    if(information["phone"] == ''){ showNotificationBad("У вас не написан номер телефона!");return }
+    if(information["inst"] == ''){ showNotificationBad("У вас не написан институт!");return }
+    if(information["group"] == ''){ showNotificationBad("У вас не написана группа!");return }
+    if(information["agree-checkbox"] == 'off'){ showNotificationBad("Нажмите подтверждение обработки данных!");return }
 
 
 

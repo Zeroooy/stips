@@ -330,10 +330,11 @@ class Statement(models.Model):
             self.comment_sport = comment
         self.points = self.mark_studies + self.mark_science + self.mark_activities + self.mark_culture + self.mark_sport
 
-        if self.mark_studies != -1 and self.mark_science != -1 and self.mark_activities != -1 and self.mark_culture != -1 and self.mark_sport != -1 and self.status.id == 0:
-            self.set_status(2)
-        elif (self.mark_studies == -2 or self.mark_science == -2 or self.mark_activities == -2 or self.mark_culture == -2 or self.mark_sport == -2) and self.status.id == 0:
+        if (self.mark_studies == -2 or self.mark_science == -2 or self.mark_activities == -2 or self.mark_culture == -2 or self.mark_sport == -2) and self.status.id == 0:
             self.set_status(1)
+        elif self.mark_studies != -1 and self.mark_science != -1 and self.mark_activities != -1 and self.mark_culture != -1 and self.mark_sport != -1 and self.status.id == 0:
+            self.set_status(2)
+
         else:
             self.save()
 
