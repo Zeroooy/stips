@@ -46,6 +46,12 @@ class DateView(View):
         return render(request, 'date.html')
     url = 'date'
 
+# Автоматизация
+class AutoView(View):
+    def get(self, request):
+        return render(request, 'auto.html')
+    url = 'auto'
+
 # Кеш
 class CacheView(View):
     def get(self, request):

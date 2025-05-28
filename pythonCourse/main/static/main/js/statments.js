@@ -113,30 +113,54 @@ function getStatusText(status) {
 }
 
 // Функция для фильтрации заявлений по статусу
-function filterStatementsByStatus(status) {
+function filterStatementsByStatus(filters_) {
+    const [statusFilter, activityFilter, relevanceFilter] = filters_;
     const container = document.getElementById("statements-container");
-    container.innerHTML = `<div class="clickable-statement flex-row gap-12 flex justify-between font-bold ">
-            <div class="w-1/4">ФИО</div><div class="w-1/4">Статус</div><div class="w-1/4">Баллы</div><div class="w-1/4">Дата</div><div class="w-1/4">Устаревшее</div>
-        </div>`; // Очищаем контейнер
 
-    // Фильтруем заявления по статусу
-    var filteredStatements = ""
-    if(status == "all"){
-        filteredStatements = statementsData;
-    }else{
-        filteredStatements = statementsData.filter(statement => statement.status === status);
-    }
-    // Отображаем только отфильтрованные заявления
+    // Очищаем контейнер и добавляем заголовки
+    container.innerHTML = `
+        <div class="clickable-statement flex-row gap-12 flex justify-between font-bold rounded-t-xl bg-black/10 py-2">
+            <div class="w-1/4">ФИО</div>
+            <div class="w-1/4">Статус</div>
+            <div class="w-1/4">Баллы</div>
+            <div class="w-1/4">Дата</div>
+            <div class="w-1/4">Устаревшее</div>
+        </div>`;
+
+    // Фильтрация заявлений
+    const filteredStatements = statementsData.filter(statement => {
+        // Проверка на статус
+        const statusMatch = statusFilter === "all" || statement.status === statusFilter;
+
+        // Проверка на актуальность
+        const isOld = statement["old-status"] === true;
+        const relevanceMatch = relevanceFilter === "new" ? !isOld : isOld;
+
+        // Проверка на вид деятельности
+        let activityMatch = false;
+        if (activityFilter === "all") {
+            activityMatch = true;
+        } else {
+            const pointsArray = statement.points.split('|')[0].split(':').map(s => parseInt(s.trim()));
+            const index = parseInt(activityFilter) - 1;
+            activityMatch = pointsArray[index] > 0;
+        }
+
+        return statusMatch && relevanceMatch && activityMatch;
+    });
+
+    // Отображение отфильтрованных заявлений
     filteredStatements.forEach(statement => {
         createStatementFields(statement, container);
     });
 }
 
+
 // Добавляем обработчики событий для кнопок фильтрации
-document.querySelectorAll('.perehod').forEach(button => {
-    button.addEventListener('click', (event) => {
-        const status = event.target.getAttribute('data-status');
-        filterStatementsByStatus(status);
+document.querySelectorAll('.filters').forEach(button => {
+    button.addEventListener('change', (event) => {
+        var a = document.querySelectorAll('.filters')
+        filterStatementsByStatus([a[0].value, a[1].value, a[2].value]);
     });
 });
 

@@ -2,15 +2,33 @@
 {% load static %}
 {% block content %}
 
-<div class="border-2 border-red-500 rounded-xl flex flex-wrap justify-center bg-white p-2">
-    <button class="perehod flex-1 min-w-[180px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="all">Все</button>
-    <button class="perehod flex-1 min-w-[180px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="deny">Отклонённое</button>
-    <button class="perehod flex-1 min-w-[180px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="confirm">Одобренное</button>
-    <button class="perehod flex-1 min-w-[180px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="conflict">Конфликтное</button>
-    <button class="perehod flex-1 min-w-[180px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="verified">Проверенное</button>
-    <button class="perehod flex-1 min-w-[180px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="process">На проверке</button>
-    <button class="perehod flex-1 min-w-[180px] m-1 px-4 py-2 text-sm hover:bg-red-300 bg-red-100 active:bg-red-200 rounded-lg transition font-bold" data-status="error">Ошибочное</button>
+<div class="border-2 border-red-500 rounded-xl gap-12 flex flex-row flex-wrap justify-center bg-white p-2">
+    <div>
+        <label class="block text-sm text-gray-600 mb-1">Статус заявления</label>
+        <select class="filters border-2 border-red-500 px-3 rounded-sm">
+            <option value="all">Все заявления</option>
+            <option value="deny">Отклонённые</option>
+            <option value="confirm">Одобренные</option>
+            <option value="conflict">Конфликтные</option>
+            <option value="verified">Проверенные</option>
+            <option value="process">На проверке</option>
+            <option value="error">Ошибочные</option>
+        </select>
+    </div>
+
+    <div>
+        <label class="block text-sm text-gray-600 mb-1">Вид деятельности</label>
+        <select class="filters border-2 border-red-500 px-3 rounded-sm">
+            <option value="all">Всё</option>
+            <option value="1">Учеба</option>
+            <option value="2">Наука</option>
+            <option value="3">Общественная деятельность</option>
+            <option value="4">Культура и творчество</option>
+            <option value="5">Спорт</option>
+        </select>
+    </div>
 </div>
+
 
 <button onclick= "showConfirmation(() => {markAllStatementsOutdated(); });" class="transition hover:scale-110 hover:bg-red-100 mb-5 p-1 px-7 border-2 border-red-500 rounded-xl font-bold">Все заявления сделать устаревшими</button>
 

@@ -11,6 +11,7 @@ from .views import (
     UsersView,
     UserView,
     DateView,
+    AutoView,
     CacheView,
     LogView,
 )
@@ -38,6 +39,9 @@ urlpatterns = [
 
     # Даты
     path(DateView.url, DateView.as_view(), name='date'),
+
+    # Автоматизация
+    path(AutoView.url, AutoView.as_view(), name='auto'),
 
     # Кеш
     path(CacheView.url, CacheView.as_view(), name='cache'),

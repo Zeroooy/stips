@@ -5,6 +5,9 @@ from django.db import models
 from django.template.defaultfilters import random
 from django.core.files.storage import FileSystemStorage
 import re
+
+from heapq import heappush, heappop
+from collections import deque
 # Create your models here.
 
 
@@ -428,38 +431,40 @@ class Statement(models.Model):
 
 
     @staticmethod
-    def system_checkout(counts):
+    def system_checkout(counts_):
+
+        fields = ['mark_studies', 'mark_science', 'mark_activities', 'mark_culture', 'mark_sport']
+        limits = list(map(int, counts_))  # макс. размер каждого пула
+        pools = [[] for _ in range(5)]  # кучи: [(score, Statement), ...]
+
+        # Заявления с наибольшими points
         statements = Statement.objects.filter(status__id=2).order_by('-points')
 
-        part_of_statements = []
-        prev_points = None
-        temp = -1
+        def try_insert(statement):
+            """Пытается вставить statement в один из пулов, с вытеснением и рекурсией"""
+            marks = [getattr(statement, f) for f in fields]
+            sorted_indices = sorted(range(5), key=lambda i: -marks[i])
 
-        # Группировка заявлений с одинаковыми баллами
-        for i in statements:
-            if prev_points == i.points:
-                part_of_statements[temp].append(i)
-            else:
-                part_of_statements.append([i])
-                temp += 1
-                prev_points = i.points
+            for idx in sorted_indices:
+                score = marks[idx]
+                pool = pools[idx]
 
-        # Сначала обрабатываем группы
-        for group in part_of_statements:
-            if counts >= len(group):
-                # Мест хватает — одобрить всех
-                for s in group:
-                    s.set_status(4)
-                counts -= len(group)
-            elif counts > 0:
-                # Мест не хватает — конфликт
-                for s in group:
-                    s.set_status(3)
-                counts = 0
-            else:
-                # Мест нет — отклонить
-                for s in group:
-                    s.set_status(5)
+                if len(pool) < limits[idx]:
+                    heappush(pool, (score, statement))
+                    return True
+                elif pool[0][0] < score:
+                    evicted_score, evicted_stmt = heappop(pool)
+                    heappush(pool, (score, statement))
+                    # попытаемся вставить вытесненного
+                    try_insert(evicted_stmt)
+                    return True
+            return False  # никуда не влезло
+
+        # Начинаем распределение
+        for s in statements:
+            try_insert(s)
+
+        result = [[item[1] for item in pool] for pool in pools]
 
     @staticmethod
     def get_by_user(user):

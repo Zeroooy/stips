@@ -4,17 +4,19 @@
 
 <div class="flex flex-col m-11">
     <div class="flex flex-wrap justify-center">
-        <div class="button-block hidden transition hover:scale-105 bg-white border-red-500 border-2 rounded-lg flex flex-col items-center p-4 w-80 m-5">
-            <h2 class="font-bold pb-2">ПРОСМОТРЕТЬ СПИСОК ЗАЯВЛЕНИЙ</h2>
-            <p class="text-left h-20">Просмотр списка заявлений согласно вашей роли</p>
-            <button class="w-40 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="window.location.href='statments'">Перейти</button>
-        </div>
 
         <div class="button-block hidden transition hover:scale-105 bg-white border-red-500 border-2 rounded-lg flex flex-col items-center p-4 w-80 m-5">
             <h2 class="font-bold pb-2">ЗАПОЛНИТЬ ЗАЯВЛЕНИЕ</h2>
             <p class="text-left h-20">Заполните и отправьте заявление на проверку</p>
             <button class="w-40 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="window.location.href='statment'">Перейти</button>
         </div>
+
+        <div class="button-block hidden transition hover:scale-105 bg-white border-red-500 border-2 rounded-lg flex flex-col items-center p-4 w-80 m-5">
+            <h2 class="font-bold pb-2">ПРОСМОТРЕТЬ СПИСОК ЗАЯВЛЕНИЙ</h2>
+            <p class="text-left h-20">Просмотр списка заявлений согласно вашей роли</p>
+            <button class="w-40 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="window.location.href='statments'">Перейти</button>
+        </div>
+
 
         <div class="button-block hidden transition hover:scale-105 bg-white border-red-500 border-2 rounded-lg flex flex-col items-center p-4 w-80 m-5">
             <h2 class="font-bold pb-2">ПРОСМОТРЕТЬ СПИСОК ПОЛЬЗОВАТЕЛЕЙ</h2>
@@ -78,26 +80,8 @@
 
         <div class="button-block hidden transition hover:scale-105 bg-white border-red-500 border-2 rounded-lg flex flex-col items-center text-center p-4 w-80 m-5">
             <h2 class="font-bold pb-2">ВЫПОЛНИТЬ АВТОМАТИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ</h2>
-            <input class="w-50 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" id="count-place" placeholder="Количество мест">
-            <button class="w-50 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="tryStatement()">Выполнить</button>
-            <script>
-                function tryStatement(){
-                    showConfirmation(() => {
-                        const json = {
-                            session: sessionStorage.getItem('sessionId'),
-                            count: document.querySelector("#count-place").value
-                        };
-                        showNotification("Подождите..");
-                        HttpRequestPostJson('tryStatements', function (response) {
-                            if (response.answer === true) {
-                                showNotification("Успешно!");
-                            } else {
-                                showNotification("Ошибка!");
-                            }
-                        }, json);
-                    });
-                }
-            </script>
+            <p class="text-left h-20">Выполнить автоматическое распределение проверенных заявлений.</p>
+            <button class="w-40 m-2 p-1 rounded-lg bg-red-500 hover:bg-red-400 block text-white" onclick="window.location.href='auto'">Перейти</button>
         </div>
 
     </div>
@@ -109,8 +93,8 @@
         HttpRequestPostJson('getRole', function (response) {
             var blocks = document.querySelectorAll(".button-block")
             if (response.answer == "Administrator") {
-                blocks[0].classList.remove("hidden")
-                blocks[1].remove()
+                blocks[1].classList.remove("hidden")
+                blocks[0].remove()
                 blocks[2].classList.remove("hidden")
                 blocks[3].classList.remove("hidden")
                 blocks[4].classList.remove("hidden")
@@ -118,10 +102,10 @@
                 blocks[6].classList.remove("hidden")
                 blocks[7].classList.remove("hidden")
             }else if (response.answer == "Student") {
-                blocks[0].classList.remove("hidden")
-                blocks[0].querySelector(".font-bold").innerHTML = "МОИ ЗАЯВЛЕНИЯ"
-                blocks[0].querySelector(".text-left").innerHTML = "Просмотрите все ваши заявления"
                 blocks[1].classList.remove("hidden")
+                blocks[1].querySelector(".font-bold").innerHTML = "МОИ ЗАЯВЛЕНИЯ"
+                blocks[1].querySelector(".text-left").innerHTML = "Просмотрите все ваши заявления"
+                blocks[0].classList.remove("hidden")
                 blocks[2].remove()
                 blocks[3].remove()
                 blocks[4].remove()
@@ -129,8 +113,8 @@
                 blocks[6].remove()
                 blocks[7].remove()
             }else if (response.answer == "Jury") {
-                blocks[0].classList.remove("hidden")
-                blocks[1].remove()
+                blocks[1].classList.remove("hidden")
+                blocks[0].remove()
                 blocks[2].remove()
                 blocks[3].remove()
                 blocks[4].remove()
@@ -138,8 +122,8 @@
                 blocks[6].classList.remove("hidden")
                 blocks[7].classList.remove("hidden")
             }else if (response.answer == "Inspector studies" || response.answer == "Inspector science" || response.answer == "Inspector culture" || response.answer == "Inspector activities" || response.answer == "Inspector sport") {
-                blocks[0].classList.remove("hidden")
-                blocks[1].remove()
+                blocks[1].classList.remove("hidden")
+                blocks[0].remove()
                 blocks[2].remove()
                 blocks[3].remove()
                 blocks[4].remove()
