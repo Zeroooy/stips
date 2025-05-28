@@ -34,6 +34,10 @@ function getMyStatements() {
                     response.statements.forEach(statement => {
                         createStatementFields(statement, container);
                     });
+
+
+                    var a = document.querySelectorAll('.filters')
+                    filterStatementsByStatus([a[0].value, a[1].value, a[2].value]);
                 }
             } else {
                 console.error("Нет данных или ошибка запроса");
@@ -163,7 +167,6 @@ document.querySelectorAll('.filters').forEach(button => {
         filterStatementsByStatus([a[0].value, a[1].value, a[2].value]);
     });
 });
-
 
 
 document.addEventListener("DOMContentLoaded", function () {

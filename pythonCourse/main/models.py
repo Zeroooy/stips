@@ -465,6 +465,8 @@ class Statement(models.Model):
             try_insert(s)
 
         result = [[item[1] for item in pool] for pool in pools]
+        
+
 
     @staticmethod
     def get_by_user(user):
