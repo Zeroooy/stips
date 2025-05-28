@@ -465,7 +465,7 @@ class Statement(models.Model):
             try_insert(s)
 
         result = [[item[1] for item in pool] for pool in pools]
-        
+
 
 
     @staticmethod
