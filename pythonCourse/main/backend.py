@@ -238,9 +238,9 @@ def try_statements(request):
         data = json.loads(request.body)
         user = User.get_by_session(data.get("session"))
         if user is not None and (user.is_jury() or user.is_admin()):
-            Statement.system_checkout(data.get("counts"))
+            answ = Statement.system_checkout(data.get("counts"))
             Log.add(user, "Распределение заявлений, выбрано:" + str(data.get("count")), "", {})
-            response = {"answer": True}
+            response = {"answer": [True, answ]}
         else:
             response = {"answer": False}
     except:
@@ -299,6 +299,29 @@ def deny_statement_jury(request):
             statement.set_status(5)
             Log.add(user, "Отклонение заявления", "", copy.deepcopy(statement.get_json_data()))
             response = {"answer": True}
+        else:
+            response = {"answer": False}
+    except:
+        return HttpResponse("bad request")
+
+    return JsonResponse(response)
+
+
+# Получить количество
+@csrf_exempt
+def get_counts(request):
+    try:
+        data = json.loads(request.body)
+        user = User.get_by_session(data.get("session"))
+        if user is not None and (user.is_jury() or user.is_admin()):
+            mass = []
+            mass.append(len(Statement.objects.filter(status__id=2, old_status=False)))
+            mass.append(len(Statement.objects.filter(status__id=2, old_status=False, mark_studies__gt=0)))
+            mass.append(len(Statement.objects.filter(status__id=2, old_status=False, mark_science__gt=0)))
+            mass.append(len(Statement.objects.filter(status__id=2, old_status=False, mark_activities__gt=0)))
+            mass.append(len(Statement.objects.filter(status__id=2, old_status=False, mark_culture__gt=0)))
+            mass.append(len(Statement.objects.filter(status__id=2, old_status=False, mark_sport__gt=0)))
+            response = {"answer": mass}
         else:
             response = {"answer": False}
     except:

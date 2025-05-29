@@ -4,41 +4,70 @@
 
 
 <!-- Фрейм для ввода дат -->
-<div class="bg-white flex flex-col items-center p-4 w-100">
+<div class="bg-white flex flex-col items-center p-4">
 
     <div class="flex flex-col p-5 items-center border-red-500 border-2 rounded-lg">
-        <label class="block text-sm text-gray-600 mb-1">Количество мест для учебной деятельности<br>(Всего заявлений 5)</label>
+        <label class="block text-sm text-gray-600 mb-1">Количество поданных заявлений и прошедших проверку:</label>
+        <label class="block text-sm text-gray-600 mb-1">Количество мест для учебной деятельности<br>(Всего заявлений )</label>
         <input class="w-50 m-2 p-1 border-2 border-red-500 rounded-lg" id="count-place1" placeholder="Количество мест">
-        <label class="block text-sm text-gray-600 mb-1">Количество мест для научной деятельности<br>(Всего заявлений 5)</label>
+        <label class="block text-sm text-gray-600 mb-1">Количество мест для научной деятельности<br>(Всего заявлений )</label>
         <input class="w-50 m-2 p-1 border-2 border-red-500 rounded-lg" id="count-place2" placeholder="Количество мест">
-        <label class="block text-sm text-gray-600 mb-1">Количество мест для учебной деятельности<br>(Всего заявлений 5)</label>
+        <label class="block text-sm text-gray-600 mb-1">Количество мест для общественной деятельности<br>(Всего заявлений )</label>
         <input class="w-50 m-2 p-1 border-2 border-red-500 rounded-lg" id="count-place3" placeholder="Количество мест">
-        <label class="block text-sm text-gray-600 mb-1">Количество мест для культуры<br>(Всего заявлений 5)</label>
+        <label class="block text-sm text-gray-600 mb-1">Количество мест для культуры<br>(Всего заявлений )</label>
         <input class="w-50 m-2 p-1 border-2 border-red-500 rounded-lg" id="count-place4" placeholder="Количество мест">
-        <label class="block text-sm text-gray-600 mb-1">Количество мест для спортивной деятельности<br>(Всего заявлений 5)</label>
+        <label class="block text-sm text-gray-600 mb-1">Количество мест для спортивной деятельности<br>(Всего заявлений )</label>
         <input class="w-50 m-2 p-1 border-2 border-red-500 rounded-lg" id="count-place5" placeholder="Количество мест">
     </div>
     <button class="transition hover:scale-110 w-50 m-2 p-1 rounded-lg border-2 border-red-500 hover:bg-red-100 block font-bold" onclick="tryStatement()">Выполнить</button>
 </div>
 
-<script src="{% static 'main/js/showNotification.js' %}"></script>
-<script src="{% static 'main/js/auto.js' %}"></script>
 <script>
     function tryStatement(){
         showConfirmation(() => {
+            const inputs = [
+              document.querySelector("#count-place1").value,
+              document.querySelector("#count-place2").value,
+              document.querySelector("#count-place3").value,
+              document.querySelector("#count-place4").value,
+              document.querySelector("#count-place5").value
+            ];
+
+            const allValid = inputs.every(val => val.trim() !== "" && !isNaN(val) && Number(val) >= 0);
+
+            if (!allValid) {
+              showNotificationBad("Пожалуйста, заполните все поля и укажите корректные числовые значения.");
+              return; // прерываем выполнение, если невалидно
+            }
+
+
             const json = {
                 session: sessionStorage.getItem('sessionId'),
                 counts: [document.querySelector("#count-place1").value,document.querySelector("#count-place2").value,document.querySelector("#count-place3").value,document.querySelector("#count-place4").value,document.querySelector("#count-place5").value]
             };
             showNotification("Подождите..");
             HttpRequestPostJson('tryStatements', function (response) {
-                if (response.answer === true) {
+                if (response.answer[0] === true) {
                     showNotification("Успешно!");
+                    var mass = response.answer[1]
+                    showNotificationModal("Места которые остались: <br>Учебной деятельности: " + mass[0] + "<br>Научной деятельности: " + mass[1] + "<br>Общественной деятельности: " + mass[2] + "<br>Культуры: " + mass[3] + "<br>Спортивной деятельности: " + mass[4]);
                 } else {
-                    showNotification("Ошибка!");
+                    showNotificationBad("Ошибка!");
                 }
             }, json);
         });
     }
+
+    HttpRequestPostJson('getCounts', function (response) {
+        var blocks = document.querySelectorAll(".block")
+        blocks[0].innerHTML = "Количество поданных заявлений и прошедших проверку: " + response.answer[0] + ""
+        blocks[1].innerHTML = "Количество мест для учебной деятельности<br>(Всего заявлений " + response.answer[1] + ")"
+        blocks[2].innerHTML = "Количество мест для научной деятельности<br>(Всего заявлений " + response.answer[2] + ")"
+        blocks[3].innerHTML = "Количество мест для общественной деятельности<br>(Всего заявлений " + response.answer[3] + ")"
+        blocks[4].innerHTML = "Количество мест для культуры<br>(Всего заявлений " + response.answer[4] + ")"
+        blocks[5].innerHTML = "Количество мест для спортивной деятельности<br>(Всего заявлений " + response.answer[5] + ")"
+    }, {
+        session: sessionStorage.getItem('sessionId')
+    });
 </script>
 {% endblock %}

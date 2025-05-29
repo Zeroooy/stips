@@ -428,16 +428,22 @@ class Statement(models.Model):
         else:
             return False
 
+    import heapq
 
     @staticmethod
     def system_checkout(counts_):
         try:
             fields = ['mark_studies', 'mark_science', 'mark_activities', 'mark_culture', 'mark_sport']
-            limits = list(map(int, counts_))  # макс. размер каждого пула
-            pools = [[] for _ in range(5)]  # кучи: [(score, id, statement), ...]
+            comment_fields = ['comment_studies', 'comment_science', 'comment_activities', 'comment_culture',
+                              'comment_sport']
+            limits = list(map(int, counts_))  # Максимальные размеры пулов
+            pools = [[] for _ in range(5)]  # Кучи: (score, -points, id, statement)
 
-            # Заявления с наибольшими points
-            statements = Statement.objects.filter(status__id=2, old_status = False).order_by('-points')
+            # Получаем заявления со статусом "на проверке"
+            statements = list(Statement.objects.filter(status__id=2, old_status=False).order_by('-points'))
+
+            # Карта всех заявлений для быстрого доступа по ID
+            statement_map = {s.id: s for s in statements}
 
             def try_insert(statement):
                 if statement.points < 1:
@@ -445,7 +451,6 @@ class Statement(models.Model):
 
                 marks = [getattr(statement, f) for f in fields]
                 sorted_indices = sorted(range(5), key=lambda i: -marks[i])
-
                 inserted = False
 
                 for idx in sorted_indices:
@@ -453,7 +458,6 @@ class Statement(models.Model):
                     if score <= 0:
                         continue
                     pool = pools[idx]
-
                     heap_item = (score, -statement.points, statement.id, statement)
 
                     if len(pool) < limits[idx]:
@@ -469,26 +473,25 @@ class Statement(models.Model):
                             inserted = True
                             break
 
-                # 💡 Не вставилось — проверим на полное равенство с "самыми слабыми"
+                # Отметим спорные, если не удалось вставить, но баллы равны минимумам в кучах
                 if not inserted:
+                    marks = [getattr(statement, f) for f in fields]
                     same_everywhere = True
                     for i in range(5):
                         score = marks[i]
                         if score <= 0:
-                            continue  # этот пул нам не подходит
-
+                            continue
                         pool = pools[i]
                         if not pool:
                             same_everywhere = False
                             break
-
                         weakest_score, weakest_neg_points, *_ = pool[0]
                         if weakest_score != score or -weakest_neg_points != statement.points:
                             same_everywhere = False
                             break
-
                     if same_everywhere:
-                        statement.set_status(3)  # Присваиваем статус "невозможно распределить"
+                        statement.set_status(3)
+                        statement.save()
 
                 return inserted
 
@@ -496,27 +499,58 @@ class Statement(models.Model):
             for s in statements:
                 try_insert(s)
 
-            # Результат: только объекты Statement
-            result = [[item[2] for item in pool] for pool in pools]
+            # Собираем финальных прошедших
+            passed_ids = set()
+            pool_min_criteria = [{} for _ in range(5)]  # по каждому пулу: {score: [(points, id)]}
+            for i, pool in enumerate(pools):
+                for score, neg_points, stmt_id, stmt in pool:
+                    passed_ids.add(stmt_id)
+                    setattr(stmt, comment_fields[i], "Ключевые баллы")
+                    stmt.set_status(4)
+                    stmt.save()
 
-            for i, r in enumerate(result):
-                for s in r:
-                    s: Statement = Statement.objects.filter(id=s).last()
-                    fields_ = ['comment_studies', 'comment_science', 'comment_activities', 'comment_culture', 'comment_sport']
-                    setattr(s, fields_[i], "Ключевые баллы")
-                    s.set_status(4)
+                    # Запоминаем критерии
+                    pool_min_criteria[i].setdefault(score, set()).add((-neg_points, stmt_id))
 
+            # Проверка на спорные: находим минимумы в пулах
+            all_criteria = set()
+            for i, pool in enumerate(pools):
+                if not pool:
+                    continue
+                min_score, min_neg_points, *_ = pool[0]
+                min_points = -min_neg_points
+                all_criteria.add((i, min_score, min_points))
 
-            for s in Statement.objects.filter(status__id=2, old_status = False):
+            # Проходим по всем, включая прошедших
+            for s in statements:
+                for i, field in enumerate(fields):
+                    score = getattr(s, field)
+                    if (i, score, s.points) in all_criteria:
+                        # Если нашлось другое с такими же баллами, но он не прошел — статус 3 всем
+                        if s.id not in passed_ids or any(
+                                stmt_id != s.id and statement_map[stmt_id].status_id != 4
+                                for _, _, stmt_id, _ in pools[i] if (score, -s.points, stmt_id) in pools[i]
+                        ):
+                            s.set_status(3)
+                            s.save()
+                            break  # Достаточно одного совпадения
+
+            # Остальным ставим статус 5 (не прошли, не спорные)
+            for s in Statement.objects.filter(status__id=2, old_status=False):
                 s.set_status(5)
-            # Вернуть результат, если нужно
-            return result
+
+            lists = [[item[3] for item in pool] for pool in pools]
+            lists_ = []
+            for i, el in enumerate(lists):
+                count = len(el)
+                for s in el:
+                    if s.status.id == 3:
+                        count -= 1
+                lists_.append(limits[i] - count)
+            return lists_  # Возвращаем списки Statement-ов
 
         except Exception as e:
             print(f"Ошибка при распределении заявлений: {e}")
-
-        pass
-
 
     @staticmethod
     def get_by_user(user):

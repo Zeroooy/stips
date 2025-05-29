@@ -81,6 +81,8 @@ urlpatterns = [
 
     path('api/tryStatements', backend.try_statements),
 
+    path('api/getCounts', backend.get_counts),
+
     # АДМИН
     path('api/setPeriod', backend.set_period),
 

@@ -294,3 +294,30 @@ function confirmСlearLogs() {
     createJson()
   });
 }
+
+function showNotificationModal(messageText) {
+  if (document.getElementById("notification-modal")) return;
+
+  const backdrop = document.createElement("div");
+  backdrop.id = "notification-modal";
+  backdrop.className = "fixed inset-0 bg-black/20 flex items-center justify-center z-50";
+
+  const modal = document.createElement("div");
+  modal.className = "bg-white p-6 rounded-xl shadow-xl w-80 text-center";
+
+  const message = document.createElement("p");
+  message.className = "mb-4 text-base font-medium text-gray-800";
+  message.innerHTML = messageText.replace(/\n/g, "<br>");
+  modal.appendChild(message);
+
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "mt-2 px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600";
+  closeBtn.textContent = "Закрыть";
+  closeBtn.onclick = () => {
+    document.body.removeChild(backdrop);
+  };
+
+  modal.appendChild(closeBtn);
+  backdrop.appendChild(modal);
+  document.body.appendChild(backdrop);
+}
