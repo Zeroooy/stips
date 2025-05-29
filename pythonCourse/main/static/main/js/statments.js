@@ -179,5 +179,22 @@ document.querySelectorAll('.filters').forEach(button => {
 
 document.addEventListener("DOMContentLoaded", function () {
     getMyStatements()
+
+    const json = {
+        session: sessionStorage.getItem('sessionId')
+    };
+    HttpRequestPostJson('getRole', function (response) {
+        var options = document.querySelector(".filters").querySelectorAll("option")
+        if (response.answer == "Jury") {
+            options[5].remove()
+            options[6].remove()
+        }else if (response.answer == "Inspector studies" || response.answer == "Inspector science" || response.answer == "Inspector culture" || response.answer == "Inspector activities" || response.answer == "Inspector sport") {
+            options[1].remove()
+            options[2].remove()
+            options[3].remove()
+        } else {
+            console.error("Нет данных или ошибка запроса");
+        }
+    }, json);
 })
 
