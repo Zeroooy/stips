@@ -116,7 +116,9 @@ class User(models.Model):
                 "role": self.role.name,
                 "user-id": self.id,
                 "email": self.email,
-                "phone": self.phone
+                "phone": self.phone,
+                "inst": self.inst,
+                "group": self.group
                 }
 
     def generate_session(self):
@@ -298,7 +300,7 @@ class Statement(models.Model):
 
     old_status = models.BooleanField("Кеш-статус", blank=True, default=False)
 
-
+    created_at = models.DateTimeField(auto_now_add=True)
     def get_data(self):
         return {"user" : str(self.user),
                 "status" : self.status.name,
@@ -530,12 +532,20 @@ class Statement(models.Model):
 
     @staticmethod
     def get_by_user(user):
-        statements = user.statements.all()
+        statements = user.statements.order_by('-created_at')  # сортируем по дате создания
         if statements.exists():
-            return statements.last()
+            return statements.first()  # первый в отсортированном списке — самый новый
         else:
             return None
 
+    @staticmethod
+    def get_by_user(user):
+        statements = user.statements.all()
+        statements = user.statements.order_by('-created_at')  # сортируем по дате создания
+        if statements.exists():
+            return statements.first()  # первый в отсортированном списке — самый новый
+        else:
+            return None
 
     @staticmethod
     def get_by_id(statement_id):

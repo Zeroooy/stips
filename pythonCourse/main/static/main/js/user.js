@@ -41,7 +41,9 @@ function fillUserFields(userData) {
         "Отчество": "middlename",
         "Роль": "role",
         "Email": "email",
-        "Телефон": "phone"
+        "Телефон": "phone",
+        "Институт/Кафедра": "inst",
+        "Группа": "group"
     };
 
     Object.entries(fieldMapping).forEach(([label, key]) => {
