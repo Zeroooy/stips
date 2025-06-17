@@ -81,12 +81,12 @@ function createStatementFields(statement, container) {
     pointsDiv.classList.add("w-1/4");
     const pointsArray = statement.points.split('|')[0].split(':').map(s => parseInt(s.trim()));
     pointsDiv.innerHTML = `
-        <div title="`+statement.points.split('|')[1]+`" class="flex-row gap-3 flex justify-between rounded-xl border-2 border-black/10 p-2">
-            <div class="w-1/5">`+pointsArray[0]+`</div>
-            <div class="w-1/5">`+pointsArray[1]+`</div>
-            <div class="w-1/5">`+pointsArray[2]+`</div>
-            <div class="w-1/5">`+pointsArray[3]+`</div>
-            <div class="w-1/5">`+pointsArray[4]+`</div>
+        <div title="`+statement.points.split('|')[1]+`" class="overflow-hidden points flex-row gap-3 flex justify-between rounded-xl border-2 border-black/10">
+            <div class="w-1/5 p-1">`+pointsArray[0]+`</div>
+            <div class="w-1/5 p-1">`+pointsArray[1]+`</div>
+            <div class="w-1/5 p-1">`+pointsArray[2]+`</div>
+            <div class="w-1/5 p-1">`+pointsArray[3]+`</div>
+            <div class="w-1/5 p-1">`+pointsArray[4]+`</div>
         </div>`
 
     // Поле с датой
@@ -161,9 +161,20 @@ function filterStatementsByStatus(filters_) {
         return statusMatch && relevanceMatch && activityMatch;
     });
 
+
     // Отображение отфильтрованных заявлений
     filteredStatements.forEach(statement => {
         createStatementFields(statement, container);
+    });
+
+    const index = parseInt(activityFilter) - 1;
+    document.querySelectorAll(".points").forEach(point => {
+        var i = 0
+        point.querySelectorAll("div").forEach(d => {
+            if(i == index) d.classList.add("bg-green-200")
+            else d.classList.remove("bg-green-200")
+            i++
+        });
     });
 }
 
@@ -192,8 +203,6 @@ document.addEventListener("DOMContentLoaded", function () {
             options[1].remove()
             options[2].remove()
             options[3].remove()
-        } else {
-            console.error("Нет данных или ошибка запроса");
         }
     }, json);
 })
